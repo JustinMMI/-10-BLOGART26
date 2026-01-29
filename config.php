@@ -20,3 +20,6 @@ require_once ROOT . '/functions/global.inc.php';
 
 //load security
 require_once ROOT . '/config/security.php';
+
+
+// test
