@@ -1,8 +1,13 @@
 <?php
 include '../../../header.php'; // contains the header and call to config.php
 
-//Load all statuts
-$membres = sql_select("MEMBRE m INNER JOIN STATUT s ON m.numStat = s.numStat","m.*, s.libStat");
+$ghostUserId = 999;
+
+$membres = sql_select(
+    "MEMBRE m INNER JOIN STATUT s ON m.numStat = s.numStat",
+    "m.*, s.libStat",
+    "m.numMemb <> $ghostUserId"
+);
 
 ?>
 
