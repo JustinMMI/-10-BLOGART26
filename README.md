@@ -17,3 +17,6 @@
 - **index.php** - Must be the homepage
 - **views** - All your pages
 - 
+
+
+- $2y$10$gG4LwH6c8IffKi9PnrOXsO8UY9kBahY92PFZAnTUtysKrnZlErzhG
