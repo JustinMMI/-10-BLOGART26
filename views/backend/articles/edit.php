@@ -21,7 +21,7 @@ if (isset($_GET['numArt'])) {
         </div>
 
         <div class="col-md-12">
-            <form action="<?php echo ROOT_URL . '/api/articles/edit.php'; ?>" method="post">
+            <form action="<?php echo ROOT_URL . '/api/articles/update.php'; ?>" method="post">
 
                 <input type="hidden" name="numArt" value="<?= $numArt ?>">
 
