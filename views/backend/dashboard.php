@@ -3,6 +3,19 @@ include '../../header.php';
 
 ?>
 
+<?php
+if (!isset($_SESSION['user'])) {
+    header('Location: security/login.php?error=auth');
+    exit;
+}
+
+// Vérification ADMIN
+if ($_SESSION['user']['statut'] !== 'admin') {
+    echo "⛔ Accès réservé aux admins.";
+    exit;
+}
+?>
+
 <!-- Bootstrap admin dashboard template -->
 <div>
     <hr class="my-3">
