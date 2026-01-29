@@ -24,7 +24,7 @@ $statuts = sql_select("STATUT", "*");
                             <td><?php echo($statut['numStat']); ?></td>
                             <td><?php echo($statut['libStat']); ?></td>
                             <td>
-                                <a href="edit.php?numStat=<?php echo($statut['numStat']); ?>" class="btn btn-primary">Edit</a>
+                                <a href="edit.php?numStat=<?php echo($statut['numStat']); ?>" class="btn btn-warning">Edit</a>
                                 <a href="delete.php?numStat=<?php echo($statut['numStat']); ?>" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
