@@ -21,7 +21,7 @@ $thematiques = sql_select("THEMATIQUE", "*");
             <form action="<?php echo ROOT_URL . '/api/thematiques/create.php'; ?>" method="post">
 
                 <div class="form-group">
-                    <label>Titre</label>
+                    <label>Thématique</label>
                     <input name="libThem" class="form-control" required>
                 </div>
 
