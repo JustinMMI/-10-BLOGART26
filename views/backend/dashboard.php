@@ -10,10 +10,10 @@ if (!isset($_SESSION['user'])) {
 }
 
 // Vérification ADMIN
-// if ($_SESSION['user']['statut'] !== 'admin') {
-//     echo "⛔ Accès réservé aux admins.";
-//     exit;
-// }
+if ($_SESSION['user']['statut'] !== 'Administrateur') {
+    echo "⛔ Accès réservé aux admins.";
+    exit;
+}
 ?>
 
 <!-- Bootstrap admin dashboard template -->
