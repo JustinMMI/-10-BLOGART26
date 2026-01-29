@@ -22,27 +22,57 @@ require_once 'config.php';
 <body>
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Blog'Art 25</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="/">Blog'Art 26</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav me-auto">
+
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link active" href="/">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/views/backend/dashboard.php">Admin</a>
-        </li>
+
+        <?php if (isset($_SESSION['user']) && $_SESSION['user']['statut'] === 'admin'): ?>
+          <li class="nav-item">
+            <a class="nav-link" href="/views/backend/dashboard.php">Admin</a>
+          </li>
+        <?php endif; ?>
+
       </ul>
     </div>
-    <!--right align-->
-    <div class="d-flex">
-      <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Rechercher sur le site…" aria-label="Search" >
-      </form>
-      <a class="btn btn-primary m-1" href="/views/backend/security/login.php" role="button">Login</a>
-      <a class="btn btn-dark m-1" href="/views/backend/security/signup.php" role="button">Sign up</a>
+
+    <!-- RIGHT SIDE -->
+    <div class="d-flex align-items-center">
+
+      <?php if (isset($_SESSION['user'])): ?>
+
+        <span class="me-3">
+          👋 <?= htmlspecialchars($_SESSION['user']['pseudo']) ?>
+        </span>
+
+        <a class="btn btn-danger"
+           href="/views/backend/security/login.php?action=logout">
+           Déconnexion
+        </a>
+
+      <?php else: ?>
+
+        <a class="btn btn-primary m-1"
+           href="/views/backend/security/login.php">
+           Login
+        </a>
+
+        <a class="btn btn-dark m-1"
+           href="/views/backend/security/signup.php">
+           Sign up
+        </a>
+
+      <?php endif; ?>
+
     </div>
   </div>
 </nav>
