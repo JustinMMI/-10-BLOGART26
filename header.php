@@ -1,3 +1,8 @@
+<?php
+session_start();
+require_once 'config.php';
+?>
+
 <!DOCTYPE html>
 <html lang="fr-FR">
 <head>
