@@ -18,5 +18,5 @@
 - **views** - All your pages
 - 
 
-
-- $2y$10$gG4LwH6c8IffKi9PnrOXsO8UY9kBahY92PFZAnTUtysKrnZlErzhG
+- Mot de passe comptes de base : 12345678
+- Hash comptes de base a remplacer dans le bdd : $2y$10$gG4LwH6c8IffKi9PnrOXsO8UY9kBahY92PFZAnTUtysKrnZlErzhG
