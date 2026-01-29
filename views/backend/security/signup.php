@@ -23,10 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $hash = password_hash($pass, PASSWORD_DEFAULT);
 
+            $statutMembre = sql_select(
+                "STATUT",
+                "numStat",
+                "libStat = 'Membre'"
+            )[0]['numStat'];
+
             sql_insert(
                 "MEMBRE",
                 "prenomMemb, nomMemb, pseudoMemb, passMemb, eMailMemb, dtCreaMemb, numStat",
-                "'$prenom', '$nom', '$pseudo', '$hash', '$email', NOW(), 1"
+                "'$prenom', '$nom', '$pseudo', '$hash', '$email', NOW(), $statutMembre"
             );
 
             $success = "Compte créé avec succès. Vous pouvez vous connecter.";

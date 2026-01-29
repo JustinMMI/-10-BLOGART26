@@ -36,7 +36,7 @@ require_once 'config.php';
           <a class="nav-link active" href="/">Home</a>
         </li>
 
-        <?php if (isset($_SESSION['user']) && $_SESSION['user']['statut'] === 'admin'): ?>
+        <?php if (isset($_SESSION['user']) && $_SESSION['user']['statut'] === 'Administrateur'): ?>
           <li class="nav-item">
             <a class="nav-link" href="/views/backend/dashboard.php">Admin</a>
           </li>
