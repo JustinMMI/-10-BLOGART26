@@ -1,3 +1,92 @@
 <?php
 include '../../../header.php';
+$statuts = sql_select("STATUT", "*");
+?>
 
+<!-- Bootstrap form to create a new statut -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Création nouveau Membre</h1>
+        </div>
+        <div class="col-md-12">
+            <!-- Form to create a new statut -->
+            <form action="<?php echo ROOT_URL . '/api/statuts/create.php' ?>" method="post">
+                <div class="form-group">
+                    <label for="pseudoMemb">Pseudo (non modifiable)</label>
+                    <input id="pseudoMemb" name="pseudoMemb" class="form-control" type="text" required />
+                    <p id="pseudoMemb">(Entre 6 et 70 car.)</p>
+
+                    <label for="prenomMemb">Prénom</label>
+                    <input id="prenomMemb" name="prenomMemb" class="form-control" type="text" required />
+
+                    <label for="nomMemb">Nom</label>
+                    <input id="nomMemb" name="nomMemb" class="form-control" type="text" required />
+
+                    <label for="passMemb" class="form-label">Password</label>
+                    <input type="password" id="passMemb" class="form-control" aria-describedby="passwordHelpBlock">
+                    <div id="passwordHelpBlock" class="form-text">
+                    (Entre 8 et 15 car., au - une majuscule, une minuscule, un chiffre, car. spéciaux acceptés)
+                    </div>
+
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="passMemb">
+                    <label class="form-check-label" for="checkDefault">
+                        Afficher Mot de passe
+                    </label>
+                    </div>
+
+                    <label for="passMemb" class="form-label">Confirmez password</label>
+                    <input type="password" id="passMemb" class="form-control" aria-describedby="passwordHelpBlock">
+                    <div id="passwordHelpBlock" class="form-text">
+                    (Entre 8 et 15 car., au - une majuscule, une minuscule, un chiffre, car. spéciaux acceptés)
+                    </div>
+
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="passMemb">
+                    <label class="form-check-label" for="Memb">
+                        Afficher Mot de passe
+                    </label>
+                    </div>
+
+                    <label for="eMailMemb">eMail</label>
+                    <input id="eMailMemb" name="eMailMemb" class="form-control" type="text" autofocus="autofocus" />
+
+                    <label for="eMailMemb">Confirmez eMail</label>
+                    <input id="eMailMemb" name="eMailMemb" class="form-control" type="text" autofocus="autofocus" />
+
+                    <p id="accordMemb">J'accepte que mes données soient conservées</p>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="accordMemb" value="Oui">
+                        <label class="form-check-label" for="accordMemb">Oui</label>
+                    </div>
+                
+                    <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="accordMemb">
+                    <label class="form-check-label" for="accordMemb">Non</label>
+                    </div>
+
+                    <p><b>Statut :</b></p>
+                    <select class="form-select" name="numStat" label="Choix du statut">
+                        <option value="">-- Choisir un statut --</option>
+
+                        <?php foreach ($statuts as $statut) { ?>
+                            <option value="<?php echo $statut['numStat']; ?>">
+                                <?php echo $statut['libStat']; ?>
+                            </option>
+                        <?php } ?>
+
+                    </select>
+
+                </div>
+                <br />
+                <div class="form-group mt-2">
+                    <a href="list.php" class="btn btn-primary">List</a>
+                        <button type="submit" class="btn btn-success">Confirmer create ?</button>
+        
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

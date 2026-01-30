@@ -19,9 +19,9 @@ $membres = sql_select("MEMBRE m INNER JOIN STATUT s ON m.numStat = s.numStat","m
                         <th>Nom</th>
                         <th>Pseudo</th>
                         <th>Email</th>
-                        <th>Date création</th>
-                        <th>Dernière maj</th>
-                        <th>Nom statut</th>
+                        <th>Accord RGPD</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,8 +32,7 @@ $membres = sql_select("MEMBRE m INNER JOIN STATUT s ON m.numStat = s.numStat","m
                             <td><?php echo($membre['nomMemb']); ?></td>
                             <td><?php echo($membre['pseudoMemb']); ?></td>
                             <td><?php echo($membre['eMailMemb']); ?></td>
-                            <td><?php echo($membre['dtCreaMemb']); ?></td>
-                            <td><?php echo($membre['dtMajMemb']); ?></td>
+                            <td><?php echo ($membre['accordMemb'] == 1 ? 'Oui' : 'Non'); ?></td>
                             <td><?php echo($membre['libStat']); ?></td>
                             <td>
                                 <a href="edit.php?numMemb=<?php echo($membre['numMemb']); ?>" class="btn btn-warning">Edit</a>
