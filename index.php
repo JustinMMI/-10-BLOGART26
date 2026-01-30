@@ -1,38 +1,77 @@
-<?php 
-require_once 'header.php';
-sql_connect();
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Article de test (le plus récent)
-$article = sql_select("ARTICLE", "numArt, libTitrArt, libChapoArt, dtCreaArt", null, null, "dtCreaArt DESC", "1");
-$article = $article[0] ?? null;
+require_once 'header.php';
+$db = sql_connect();
+
+$articles = sql_select("ARTICLE", "*");
+$numMemb = isset($_SESSION['numMemb']) ? $_SESSION['numMemb'] : null;
 ?>
 
 <div class="container mt-4">
-	<h1>Accueil</h1>
+    <h1>Accueil</h1>
 
-	<?php 
-    $articles = sql_select("ARTICLE", "*");
-    if ($articles):
-        foreach ($articles as $article): ?>
+    <?php if ($articles): ?>
+        <?php foreach ($articles as $article): ?>
+            
+            <?php
+            $userLiked = false;
+            $numArt = $article['numArt'];
+
+            if ($numMemb) {
+                $sqlCheck = "SELECT * FROM `LIKE` WHERE numMemb = '$numMemb' AND numArt = '$numArt'";
+                $resultCheck = $db->query($sqlCheck);
+                
+                if ($resultCheck && $resultCheck->rowCount() > 0) {
+                    $userLiked = true;
+                }
+            }
+            ?>
+
             <div class="card mt-3">
                 <div class="card-body">
                     <h2 class="card-title"><?= htmlspecialchars($article['libTitrArt']); ?></h2>
                     <p class="text-muted mb-2">Publié le <?= htmlspecialchars($article['dtCreaArt']); ?></p>
                     <p class="card-text"><?= nl2br(htmlspecialchars($article['libChapoArt'])); ?></p>
-                    <a class="btn btn-primary" href="/views/frontend/articles/article1.php?numArt=<?= (int) $article['numArt']; ?>">Lire l’article</a>
+                    
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <a class="btn btn-primary" href="views/frontend/articles/article1.php?numArt=<?= $article['numArt']; ?>">Lire l’article</a>
+
+                        <div class="like-container">
+                            <?php if ($numMemb): ?>
+                                <?php if ($userLiked): ?>
+                                    <form action="api/likes/delete.php" method="POST">
+                                        <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
+                                        <input type="hidden" name="numArt" value="<?= $numArt ?>">
+                                        <input type="hidden" name="frontend" value="true">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            ❤️ Je n'aime plus
+                                        </button>
+                                    </form>
+                                <?php else: ?>
+                                    <form action="api/likes/create.php" method="POST">
+                                        <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
+                                        <input type="hidden" name="numArt" value="<?= $numArt ?>">
+                                        <input type="hidden" name="frontend" value="true">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                                            🤍 J'aime
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <small class="text-muted"><a href="views/security/login.php">Se connecter</a> pour liker</small>
+                            <?php endif; ?>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         <?php endforeach; ?>
-	<?php else: ?>
-		<div class="alert alert-info mt-3">Aucun article disponible.</div>
-	<?php endif; ?>
+    <?php else: ?>
+        <div class="alert alert-info mt-3">Aucun article disponible.</div>
+    <?php endif; ?>
 </div>
 
 <?php require_once 'footer.php'; ?>
-
-<script>
-function onSubmit(token) {
-    document.getElementById("recaptcha").submit();
-    console.log(document.getElementById("recaptcha"));
-}
-</script>
