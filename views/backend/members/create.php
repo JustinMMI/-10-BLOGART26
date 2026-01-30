@@ -24,30 +24,41 @@ $statuts = sql_select("STATUT", "*");
                     <input id="nomMemb" name="nomMemb" class="form-control" type="text" required />
 
                     <label for="passMemb" class="form-label">Password</label>
-                    <input type="password" id="passMemb" class="form-control" aria-describedby="passwordHelpBlock">
+                    <input type="password" id="passMemb" name="passMemb" class="form-control">
                     <div id="passwordHelpBlock" class="form-text">
                     (Entre 8 et 15 car., au - une majuscule, une minuscule, un chiffre, car. spéciaux acceptés)
                     </div>
 
                     <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="passMemb">
-                    <label class="form-check-label" for="checkDefault">
+                    <input class="form-check-input" type="checkbox" id="showPassMemb">
+                    <label class="form-check-label" for="showPassMemb">
                         Afficher Mot de passe
                     </label>
                     </div>
 
                     <label for="passMemb" class="form-label">Confirmez password</label>
-                    <input type="password" id="passMemb" class="form-control" aria-describedby="passwordHelpBlock">
+                    <input type="password" id="passMembConfirm" name="passMembConfirm" class="form-control">
                     <div id="passwordHelpBlock" class="form-text">
                     (Entre 8 et 15 car., au - une majuscule, une minuscule, un chiffre, car. spéciaux acceptés)
                     </div>
 
                     <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="passMemb">
-                    <label class="form-check-label" for="Memb">
+                    <input class="form-check-input" type="checkbox" id="showPassMembConfirm">
+                    <label class="form-check-label" for="showPassMembConfirm">
                         Afficher Mot de passe
                     </label>
                     </div>
+
+                    <script>
+                    document.getElementById('showPassMemb').addEventListener('change', function () {
+                        document.getElementById('passMemb').type = this.checked ? 'text' : 'password';
+                    });
+
+                    document.getElementById('showPassMembConfirm').addEventListener('change', function () {
+                        document.getElementById('passMembConfirm').type = this.checked ? 'text' : 'password';
+                    });
+                    </script>
+
 
                     <label for="eMailMemb">eMail</label>
                     <input id="eMailMemb" name="eMailMemb" class="form-control" type="text" autofocus="autofocus" />
