@@ -46,11 +46,9 @@ $allMots = sql_select("MOTCLE", "*");
         <label>Conclusion</label>
         <textarea name="libConclArt" class="form-control mb-4" rows="4"></textarea>
 
-        <!-- IMAGE -->
         <label>Importez l'illustration</label>
         <input type="file" name="urlPhotArt" class="form-control mb-4" accept=".jpg,.jpeg,.png,.gif">
 
-        <!-- THEMATIQUE -->
         <div class="mb-4">
             <label class="fw-bold">Thématique :</label>
             <select name="numThem" class="form-control" required>
@@ -58,15 +56,14 @@ $allMots = sql_select("MOTCLE", "*");
                     <option value="<?= $t['numThem']; ?>">
                         <?= htmlspecialchars($t['libThem']); ?>
                     </option>
-                <?php endforeach; ?>
+                <?php endforeach; ?> 
             </select>
         </div>
 
-        <!-- MOTS CLÉS -->
         <label>Choisissez les mots clés liés à l'article :</label>
 
         <div class="row mb-4">
-            <!-- LISTE DISPO -->
+
             <div class="col-md-5">
                 <label>Liste Mots clés</label>
                 <select id="mots-dispo" class="form-control" size="8" multiple>
