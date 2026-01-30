@@ -12,14 +12,6 @@ if(isset($_GET['numStat'])){
 }
 ?>
 
-<div class="container">
-<div class="row">
-    <div class="col-md-12">
-        <h1>Modifier Statut</h1>
-    </div>
-    <div class="col-md-12">
-        <!-- Form to create a new statut -->
-
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-12">

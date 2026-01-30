@@ -1,26 +1,33 @@
 <?php
-include '../../../header.php';
+require_once '../../../header.php';
 ?>
 
-<!-- Bootstrap form to create a new statut -->
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Création nouveau Statut</h1>
+    <h2>Liker Article</h2>
+    <form action="../../../api/likes/create.php" method="POST">
+        <div class="mb-3">
+            <label for="numMemb" class="form-label">Membre :</label>
+            <select name="numMemb" id="numMemb" class="form-select">
+                <option value="">- - - Choisissez un membre - - -</option>
+                </select>
         </div>
-        <div class="col-md-12">
-            <!-- Form to create a new statut -->
-            <form action="<?php echo ROOT_URL . '/api/statuts/create.php' ?>" method="post">
-                <div class="form-group">
-                    <label for="libStat">Nom du statut</label>
-                    <input id="libStat" name="libStat" class="form-control" type="text" autofocus="autofocus" />
-                </div>
-                <br />
-                <div class="form-group mt-2">
-                    <a href="list.php" class="btn btn-primary">List</a>
-                    <button type="submit" class="btn btn-success">Confirmer create ?</button>
-                </div>
-            </form>
+
+        <div class="mb-3">
+            <label for="numArt" class="form-label">Article :</label>
+            <select name="numArt" id="numArt" class="form-select">
+                <option value="">- - - Choisissez un article - - -</option>
+                </select>
         </div>
-    </div>
+
+        <p class="text-danger">
+            [cite_start]<strong>Remarque :</strong> Dès le membre sélectionné, seuls les articles non encore likés par ce membre s'afficheront. [cite: 29]
+        </p>
+
+        <div class="mt-4">
+            <a href="list.php" class="btn btn-outline-secondary">List</a>
+            <button type="submit" class="btn btn-success">Create</button>
+        </div>
+    </form>
 </div>
+
+<?php require_once '../../../footer.php'; ?>
