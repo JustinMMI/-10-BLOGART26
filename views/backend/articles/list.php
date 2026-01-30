@@ -7,8 +7,12 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur
     exit;
 }
 
-// Charger tous les articles
-$articles = sql_select("ARTICLE", "*");
+// Charger les articles + thématique
+$articles = sql_select(
+    "ARTICLE a
+     INNER JOIN THEMATIQUE t ON a.numThem = t.numThem",
+    "a.*, t.libThem"
+);
 ?>
 
 <div class="container">
@@ -16,27 +20,58 @@ $articles = sql_select("ARTICLE", "*");
         <div class="col-md-12">
             <h1>Articles</h1>
 
-            <table class="table table-striped">
-                <thead>
+            <table class="table table-striped table-bordered align-middle">
+                <thead class="table-light">
                     <tr>
-                        <th>ID</th>
+                        <th>Id</th>
+                        <th>Date</th>
                         <th>Titre</th>
-                        <th>Date création</th>
-                        <th>Dernière maj</th>
+                        <th>Chapeau</th>
+                        <th>Accroche</th>
+                        <th>Mots clés</th>
+                        <th>Thématique</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
 
                 <?php foreach ($articles as $article): ?>
+
+                    <?php
+
+                    $motsCles = sql_select(
+                        "MOTCLEARTICLE ma 
+                         INNER JOIN MOTCLE mc ON ma.numMotCle = mc.numMotCle",
+                        "mc.libMotCle",
+                        "ma.numArt = " . (int)$article['numArt']
+                    );
+
+                    $listeMots = [];
+                    foreach ($motsCles as $mot) {
+                        $listeMots[] = $mot['libMotCle'];
+                    }
+                    ?>
+
                     <tr>
                         <td><?= $article['numArt']; ?></td>
 
-                        <td><?= htmlspecialchars($article['libTitrArt']); ?></td>
-
                         <td><?= $article['dtCreaArt']; ?></td>
 
-                        <td><?= $article['dtMajArt'] ?? '-'; ?></td>
+                        <td><?= htmlspecialchars($article['libTitrArt']); ?></td>
+
+                        <td>
+                            <?= substr(strip_tags($article['libChapoArt']), 0, 80); ?> […]
+                        </td>
+
+                        <td>
+                            <?= substr(strip_tags($article['libAccrochArt'] ?? ''), 0, 80); ?> […]
+                        </td>
+
+                        <td>
+                            <?= !empty($listeMots) ? implode(', ', $listeMots) . ' […]' : '-' ?>
+                        </td>
+
+                        <td><?= htmlspecialchars($article['libThem']); ?></td>
 
                         <td>
                             <a href="edit.php?numArt=<?= $article['numArt']; ?>"
@@ -50,6 +85,7 @@ $articles = sql_select("ARTICLE", "*");
                             </a>
                         </td>
                     </tr>
+
                 <?php endforeach; ?>
 
                 </tbody>

@@ -2,18 +2,68 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 require_once '../../functions/ctrlSaisies.php';
 
-// Sécurisation basique
-$libTitrArt  = ctrlSaisies($_POST['libTitrArt']);
-$libChapoArt = ctrlSaisies($_POST['libChapoArt']);
-$numThem     = (int) $_POST['numThem'];
-$urlPhotArt  = ctrlSaisies($_POST['urlPhotArt']);
+/* =========================
+   CHAMPS TEXTE
+========================= */
+$libTitrArt     = addslashes(ctrlSaisies($_POST['libTitrArt']));
+$libChapoArt    = addslashes(ctrlSaisies($_POST['libChapoArt']));
+$libAccrochArt  = addslashes(ctrlSaisies($_POST['libAccrochArt']));
+$parag1Art      = addslashes(ctrlSaisies($_POST['parag1Art']));
+$libSsTitr1Art  = addslashes(ctrlSaisies($_POST['libSsTitr1Art']));
+$parag2Art      = addslashes(ctrlSaisies($_POST['parag2Art']));
+$libSsTitr2Art  = addslashes(ctrlSaisies($_POST['libSsTitr2Art']));
+$parag3Art      = addslashes(ctrlSaisies($_POST['parag3Art']));
+$libConclArt    = addslashes(ctrlSaisies($_POST['libConclArt']));
+$numThem        = (int) $_POST['numThem'];
 
+
+/* =========================
+   IMAGE
+========================= */
+$fileName = '';
+
+if (!empty($_FILES['urlPhotArt']['name'])) {
+    $fileName = basename($_FILES['urlPhotArt']['name']);
+    move_uploaded_file(
+        $_FILES['urlPhotArt']['tmp_name'],
+        $_SERVER['DOCUMENT_ROOT'] . '/src/uploads/' . $fileName
+    );
+}
+
+/* =========================
+   INSERT ARTICLE
+========================= */
 sql_insert(
     'ARTICLE',
-    'libTitrArt, libChapoArt, numThem, urlPhotArt, dtCreaArt',
-    "'$libTitrArt', '$libChapoArt', $numThem, '$urlPhotArt', NOW()"
+    '
+    libTitrArt, libChapoArt, libAccrochArt,
+    parag1Art, libSsTitr1Art, parag2Art,
+    libSsTitr2Art, parag3Art, libConclArt,
+    urlPhotArt, numThem, dtCreaArt
+    ',
+    "
+    '$libTitrArt', '$libChapoArt', '$libAccrochArt',
+    '$parag1Art', '$libSsTitr1Art', '$parag2Art',
+    '$libSsTitr2Art', '$parag3Art', '$libConclArt',
+    '$fileName', $numThem, NOW()
+    "
 );
 
-// Redirection après succès
+$numArt = sql_select("ARTICLE", "MAX(numArt) AS id")[0]['id'];
+
+/* =========================
+   MOTS-CLÉS
+========================= */
+if (!empty($_POST['mots'])) {
+    foreach ($_POST['mots'] as $numMotCle) {
+        $numMotCle = (int) $numMotCle;
+        sql_insert(
+            'MOTCLEARTICLE',
+            'numArt, numMotCle',
+            "$numArt, $numMotCle"
+        );
+    }
+}
+
 header('Location: ../../views/backend/articles/list.php');
 exit;
