@@ -16,10 +16,6 @@ $parag3Art      = addslashes(ctrlSaisies($_POST['parag3Art']));
 $libConclArt    = addslashes(ctrlSaisies($_POST['libConclArt']));
 $numThem        = (int) $_POST['numThem'];
 
-
-/* =========================
-   IMAGE
-========================= */
 $fileName = '';
 
 if (!empty($_FILES['urlPhotArt']['name'])) {
@@ -30,9 +26,6 @@ if (!empty($_FILES['urlPhotArt']['name'])) {
     );
 }
 
-/* =========================
-   INSERT ARTICLE
-========================= */
 sql_insert(
     'ARTICLE',
     '
@@ -51,9 +44,6 @@ sql_insert(
 
 $numArt = sql_select("ARTICLE", "MAX(numArt) AS id")[0]['id'];
 
-/* =========================
-   MOTS-CLÉS
-========================= */
 if (!empty($_POST['mots'])) {
     foreach ($_POST['mots'] as $numMotCle) {
         $numMotCle = (int) $numMotCle;
