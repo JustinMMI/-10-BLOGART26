@@ -1,4 +1,3 @@
-
 <?php
 include '../../../header.php';
 
@@ -12,91 +11,99 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 
 $error = '';
 
-// Traitement login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Vérification du captcha
-    if (!isset($_POST['g-recaptcha-response']) || empty($_POST['g-recaptcha-response'])) {
-        $error = "Captcha requis";
+
+    if (empty($_POST['g-recaptcha-response'])) {
+        $error = "Veuillez valider le captcha.";
     } else {
-        $token = $_POST['g-recaptcha-response'];
-        $url = 'https://www.google.com/recaptcha/api/siteverify';
-        $data = array(
-            'secret' => '6Lcv_losAAAAALgmId0ujnWyFEzApB_LYkdkIALq',
-            'response' => $token
-        );
-        $options = array(
-            'http' => array(
-                'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
-                'method' => 'POST',
-                'content' => http_build_query($data)
-            )
+
+        $secretKey = '6Ld0GlssAAAAADiS4gh097petnjcA1nTMO1PS-JO'; // 🔐 TA CLÉ SECRÈTE
+        $captchaResponse = $_POST['g-recaptcha-response'];
+
+        $verify = file_get_contents(
+            "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$captchaResponse"
         );
 
-        $context = stream_context_create($options);
-        $result = file_get_contents($url, false, $context);
-        $response = json_decode($result);
+        $responseData = json_decode($verify);
 
-        if (!($response->success && $response->score >= 0.5)) {
-            $error = "Vous êtes peut-être un robot. Captcha échoué.";
+        if (!$responseData->success) {
+            $error = "Captcha invalide.";
         }
     }
 
-    if ($error) {
-        // Captcha KO, on stoppe ici
-    } else {
-        $email = $_POST['email'] ?? '';
-        $password = $_POST['password'] ?? '';
+    if (!$error) {
 
-    // Récupération du membre
-    $membre = sql_select("MEMBRE", "*", "eMailMemb = '$email'");
+        $email    = $_POST['email'];
+        $password = $_POST['password'];
 
-    if (empty($membre)) {
-        $error = "Email ou mot de passe incorrect.";
-    } else {
-        $membre = $membre[0];
+        $membre = sql_select("MEMBRE", "*", "eMailMemb = '$email'");
 
-        if (!password_verify($password, $membre['passMemb'])) {
+        if (empty($membre)) {
             $error = "Email ou mot de passe incorrect.";
         } else {
-            // Récupération du statut
-            $statut = sql_select(
-                "STATUT",
-                "libStat",
-                "numStat = " . $membre['numStat']
-            )[0]['libStat'];
 
-            $_SESSION['user'] = [
-                'id'     => $membre['numMemb'],
-                'email'  => $membre['eMailMemb'],
-                'pseudo' => $membre['pseudoMemb'],
-                'statut' => $statut
-            ];
+            $membre = $membre[0];
 
-            if ($statut === 'admin') {
-                header('Location: ../dashboard.php');
+            if (!password_verify($password, $membre['passMemb'])) {
+                $error = "Email ou mot de passe incorrect.";
             } else {
-                header('Location: /index.php'); // Home
+
+                $statut = sql_select(
+                    "STATUT",
+                    "libStat",
+                    "numStat = " . $membre['numStat']
+                )[0]['libStat'];
+
+                $_SESSION['user'] = [
+                    'id'     => $membre['numMemb'],
+                    'email'  => $membre['eMailMemb'],
+                    'pseudo' => $membre['pseudoMemb'],
+                    'statut' => $statut
+                ];
+
+                header('Location: /index.php');
+                exit;
             }
-            exit;
         }
-    }
     }
 }
 ?>
 
-<div class="container mt-5">
-    <h2>Connexion</h2>
+<div class="container mt-5" style="max-width:500px;">
+    <h2 class="mb-4">Connexion</h2>
 
     <?php if ($error): ?>
         <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
 
-    <form id="form-recaptcha" method="post">
-        <button class="g-recaptcha" data-sitekey="6Lcv_losAAAAAGBCPCiH7FwZBeXDoHKPjjQuygZJ" data-callback='onSubmit' data-action='submit'>Submit </button>
-            <input class="form-control mb-2" name="email" type="email" placeholder="Email" required>
-            <input class="form-control mb-2" name="password" type="password" placeholder="Mot de passe" required>
+    <form method="post">
 
-        <button class="btn btn-primary mt-2">Connexion</button>
-        <a href="signup.php" class="btn btn-secondary mt-2">Créer un compte</a>
+        <input class="form-control mb-2"
+               name="email"
+               type="email"
+               placeholder="Email"
+               required>
+
+        <input class="form-control mb-3"
+               name="password"
+               type="password"
+               placeholder="Mot de passe"
+               required>
+
+        <!-- reCAPTCHA v2 -->
+        <div class="g-recaptcha mb-3"
+             data-sitekey="6Ld0GlssAAAAAHLBmEi-bB9vXrPbv1vYF_foDuvk">
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Connexion
+        </button>
+
+        <a href="signup.php" class="btn btn-secondary ms-2">
+            Créer un compte
+        </a>
+
     </form>
 </div>
+
+
