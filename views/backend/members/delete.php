@@ -1,39 +1,51 @@
 <?php
 include '../../../header.php';
 
-// Sécurité admin
+// 🔐 Sécurité admin
 if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur') {
     header('Location: /');
     exit;
 }
 
-if (isset($_GET['numMemb'])) {
-    $numMemb = (int) $_GET['numMemb'];
-    $membre = sql_select("MEMBRE", "pseudoMemb", "numMemb = $numMemb")[0];
+if (!isset($_GET['numMemb'])) {
+    header('Location: list.php');
+    exit;
 }
+
+$numMemb = (int) $_GET['numMemb'];
+
+$membre = sql_select(
+    "MEMBRE",
+    "pseudoMemb",
+    "numMemb = $numMemb"
+)[0];
 ?>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Suppression Membre</h1>
+<div class="container mt-5" style="max-width:500px;">
+    <h2 class="mb-4">Suppression Membre</h2>
+
+    <form method="post" action="<?= ROOT_URL . '/api/members/delete.php'; ?>">
+
+        <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
+
+        <div class="mb-3">
+            <label class="fw-bold">Pseudo</label>
+            <input class="form-control"
+                   value="<?= htmlspecialchars($membre['pseudoMemb']); ?>"
+                   disabled>
         </div>
 
-        <div class="col-md-12">
-            <form id="form-recaptcha" action="<?php echo ROOT_URL . '/api/members/delete.php'; ?>" method="post">
-                <button class="g-recaptcha" data-sitekey="6Lcv_losAAAAAGBCPCiH7FwZBeXDoHKPjjQuygZJ" data-callback='onSubmit' data-action='submit'>Submit </button>
-                    <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
-
-                <div class="form-group">
-                    <label>Pseudo</label>
-                    <input class="form-control" value="<?= htmlspecialchars($membre['pseudoMemb']); ?>" disabled>
-                </div>
-
-                <br>
-                <a href="list.php" class="btn btn-primary">List</a>
-                <button type="submit" class="btn btn-danger">Confirmer delete ?</button>
-            </form>
+        <div class="g-recaptcha mb-3"
+             data-sitekey="6Ld0GlssAAAAAHLBmEi-bB9vXrPbv1vYF_foDuvk">
         </div>
-    </div>
+
+        <a href="list.php" class="btn btn-primary">
+            List
+        </a>
+
+        <button type="submit" class="btn btn-danger ms-2">
+            Confirmer delete ?
+        </button>
+
+    </form>
 </div>
-
