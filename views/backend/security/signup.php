@@ -6,9 +6,6 @@ $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    /* =========================
-       CAPTCHA reCAPTCHA v2
-    ========================= */
     if (empty($_POST['g-recaptcha-response'])) {
         $error = "Veuillez valider le captcha.";
     } else {
@@ -27,9 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    /* =========================
-       INSCRIPTION
-    ========================= */
     if (!$error) {
 
         $prenom  = trim($_POST['prenom']);

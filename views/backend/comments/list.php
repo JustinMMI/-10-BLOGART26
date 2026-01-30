@@ -1,7 +1,8 @@
 <?php
 include '../../../header.php'; // contains the header and call to config.php
+?>
 
-//Load all statuts
+<?php
 $comments = sql_select(
     "comment c
      INNER JOIN membre m ON c.numMemb = m.numMemb
@@ -9,43 +10,48 @@ $comments = sql_select(
     "a.libTitrArt,
      m.pseudoMemb,
      c.dtCreaCom,
+     c.dtModCom,
+     c.delLogiq,
+     c.attModOK,
+     c.notifComKOAff,
      c.libCom,
      c.numCom",
     null,
     null,
     "c.dtCreaCom DESC"
 );
+
+$enAttente = array_filter($comments, fn($c) => $c['delLogiq'] == 0 && $c['attModOK'] == 0);
+$dejaControle = array_filter($comments, fn($c) => $c['delLogiq'] == 0 && $c['attModOK'] == 1);
+$suppressionLogique = array_filter($comments, fn($c) => $c['delLogiq'] == 1);
+$suppressionPhysique = $suppressionLogique;
 ?>
 
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <a href="create.php" class="btn btn-success">Create</a>
-            <h1>Commentaires en attentes</h1>
+            <h1>Commentaires en attente </h1>
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Titre Article</th>
                         <th>Pseudo</th>
                         <th>Date</th>
-                        <th>Contenue</th>
+                        <th>Contenu</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($comments as $comment) { ?>
+                    <?php foreach ($enAttente as $comment) { ?>
                         <tr>
-                            <td><?php echo $comment['libTitrArt']; ?></td>
-                            <td><?php echo $comment['pseudoMemb']; ?></td>
-                            <td><?php echo $comment['dtCreaCom']; ?></td>
-                            <td><?php echo $comment['libCom']; ?></td>
+                            <td><?= $comment['libTitrArt']; ?></td>
+                            <td><?= $comment['pseudoMemb']; ?></td>
+                            <td><?= $comment['dtCreaCom']; ?></td>
+                            <td><?= $comment['libCom']; ?></td>
                             <td>
-                                <a href="edit.php?numCom=<?php echo $comment['numCom']; ?>" class="btn btn-warning">
-                                    Edit
-                                </a>
-                                <a href="controle.php?numCom=<?php echo $comment['numCom']; ?>" class="btn btn-danger">
-                                    Controle
-                                </a>
+                                <a href="edit.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-warning">Edit</a>
+                                <a href="controle.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-info">Controle</a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -55,29 +61,28 @@ $comments = sql_select(
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h1>Commentaires en contrôlés</h1>
+            <h1>Commentaires contrôlés</h1>
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Pseudo</th>
                         <th>Dernière Modification</th>
-                        <th>Contenue</th>
+                        <th>Contenu</th>
                         <th>Publication</th>
                         <th>Raison refus</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($comments as $comment) { ?>
+                    <?php foreach ($dejaControle as $comment) { ?>
                         <tr>
-                            <td><?php echo $comment['libTitrArt']; ?></td>
-                            <td><?php echo $comment['pseudoMemb']; ?></td>
-                            <td><?php echo $comment['dtCreaCom']; ?></td>
-                            <td><?php echo $comment['libCom']; ?></td>
+                            <td><?= $comment['pseudoMemb']; ?></td>
+                            <td><?= $comment['dtModCom']; ?></td>
+                            <td><?= $comment['libCom']; ?></td>
+                            <td><?= $comment['delLogiq'] ? 'Masqué' : 'Publié'; ?></td>
+                            <td><?= $comment['notifComKOAff']; ?></td>
                             <td>
-                                <a href="edit.php?numCom=<?php echo $comment['numCom']; ?>" class="btn btn-warning">
-                                    Edit
-                                </a>
+                                <a href="edit.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-warning">Edit</a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -93,23 +98,22 @@ $comments = sql_select(
                     <tr>
                         <th>Pseudo</th>
                         <th>Date suppr logique</th>
-                        <th>Contenue</th>
+                        <th>Contenu</th>
                         <th>Publication</th>
                         <th>Raison refus</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($comments as $comment) { ?>
+                    <?php foreach ($suppressionLogique as $comment) { ?>
                         <tr>
-                            <td><?php echo $comment['libTitrArt']; ?></td>
-                            <td><?php echo $comment['pseudoMemb']; ?></td>
-                            <td><?php echo $comment['dtCreaCom']; ?></td>
-                            <td><?php echo $comment['libCom']; ?></td>
+                            <td><?= $comment['pseudoMemb']; ?></td>
+                            <td><?= $comment['dtModCom']; ?></td>
+                            <td><?= $comment['libCom']; ?></td>
+                            <td>REFUS</td>
+                            <td><?= $comment['notifComKOAff']; ?></td>
                             <td>
-                                <a href="edit.php?numCom=<?php echo $comment['numCom']; ?>" class="btn btn-warning">
-                                    Edit
-                                </a>
+                                <a href="edit.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-warning">Edit</a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -117,6 +121,7 @@ $comments = sql_select(
             </table>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
             <h1>Suppression Physique</h1>
@@ -125,23 +130,22 @@ $comments = sql_select(
                     <tr>
                         <th>Pseudo</th>
                         <th>Date suppr logique</th>
-                        <th>Contenue</th>
+                        <th>Contenu</th>
                         <th>Publication</th>
                         <th>Raison refus</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($comments as $comment) { ?>
+                    <?php foreach ($suppressionPhysique as $comment) { ?>
                         <tr>
-                            <td><?php echo $comment['libTitrArt']; ?></td>
-                            <td><?php echo $comment['pseudoMemb']; ?></td>
-                            <td><?php echo $comment['dtCreaCom']; ?></td>
-                            <td><?php echo $comment['libCom']; ?></td>
+                            <td><?= $comment['pseudoMemb']; ?></td>
+                            <td><?= $comment['dtModCom']; ?></td>
+                            <td><?= $comment['libCom']; ?></td>
+                            <td>REFUS</td>
+                            <td><?= $comment['notifComKOAff']; ?></td>
                             <td>
-                                <a href="delete.php?numCom=<?php echo $comment['numCom']; ?>" class="btn btn-danger">
-                                    Controle
-                                </a>
+                                <a href="delete.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -150,6 +154,8 @@ $comments = sql_select(
         </div>
     </div>
 </div>
-<?php
 
+
+<?php
 include '../../../footer.php'; // contains the footer
+?>
