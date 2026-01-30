@@ -1,13 +1,17 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+// On inclut le header qui démarre déjà la session
+require_once 'header.php'; 
 
-require_once 'header.php';
-$db = sql_connect();
+// IMPORTANT : On capture la connexion dans $db
+$db = sql_connect(); 
 
+// DEBUG : Affiche ce qu'il y a dans ta session (supprime ces 3 lignes une fois le problème trouvé)
+// echo '<pre style="background: white; padding: 10px; border: 1px solid red;">SESSION CONTENU : ';
+// var_dump($_SESSION);
+// echo '</pre>';
+
+// Récupération des articles
 $articles = sql_select("ARTICLE", "*");
-$numMemb = isset($_SESSION['numMemb']) ? $_SESSION['numMemb'] : null;
 ?>
 
 <div class="container mt-4">
@@ -17,17 +21,26 @@ $numMemb = isset($_SESSION['numMemb']) ? $_SESSION['numMemb'] : null;
         <?php foreach ($articles as $article): ?>
             
             <?php
+            // --- LOGIQUE DU LIKE ---
             $userLiked = false;
+            // On vérifie si numMemb existe, sinon on essaie de deviner d'autres noms courants
+            $numMemb = $_SESSION['numMemb'] ?? null; 
+            
             $numArt = $article['numArt'];
 
             if ($numMemb) {
+                // Vérifie si déjà liké
                 $sqlCheck = "SELECT * FROM `LIKE` WHERE numMemb = '$numMemb' AND numArt = '$numArt'";
-                $resultCheck = $db->query($sqlCheck);
                 
-                if ($resultCheck && $resultCheck->rowCount() > 0) {
-                    $userLiked = true;
+                // On vérifie que $db n'est pas vide pour éviter l'erreur rouge
+                if ($db) {
+                    $resultCheck = $db->query($sqlCheck);
+                    if ($resultCheck && $resultCheck->rowCount() > 0) {
+                        $userLiked = true;
+                    }
                 }
             }
+            // -----------------------
             ?>
 
             <div class="card mt-3">
@@ -46,25 +59,20 @@ $numMemb = isset($_SESSION['numMemb']) ? $_SESSION['numMemb'] : null;
                                         <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
                                         <input type="hidden" name="numArt" value="<?= $numArt ?>">
                                         <input type="hidden" name="frontend" value="true">
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            ❤️ Je n'aime plus
-                                        </button>
+                                        <button type="submit" class="btn btn-danger btn-sm">❤️ Je n'aime plus</button>
                                     </form>
                                 <?php else: ?>
                                     <form action="api/likes/create.php" method="POST">
                                         <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
                                         <input type="hidden" name="numArt" value="<?= $numArt ?>">
                                         <input type="hidden" name="frontend" value="true">
-                                        <button type="submit" class="btn btn-outline-danger btn-sm">
-                                            🤍 J'aime
-                                        </button>
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">🤍 J'aime</button>
                                     </form>
                                 <?php endif; ?>
                             <?php else: ?>
                                 <small class="text-muted"><a href="views/security/login.php">Se connecter</a> pour liker</small>
                             <?php endif; ?>
                         </div>
-
                     </div>
                 </div>
             </div>
