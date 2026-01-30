@@ -21,7 +21,7 @@ if ($numArt > 0) {
 		<p><?= nl2br(htmlspecialchars($article['libChapoArt'])); ?></p>
 
 		<?php if (isset($_SESSION['user'])): ?>
-			<a class="btn btn-primary" href="<?= ROOT_URL . '/views/backend/comments/create.php?numArt=' . (int) $article['numArt']; ?>">
+			<a class="btn btn-primary" href="<?= ROOT_URL . '/views/frontend/comments/commentaire.php?numArt=' . (int) $article['numArt']; ?>">
 				Commenter cet article
 			</a>
 		<?php else: ?>
