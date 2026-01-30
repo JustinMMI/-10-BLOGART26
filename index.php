@@ -1,16 +1,9 @@
-<?php
-// On inclut le header qui démarre déjà la session
-require_once 'header.php'; 
+<?php 
+require_once 'header.php';
+// On récupère la connexion pour pouvoir faire des requêtes personnalisées (vérif des likes)
+$db = sql_connect();
 
-// IMPORTANT : On capture la connexion dans $db
-$db = sql_connect(); 
-
-// DEBUG : Affiche ce qu'il y a dans ta session (supprime ces 3 lignes une fois le problème trouvé)
-// echo '<pre style="background: white; padding: 10px; border: 1px solid red;">SESSION CONTENU : ';
-// var_dump($_SESSION);
-// echo '</pre>';
-
-// Récupération des articles
+// Récupération de tous les articles
 $articles = sql_select("ARTICLE", "*");
 ?>
 
@@ -21,26 +14,23 @@ $articles = sql_select("ARTICLE", "*");
         <?php foreach ($articles as $article): ?>
             
             <?php
-            // --- LOGIQUE DU LIKE ---
+            // --- LOGIQUE LIKE POUR CHAQUE ARTICLE ---
             $userLiked = false;
-            // On vérifie si numMemb existe, sinon on essaie de deviner d'autres noms courants
-            $numMemb = $_SESSION['numMemb'] ?? null; 
-            
+            $numMemb = isset($_SESSION['numMemb']) ? $_SESSION['numMemb'] : null;
             $numArt = $article['numArt'];
 
             if ($numMemb) {
-                // Vérifie si déjà liké
+                // Attention : `LIKE` est un mot réservé SQL, il faut mettre des backticks `` autour
+                // On vérifie si ce membre a déjà liké cet article précis
                 $sqlCheck = "SELECT * FROM `LIKE` WHERE numMemb = '$numMemb' AND numArt = '$numArt'";
+                $resultCheck = $db->query($sqlCheck);
                 
-                // On vérifie que $db n'est pas vide pour éviter l'erreur rouge
-                if ($db) {
-                    $resultCheck = $db->query($sqlCheck);
-                    if ($resultCheck && $resultCheck->rowCount() > 0) {
-                        $userLiked = true;
-                    }
+                // Si on trouve une ligne, c'est que c'est déjà liké
+                if ($resultCheck && $resultCheck->rowCount() > 0) {
+                    $userLiked = true;
                 }
             }
-            // -----------------------
+            // ----------------------------------------
             ?>
 
             <div class="card mt-3">
@@ -50,7 +40,7 @@ $articles = sql_select("ARTICLE", "*");
                     <p class="card-text"><?= nl2br(htmlspecialchars($article['libChapoArt'])); ?></p>
                     
                     <div class="d-flex justify-content-between align-items-center mt-3">
-                        <a class="btn btn-primary" href="views/frontend/articles/article1.php?numArt=<?= $article['numArt']; ?>">Lire l’article</a>
+                        <a class="btn btn-primary" href="/views/frontend/articles/article1.php?numArt=<?= (int) $article['numArt']; ?>">Lire l’article</a>
 
                         <div class="like-container">
                             <?php if ($numMemb): ?>
@@ -58,22 +48,24 @@ $articles = sql_select("ARTICLE", "*");
                                     <form action="api/likes/delete.php" method="POST">
                                         <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
                                         <input type="hidden" name="numArt" value="<?= $numArt ?>">
-                                        <input type="hidden" name="frontend" value="true">
-                                        <button type="submit" class="btn btn-danger btn-sm">❤️ Je n'aime plus</button>
+                                        <input type="hidden" name="frontend" value="true"> <button type="submit" class="btn btn-danger btn-sm">
+                                            ❤️ Je n'aime plus
+                                        </button>
                                     </form>
                                 <?php else: ?>
                                     <form action="api/likes/create.php" method="POST">
                                         <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
                                         <input type="hidden" name="numArt" value="<?= $numArt ?>">
-                                        <input type="hidden" name="frontend" value="true">
-                                        <button type="submit" class="btn btn-outline-danger btn-sm">🤍 J'aime</button>
+                                        <input type="hidden" name="frontend" value="true"> <button type="submit" class="btn btn-outline-danger btn-sm">
+                                            🤍 J'aime
+                                        </button>
                                     </form>
                                 <?php endif; ?>
                             <?php else: ?>
                                 <small class="text-muted"><a href="views/security/login.php">Se connecter</a> pour liker</small>
                             <?php endif; ?>
                         </div>
-                    </div>
+                        </div>
                 </div>
             </div>
         <?php endforeach; ?>
@@ -83,3 +75,9 @@ $articles = sql_select("ARTICLE", "*");
 </div>
 
 <?php require_once 'footer.php'; ?>
+
+<script>
+function onSubmit(token) {
+    document.getElementById("recaptcha").submit();
+}
+</script>
