@@ -43,7 +43,7 @@ $articles = sql_select("ARTICLE", "*");
                         <a class="btn btn-primary" href="/views/frontend/articles/article1.php?numArt=<?= (int) $article['numArt']; ?>">Lire l’article</a>
 
                         <div class="like-container">
-                            <?php if ($numMemb): ?>
+                            <?php if (isset($_SESSION['user'])): ?>
                                 <?php if ($userLiked): ?>
                                     <form action="api/likes/delete.php" method="POST">
                                         <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
