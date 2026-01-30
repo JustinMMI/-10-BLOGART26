@@ -14,28 +14,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $emailConf = $_POST['eMailMembConfirm'];
     $dateCreation = date("Y-m-d-H-i-s"); 
     $dtMajMemb = null;
+    $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$/';
+
 
     
-
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "L'adresse email est valide.";
-    } else {
-        echo "L'adresse email n'est pas valide.";
-    }
 
     if (get_ExistPseudo($pseudo) > 0) {
         $error = "Ce pseudo existe déjà!";
     }elseif (strlen($pseudo)<6){
         $error = "Ce pseudo est trop court!";
-    }elseif ($passwrd != $passwrdConf){
+    }elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) || !filter_var($emailConf, FILTER_VALIDATE_EMAIL)) {
+        $error = "L'adresse email n'est pas valide !";
+    }elseif ($email !== $emailConf){
+        $error = "Les deux adresses email ne correspondent pas!";
+    }elseif (!preg_match($pattern, $passwrd) || !preg_match($pattern, $passwrdConf)) {
+        $error = "Le mot de passe doit comporter 8 à 15 caractères, au moins une majuscule, une minuscule, un chiffre et un caractère spécial.";
+    }elseif ($passwrd !== $passwrdConf){
         $error = "Les deux mots de passe ne correspondent pas!";
-    }elseif (strlen($passwrd)<8 || strlen($passwrdConf)<8){
-        $error = "Le mot de passe est trop court !";
     }else {
         $passwrd = password_hash($_POST['passMemb'], PASSWORD_DEFAULT);
         $rq = BDD::get()->prepare("INSERT INTO MEMBRE (pseudoMemb, prenomMemb, nomMemb, passMemb, eMailMemb, dtCreaMemb, dtMajMemb) VALUES (:pseudo, :prenom, :nom, :passwrd, :email, :dateCreation, :dtMajMemb)");
-        $rq->execute([':pseudo' => $pseudo,':prenom' => $prenom,':nom' => $nom,':passwrd' => $pass,':email' => $email,':dtCreaMemb' => $dateCreation]);
-}
+        $rq->execute([':pseudo' => $pseudo,':prenom' => $prenom,':nom' => $nom,':passwrd' => $passwrd,':email' => $email,':dtCreaMemb' => $dateCreation, ':dtMajMemb' => $dtMajMemb]);
+    }
 }
 ?>
 
