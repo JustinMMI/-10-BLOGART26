@@ -27,10 +27,8 @@ function cookie_notice(){
         ?>
                 <script>
         function acceptCookies() {
-            console.log("Accept button clicked");
             document.cookie = "user_cookie_consent=accepted; path=/; max-age=" + (365 * 24 * 60 * 60);
             var banner = document.getElementById("cookie-banner");
-            console.log("Banner element:", banner);
             if (banner) {
                 banner.remove();
             }
