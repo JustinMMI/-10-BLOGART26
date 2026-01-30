@@ -6,15 +6,23 @@ $error = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $pseudo = $_POST['pseudoMemb'];
+    $prenom = $_POST['prenomMemb'];
+    $nom = $_POST['nomMemb'];
+    $passwrd = password_hash($_POST['passMemb'], PASSWORD_DEFAULT); 
+    $email = $_POST['eMailMemb'];
+    $dateCreation = date("Y-m-d-H-i-s"); 
+    $dtMajMemb = null;
 
     if (get_ExistPseudo($pseudo) > 0) {
         $error = "Ce pseudo existe déjà!";
     }elseif (strlen($pseudo)<6){
         $error = "Ce pseudo est trop court!";
     }else {
-        $rq = BDD::get()->prepare("INSERT INTO MEMBRE (pseudoMemb) VALUES (?)");
-        $rq->execute([$pseudo]);
-    }
+        $rq = BDD::get()->prepare(
+            "INSERT INTO MEMBRE (pseudoMemb, prenomMemb, nomMemb, passMemb, eMailMemb, dtCreaMemb) VALUES (:pseudo, :prenom, :nom, :passwrd, :email, :dateCreation)");
+
+        $rq->execute([':pseudo' => $pseudo,':prenom' => $prenom,':nom' => $nom,':passwrd' => $pass,':email' => $email,':dtCreaMemb' => $dateCreation]);
+}
 }
 ?>
 
