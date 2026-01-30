@@ -1,7 +1,23 @@
 <?php
-include '../../../header.php';
+include '../../../header.php'; 
 $statuts = sql_select("STATUT", "*");
+$error = null;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $pseudo = $_POST['pseudoMemb'];
+
+    if (get_ExistPseudo($pseudo) > 0) {
+        $error = "Ce pseudo existe déjà!";
+    }elseif (strlen($pseudo)<6){
+        $error = "Ce pseudo est trop court!";
+    }else {
+        $rq = BDD::get()->prepare("INSERT INTO MEMBRE (pseudoMemb) VALUES (?)");
+        $rq->execute([$pseudo]);
+    }
+}
 ?>
+
 
 <!-- Bootstrap form to create a new statut -->
 <div class="container">
@@ -14,8 +30,11 @@ $statuts = sql_select("STATUT", "*");
             <form action="<?php echo ROOT_URL . '/api/statuts/create.php' ?>" method="post">
                 <div class="form-group">
                     <label for="pseudoMemb">Pseudo (non modifiable)</label>
-                    <input id="pseudoMemb" name="pseudoMemb" class="form-control" type="text" required />
-                    <p id="pseudoMemb">(Entre 6 et 70 car.)</p>
+                    <input id="pseudoMemb" name="pseudoMemb" class="form-control" minlength="6" maxlength="70" type="text" required />
+                    <div id="pseudoMemb" class="form-text">
+                    (Entre 6 et 70 car.)
+                    </div>
+                    
 
                     <label for="prenomMemb">Prénom</label>
                     <input id="prenomMemb" name="prenomMemb" class="form-control" type="text" required />
@@ -63,19 +82,19 @@ $statuts = sql_select("STATUT", "*");
                     <label for="eMailMemb">eMail</label>
                     <input id="eMailMemb" name="eMailMemb" class="form-control" type="text" autofocus="autofocus" />
 
-                    <label for="eMailMemb">Confirmez eMail</label>
-                    <input id="eMailMemb" name="eMailMemb" class="form-control" type="text" autofocus="autofocus" />
+                    <label for="eMailMembConfirm">Confirmez eMail</label>
+                    <input id="eMailMembConfirm" name="eMailMembConfirm" class="form-control" type="text" autofocus="autofocus" />
 
                     <p id="accordMemb">J'accepte que mes données soient conservées</p>
 
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="accordMemb" value="Oui">
+                        <input class="form-check-input" type="radio" name="accordMemb" id="accordMemb" value="1">
                         <label class="form-check-label" for="accordMemb">Oui</label>
                     </div>
                 
                     <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="accordMemb">
-                    <label class="form-check-label" for="accordMemb">Non</label>
+                    <input class="form-check-input" type="radio" name="accordMemb" id="!accordMemb" value="0">
+                    <label class="form-check-label" for="!accordMemb">Non</label>
                     </div>
 
                     <p><b>Statut :</b></p>
