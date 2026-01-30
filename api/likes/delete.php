@@ -1,10 +1,15 @@
 <?php
-
 require_once '../../config.php';
 require_once '../../functions/query/delete.php';
 
 $numMemb = $_POST['numMemb'];
 $numArt = $_POST['numArt'];
 
-header('Location: ../../views/backend/likes/list.php');
+delete("LIKE", "numMemb=$numMemb AND numArt=$numArt");
+
+if (isset($_POST['frontend'])) {
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+} else {
+    header('Location: ../../views/backend/likes/list.php');
+}
 exit();

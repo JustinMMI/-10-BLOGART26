@@ -5,50 +5,45 @@ $error = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Vérification du captcha
-    if (!isset($_POST['g-recaptcha-response']) || empty($_POST['g-recaptcha-response'])) {
-        $error = "Captcha requis";
+
+    if (empty($_POST['g-recaptcha-response'])) {
+        $error = "Veuillez valider le captcha.";
     } else {
-        $token = $_POST['g-recaptcha-response'];
-        $url = 'https://www.google.com/recaptcha/api/siteverify';
-        $data = array(
-            'secret' => '6Lcv_losAAAAALgmId0ujnWyFEzApB_LYkdkIALq',
-            'response' => $token
-        );
-        $options = array(
-            'http' => array(
-                'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
-                'method' => 'POST',
-                'content' => http_build_query($data)
-            )
+
+        $secretKey = '6Ld0GlssAAAAADiS4gh097petnjcA1nTMO1PS-JO';
+        $captchaResponse = $_POST['g-recaptcha-response'];
+
+        $verify = file_get_contents(
+            "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$captchaResponse"
         );
 
-        $context = stream_context_create($options);
-        $result = file_get_contents($url, false, $context);
-        $response = json_decode($result);
+        $responseData = json_decode($verify);
 
-        if (!($response->success && $response->score >= 0.5)) {
-            $error = "Vous êtes peut-être un robot. Captcha échoué.";
+        if (!$responseData->success) {
+            $error = "Captcha invalide.";
         }
     }
 
     if (!$error) {
-        $prenom  = $_POST['prenom'] ?? '';
-        $nom     = $_POST['nom'] ?? '';
-        $pseudo  = $_POST['pseudo'] ?? '';
-        $email   = $_POST['email'] ?? '';
-        $pass    = $_POST['password'] ?? '';
-        $confirm = $_POST['confirm'] ?? '';
+
+        $prenom  = trim($_POST['prenom']);
+        $nom     = trim($_POST['nom']);
+        $pseudo  = trim($_POST['pseudo']);
+        $email   = trim($_POST['email']);
+        $pass    = $_POST['password'];
+        $confirm = $_POST['confirm'];
 
         if ($pass !== $confirm) {
             $error = "Les mots de passe ne correspondent pas.";
         } else {
-            // Vérifier si email existe déjà
+
+            // Email déjà utilisé ?
             $exist = sql_select("MEMBRE", "*", "eMailMemb = '$email'");
 
             if (!empty($exist)) {
                 $error = "Un compte avec cet email existe déjà.";
             } else {
+
                 $hash = password_hash($pass, PASSWORD_DEFAULT);
 
                 $statutMembre = sql_select(
@@ -70,8 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<div class="container mt-5">
-    <h2>Inscription</h2>
+<div class="container mt-5" style="max-width:500px;">
+    <h2 class="mb-4">Inscription</h2>
 
     <?php if ($error): ?>
         <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
@@ -79,18 +74,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
     <?php endif; ?>
 
-    <form id="form-recaptcha" method="post">
-        <button class="g-recaptcha" data-sitekey="6Lcv_losAAAAAGBCPCiH7FwZBeXDoHKPjjQuygZJ" data-callback='onSubmit' data-action='submit'>Submit </button>
-            <input class="form-control mb-2" name="prenom" placeholder="Prénom" required>
-            <input class="form-control mb-2" name="nom" placeholder="Nom" required>
-            <input class="form-control mb-2" name="pseudo" placeholder="Pseudo" required>
-            <input class="form-control mb-2" name="email" type="email" placeholder="Email" required>
-            <input class="form-control mb-2" name="password" type="password" placeholder="Mot de passe" required>
-            <input class="form-control mb-2" name="confirm" type="password" placeholder="Confirmation" required>
+    <form method="post">
 
-        <button class="btn btn-success mt-2">Créer le compte</button>
-        <a href="login.php" class="btn btn-primary mt-2">Connexion</a>
+        <input class="form-control mb-2"
+               name="prenom"
+               placeholder="Prénom"
+               required>
+
+        <input class="form-control mb-2"
+               name="nom"
+               placeholder="Nom"
+               required>
+
+        <input class="form-control mb-2"
+               name="pseudo"
+               placeholder="Pseudo"
+               required>
+
+        <input class="form-control mb-2"
+               name="email"
+               type="email"
+               placeholder="Email"
+               required>
+
+        <input class="form-control mb-2"
+               name="password"
+               type="password"
+               placeholder="Mot de passe"
+               required>
+
+        <input class="form-control mb-3"
+               name="confirm"
+               type="password"
+               placeholder="Confirmation"
+               required>
+
+        <!-- reCAPTCHA v2 -->
+        <div class="g-recaptcha mb-3"
+             data-sitekey="6Ld0GlssAAAAAHLBmEi-bB9vXrPbv1vYF_foDuvk">
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            Créer le compte
+        </button>
+
+        <a href="login.php" class="btn btn-primary ms-2">
+            Connexion
+        </a>
+
     </form>
 </div>
-
-?>
