@@ -24,8 +24,7 @@ sql_insert(
 	"'$libCom', $numArt, $numMemb, NOW()"
 );
 
-header("Location: /views/frontend/articles/article1.php?numArt=<?= (int) $article['numArt']; ?>");
-
+header('Location: /');
 exit;
 
 
