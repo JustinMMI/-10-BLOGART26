@@ -41,6 +41,8 @@ if ($numMemb) {
         <div class="col-md-12">
             <form action="<?php echo ROOT_URL . '/api/members/delete.php'; ?>" method="post">
 
+                <input type="hidden" name="recaptcha_token" id="recaptcha_token">
+
                 <div class="form-group">
 
                     <label for="numMemb">Numéro</label>
@@ -77,5 +79,17 @@ if ($numMemb) {
         </div>
     </div>
 </div>
+
+<script>
+document.querySelector('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    grecaptcha.execute('<?= "6LewKl8sAAAAAApTAS7X8kAdof0A4yzZlIq9BoAb" ?>', { action: 'member_delete' })
+        .then(token => {
+            document.getElementById('recaptcha_token').value = token;
+            e.target.submit();
+        });
+});
+</script>
 
 <?php include '../../../footer.php'; ?>

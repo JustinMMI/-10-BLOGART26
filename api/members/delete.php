@@ -3,6 +3,29 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 
 session_start();
 
+if (empty($_POST['recaptcha_token'])) {
+    header('Location: ' . $_SERVER['HTTP_REFERER'] . '?error=' . urlencode('Captcha manquant'));
+    exit;
+}
+
+$token = $_POST['recaptcha_token'];
+
+$verify = file_get_contents(
+    "https://www.google.com/recaptcha/api/siteverify?secret=" . "6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU" . "&response=" . $token
+);
+
+$response = json_decode($verify, true);
+
+if (
+    empty($response['success']) ||
+    $response['score'] < 0.5 ||
+    $response['action'] !== 'member_create' ||
+    $response['hostname'] !== $_SERVER['SERVER_NAME']
+) {
+    header('Location: ' . $_SERVER['HTTP_REFERER'] . '?error=' . urlencode('Captcha invalide'));
+    exit;
+}
+
 if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur') {
     header('Location: /');
     exit;

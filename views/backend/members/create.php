@@ -23,6 +23,8 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur
         <div class="col-md-12">
             <form action="<?php echo ROOT_URL . '/api/members/create.php'; ?>" method="post">
 
+                <input type="hidden" name="recaptcha_token" id="recaptcha_token">
+
                 <div class="form-group">
 
                     <label for="pseudoMemb">Pseudo (non modifiable)</label>
@@ -109,5 +111,17 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur
         </div>
     </div>
 </div>
+
+<script>
+document.querySelector('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    grecaptcha.execute('<?= "6LewKl8sAAAAAApTAS7X8kAdof0A4yzZlIq9BoAb" ?>', { action: 'member_create' })
+        .then(token => {
+            document.getElementById('recaptcha_token').value = token;
+            e.target.submit();
+        });
+});
+</script>
 
 <?php include '../../../footer.php'; ?>
