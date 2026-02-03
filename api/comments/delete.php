@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['numMemb']) && !isset($_
         exit;
     }
 }
-
+ // Suppression des commentaire par l'administrateur
 if (
     empty($_POST['numCom']) ||
     empty($_POST['redirect'])
