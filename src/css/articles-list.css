@@ -28,19 +28,18 @@
 }
 
 .article-card {
-    background: white;
-    border: 1px solid #e0d5c7;
-    transition: all 0.3s ease;
+    background: #fff;
+    border: 1px solid #e4d7c6;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    overflow: hidden;
+    transition: transform .3s ease, box-shadow .3s ease;
 }
 
 .article-card:hover {
-    box-shadow: 0 8px 24px rgba(122, 0, 38, 0.15);
-    transform: translateY(-4px);
+    transform: translateY(-6px);
+    box-shadow: 0 14px 30px rgba(90, 10, 25, 0.18);
 }
+
 
 .article-card-image {
     width: 100%;
@@ -66,22 +65,14 @@
 
 .article-card-title {
     font-family: Georgia, serif;
-    font-size: 1.3rem;
-    color: #1a1a1a;
-    margin: 0.5rem 0 1rem 0;
-    line-height: 1.4;
+    font-size: 1.35rem;
+    color: #5a001b;
 }
 
 .article-card-excerpt {
-    font-size: 0.9rem;
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-    flex-grow: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    color: #444;
+    font-size: .9rem;
+    line-height: 1.65;
 }
 
 .article-card-footer {
@@ -93,28 +84,61 @@
 }
 
 .read-link {
+    position: relative;
+    font-size: .85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     color: #7a0026;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: color 0.3s ease;
 }
 
-.read-link:hover {
-    color: #c7a14a;
+.read-link::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 1px;
+    background: #c7a14a;
+    transition: width .3s ease;
+}
+
+.read-link:hover::after {
+    width: 100%;
+}
+
+.like-form {
+    margin: 0;
 }
 
 .like-btn {
-    background: none;
+    background: transparent;
     border: none;
-    font-size: 1.3rem;
     cursor: pointer;
-    padding: 0.5rem;
-    transition: transform 0.2s ease;
+    padding: 0;
 }
 
-.like-btn:hover {
-    transform: scale(1.2);
+.heart {
+    font-size: 1.4rem;
+    color: #c7a14a;
+    transition: transform .25s ease, color .25s ease;
+}
+
+.like-btn.liked .heart {
+    color: #7a0026;
+}
+
+.like-btn:hover .heart {
+    transform: scale(1.25);
+}
+
+.like-btn.liked:hover .heart {
+    transform: scale(1.35);
+}
+
+.article-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid #eadfce;
 }
 
 .no-articles {
