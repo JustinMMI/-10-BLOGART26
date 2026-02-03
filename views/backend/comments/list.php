@@ -1,7 +1,7 @@
 <?php
 include '../../../header.php'; // contains the header and call to config.php
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur'&& $_SESSION['user']['statut'] !== 'Modérateur') {
     header('Location: /');
     exit;
 }
