@@ -61,6 +61,9 @@ $isAuthPage =
           <a href="/views/backend/dashboard.php">Admin</a>
       <?php endif; ?>
 
+      <?php if (!empty($_SESSION['user'])): ?>
+        <a href="/views/frontend/liked-articles.php">Mes articles likés</a>
+      <?php endif; ?>
 
       <?php if (!empty($_SESSION['user'])): ?>
         <a href="/views/frontend/profile.php" class="user-name"><?= htmlspecialchars($_SESSION['user']['pseudo']) ?></a>
