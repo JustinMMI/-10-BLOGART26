@@ -26,10 +26,8 @@ $dislikesGroup = array_filter($likes, fn($l) => $l['likeA'] == 0);
 ?>
 
 <div class="container">
-    <h2>Articles (Un) Likes</h2>
-    <a href="create.php" class="btn btn-primary mb-3">Create</a>
+    <h2>Articles Likes</h2>
 
-    <h3>Likes</h3>
     <table class="table table-striped">
         <thead>
             <tr>
