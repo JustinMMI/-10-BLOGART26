@@ -20,12 +20,13 @@ if (!$user) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$error) {
-    $pseudo   = trim($_POST['pseudo'] ?? '');
-    $prenom   = trim($_POST['prenom'] ?? '');
-    $nom      = trim($_POST['nom'] ?? '');
-    $email    = trim($_POST['email'] ?? '');
-    $pass     = trim($_POST['pass'] ?? '');
-    $passConf = trim($_POST['passConf'] ?? '');
+    $pseudo      = trim($_POST['pseudo'] ?? '');
+    $prenom      = trim($_POST['prenom'] ?? '');
+    $nom         = trim($_POST['nom'] ?? '');
+    $email       = trim($_POST['email'] ?? '');
+    $oldPass     = trim($_POST['oldPass'] ?? '');
+    $pass        = trim($_POST['pass'] ?? '');
+    $passConf    = trim($_POST['passConf'] ?? '');
 
     if (empty($pseudo) || empty($email)) {
         $error = "Le pseudo et l'email sont requis.";
@@ -33,6 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$error) {
         $error = "Les mots de passe ne correspondent pas.";
     } elseif (!empty($pass) && (strlen($pass) < 8 || strlen($pass) > 15)) {
         $error = "Le mot de passe doit contenir entre 8 et 15 caractères.";
+    } elseif (!empty($pass) && empty($oldPass)) {
+        $error = "L'ancien mot de passe est requis pour en changer.";
+    } elseif (!empty($pass) && !password_verify($oldPass, $user['passMemb'])) {
+        $error = "L'ancien mot de passe est incorrect.";
     } else {
         $existingEmail = sql_select(
             "MEMBRE",
@@ -107,6 +112,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$error) {
           placeholder="Email"
           value="<?= htmlspecialchars($user['eMailMemb']) ?>"
           required
+        >
+
+        <input
+          type="password"
+          name="oldPass"
+          placeholder="Ancien mot de passe (requis pour en changer)"
         >
 
         <input
