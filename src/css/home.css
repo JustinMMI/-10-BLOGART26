@@ -73,6 +73,9 @@
   font-size: 1.8rem;
   color: #7a0026;
   margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .featured-article img {
@@ -101,6 +104,11 @@
   font-size: 0.9rem;
 }
 
+.trait-dore-alaune{
+  flex: 1;
+  height: 2px;
+  background: #d6c07a;
+}
 
 
 .trait-dore{
