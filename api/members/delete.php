@@ -45,11 +45,11 @@ if (
 sql_connect();
 global $DB;
 
-$rqComments = $DB->prepare("SELECT COUNT(*) FROM COMMENTAIRE WHERE numMemb = :numMemb");
+$rqComments = $DB->prepare("SELECT COUNT(*) FROM comment WHERE numMemb = :numMemb");
 $rqComments->execute([':numMemb' => $numMemb]);
 $commentCount = $rqComments->fetchColumn();
 
-$rqLikes = $DB->prepare("SELECT COUNT(*) FROM `LIKE` WHERE numMemb = :numMemb");
+$rqLikes = $DB->prepare("SELECT COUNT(*) FROM `likeart` WHERE numMemb = :numMemb");
 $rqLikes->execute([':numMemb' => $numMemb]);
 $likeCount = $rqLikes->fetchColumn();
 
