@@ -16,17 +16,13 @@ $articles = sql_select("ARTICLE", "*");
             <?php
             // --- LOGIQUE LIKE POUR CHAQUE ARTICLE ---
             $userLiked = false;
-            $numMemb = isset($_SESSION['numMemb']) ? $_SESSION['numMemb'] : null;
+            $numMemb = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
             $numArt = $article['numArt'];
 
             if ($numMemb) {
-                // Attention : `LIKE` est un mot réservé SQL, il faut mettre des backticks `` autour
-                // On vérifie si ce membre a déjà liké cet article précis
-                $sqlCheck = "SELECT * FROM `LIKE` WHERE numMemb = '$numMemb' AND numArt = '$numArt'";
-                $resultCheck = $db->query($sqlCheck);
+                $resultCheck = sql_select("likeart", "*", "numMemb='$numMemb' AND numArt='$numArt'");
                 
-                // Si on trouve une ligne, c'est que c'est déjà liké
-                if ($resultCheck && $resultCheck->rowCount() > 0) {
+                if (!empty($resultCheck)) {
                     $userLiked = true;
                 }
             }

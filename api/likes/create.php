@@ -1,12 +1,22 @@
 <?php
+require '../../header.php';
 require_once '../../config.php';
 require_once '../../functions/query/insert.php';
+require_once '../../functions/query/select.php';
+require_once '../../functions/query/delete.php';
 
-$numMemb = $_POST['numMemb'];
+$numMemb = $_SESSION['user']['id'] ?? $_POST['numMemb'];
 $numArt = $_POST['numArt'];
 $statut = 1;
 
-insert("LIKE", ["numMemb", "numArt", "statut"], [$numMemb, $numArt, $statut]);
+// Vérifier si le like existe déjà
+$existingLike = sql_select("likeart", "*", "numMemb='$numMemb' AND numArt='$numArt'");
+
+if (!empty($existingLike)) {
+    sql_delete("likeart", "numMemb='$numMemb' AND numArt='$numArt'");
+} else {
+    sql_insert("likeart", "numMemb, numArt, likeA", "'$numMemb', '$numArt', '$statut'");
+}
 
 if (isset($_POST['frontend'])) {
     header('Location: ' . $_SERVER['HTTP_REFERER']);
