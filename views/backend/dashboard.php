@@ -4,6 +4,8 @@ include '../../header.php';
 ?>
 
 <?php
+
+
 if (!isset($_SESSION['user'])) {
     header('Location: security/login.php?error=auth');
     exit;
