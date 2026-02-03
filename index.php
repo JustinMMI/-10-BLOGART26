@@ -1,83 +1,81 @@
 <?php 
 require_once 'header.php';
-// On récupère la connexion pour pouvoir faire des requêtes personnalisées (vérif des likes)
-$db = sql_connect();
-
-// Récupération de tous les articles
-$articles = sql_select("ARTICLE", "*");
+$articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
 ?>
 
-<div class="container mt-4">
-    <h1>Accueil</h1>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <h1>
+      Bordeaux à travers<br>
+      <span class="highlight">sa gastronomie</span>
+    </h1>
+    <span class="hero-separator"></span>
+    <p>
+      Explorez les saveurs, les talents et les lieux qui font de Bordeaux une
+      capitale de la gastronomie française
+    </p>
+  </div>
+</section>
 
-    <?php if ($articles): ?>
-        <?php foreach ($articles as $article): ?>
-            
-            <?php
-            // --- LOGIQUE LIKE POUR CHAQUE ARTICLE ---
-            $userLiked = false;
-            $numMemb = isset($_SESSION['numMemb']) ? $_SESSION['numMemb'] : null;
-            $numArt = $article['numArt'];
+<!-- CONTENU BEIGE -->
+<main class="page-content">
 
-            if ($numMemb) {
-                // Attention : `LIKE` est un mot réservé SQL, il faut mettre des backticks `` autour
-                // On vérifie si ce membre a déjà liké cet article précis
-                $sqlCheck = "SELECT * FROM `LIKE` WHERE numMemb = '$numMemb' AND numArt = '$numArt'";
-                $resultCheck = $db->query($sqlCheck);
-                
-                // Si on trouve une ligne, c'est que c'est déjà liké
-                if ($resultCheck && $resultCheck->rowCount() > 0) {
-                    $userLiked = true;
-                }
-            }
-            // ----------------------------------------
-            ?>
+<?php if (!empty($articles)): ?>
+<?php $featured = $articles[0]; ?>
 
-            <div class="card mt-3">
-                <div class="card-body">
-                    <h2 class="card-title"><?= htmlspecialchars($article['libTitrArt']); ?></h2>
-                    <p class="text-muted mb-2">Publié le <?= htmlspecialchars($article['dtCreaArt']); ?></p>
-                    <p class="card-text"><?= nl2br(htmlspecialchars($article['libChapoArt'])); ?></p>
-                    
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <a class="btn btn-primary" href="/views/frontend/articles/article1.php?numArt=<?= (int) $article['numArt']; ?>">Lire l’article</a>
+<section class="featured-section">
+  <div class="container featured-layout">
 
-                        <div class="like-container">
-                            <?php if (isset($_SESSION['user'])): ?>
-                                <?php if ($userLiked): ?>
-                                    <form action="api/likes/delete.php" method="POST">
-                                        <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
-                                        <input type="hidden" name="numArt" value="<?= $numArt ?>">
-                                        <input type="hidden" name="frontend" value="true"> <button type="submit" class="btn btn-danger btn-sm">
-                                            ❤️ Je n'aime plus
-                                        </button>
-                                    </form>
-                                <?php else: ?>
-                                    <form action="api/likes/create.php" method="POST">
-                                        <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
-                                        <input type="hidden" name="numArt" value="<?= $numArt ?>">
-                                        <input type="hidden" name="frontend" value="true"> <button type="submit" class="btn btn-outline-danger btn-sm">
-                                            🤍 J'aime
-                                        </button>
-                                    </form>
-                                <?php endif; ?>
-                            <?php else: ?>
-                                <small class="text-muted"><a href="views/security/login.php">Se connecter</a> pour liker</small>
-                            <?php endif; ?>
-                        </div>
-                        </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <div class="alert alert-info mt-3">Aucun article disponible.</div>
-    <?php endif; ?>
-</div>
+    <!-- ARTICLE A LA UNE -->
+    <div class="featured-main">
+      <h2 class="section-title">À la une</h2>
+
+      <article class="featured-article">
+        <img src="/src/uploads/<?= htmlspecialchars($featured['urlPhotArt']) ?>" alt="">
+        <div class="featured-meta">
+          <span class="date"><?= date('d F Y', strtotime($featured['dtCreaArt'])) ?></span>
+          <h3><?= htmlspecialchars($featured['libTitrArt']) ?></h3>
+          <p><?= nl2br(htmlspecialchars($featured['libChapoArt'])) ?></p>
+          <a class="read-more" href="/views/frontend/articles/article1.php?numArt=<?= (int)$featured['numArt'] ?>">
+            Lire la suite →
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="featured-sidebar">
+
+      <div class="sidebar-box sidebar-dark">
+        <h4>Événements</h4>
+        <ul>
+          <li>BON ! Festival gourmand</li>
+          <li>Gourmet Business meeting</li>
+          <li>Place de la comédie à Bordeaux</li>
+          <li>Marché des Capucins – Rencontre avec les producteurs</li>
+        </ul>
+        <a class="sidebar-link" href="#">Voir tous →</a>
+      </div>
+
+      <div class="sidebar-box sidebar-light">
+        <h4>Acteurs Clés</h4>
+        <ul>
+          <li>Les étoiles qui illuminent Bordeaux</li>
+          <li>Sucré – À la croisée de l’art et des saveurs</li>
+          <li>Trompe l’œil (Viviente Andrieux)</li>
+          <li>Les jeunes chefs qui révolutionnent la ville</li>
+        </ul>
+        <a class="sidebar-link" href="#">Voir tous →</a>
+      </div>
+
+    </aside>
+
+  </div>
+</section>
+<?php endif; ?>
+
+</main>
 
 <?php require_once 'footer.php'; ?>
-
-<script>
-function onSubmit(token) {
-    document.getElementById("recaptcha").submit();
-}
-</script>
