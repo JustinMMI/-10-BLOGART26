@@ -151,7 +151,7 @@ $encodedUrl = urlencode($urlArticle);
 $encodedTitle = urlencode($titreArticle);
 ?>
 <div class="social-share">
-  <div class="container" class="mt-5">
+  <div class="container mt-5">
     <p class="mt-5">Partager cet article :</p>
     <a href="https://www.facebook.com/sharer/sharer.php?u=<?= $encodedUrl ?>"
       target="_blank" rel="noopener noreferrer" class="btn btn-primary">
