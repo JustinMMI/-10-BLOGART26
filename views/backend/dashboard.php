@@ -11,7 +11,7 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
-if ($_SESSION['user']['statut'] !== 'Administrateur'&& $_SESSION['user']['statut'] !== 'Modérateur'
+if ($_SESSION['user']['statut'] !== 'Administrateur'&& $_SESSION['user']['statut'] !== 'Modérateur'&& $_SESSION['user']['statut'] !== 'Modérateur'
 ) {
     echo "⛔ Accès réservé aux admins et modérateurs.";
     exit;
