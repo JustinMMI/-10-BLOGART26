@@ -6,21 +6,26 @@ $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if (empty($_POST['g-recaptcha-response'])) {
-        $error = "Veuillez valider le captcha.";
+    if (empty($_POST['recaptcha_token'])) {
+        $error = "Captcha manquant.";
     } else {
 
-        $secretKey = '6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU';
-        $captchaResponse = $_POST['g-recaptcha-response'];
+        $secretKey = "6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU";
+        $token = $_POST['recaptcha_token'];
 
         $verify = file_get_contents(
-            "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$captchaResponse"
+            "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$token"
         );
 
-        $responseData = json_decode($verify);
+        $responseData = json_decode($verify, true);
 
-        if (!$responseData->success) {
-            $error = "Captcha invalide.";
+        if (
+            empty($responseData['success']) ||
+            $responseData['score'] < 0.5 ||
+            $responseData['action'] !== 'signup' ||
+            $responseData['hostname'] !== $_SERVER['SERVER_NAME']
+        ) {
+            $error = "Comportement suspect détecté.";
         }
     }
 
