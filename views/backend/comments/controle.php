@@ -4,11 +4,7 @@ include '../../../header.php';
 
 <?php
 $numCom = $_GET['numCom'] ?? null;
-
-if (!$numCom) {
-    echo "Commentaire non spécifié.";
-    exit;
-}
+var_dump($_GET, $numCom);
 
 $comments = sql_select(
     "comment c
@@ -25,7 +21,8 @@ $comment = $comments[0];
 ?>
 
 
-<form action="controle.php" method="post">
+<form action="controle.php" method="POST">
+  <input type="hidden" name="numCom" value="<?= htmlspecialchars($comment['numCom']) ?>">
   <div class="container">
     <h1 class="text-center mt-5">Contrôle commentaire en attente : à valider</h1>
 
