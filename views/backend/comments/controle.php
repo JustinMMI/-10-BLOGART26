@@ -3,7 +3,14 @@ include '../../../header.php';
 ?>
 
 <?php
-$comments = sql_select(
+$numCom = $_GET['numCom'] ?? null;
+
+if (!$numCom) {
+    echo "Commentaire non spécifié.";
+    exit;
+}
+
+$comment = sql_select(
     "comment c
      INNER JOIN membre m ON c.numMemb = m.numMemb
      INNER JOIN article a ON c.numArt = a.numArt",
@@ -12,24 +19,26 @@ $comments = sql_select(
      c.dtCreaCom,
      c.libCom,
      c.numCom",
-    null,
-    null,
-);
+    "c.numCom = " . intval($numCom)
+)
 ?>
+
 
 <form action="traitement_validation.php" method="post">
   <div class="container">
     <h1 class="text-center mt-5">Contrôle commentaire en attente : à valider</h1>
 
     <h2 class="mt-5">Titre de l'article</h2>
-    <p>...</p>
+    <p><?= htmlspecialchars($comment['libTitrArt']) ?></p>
 
     <h2 class="mt-5">Information commentaire</h2>
     <p>Pseudonyme utilisateur :</p>
+    <p><?= htmlspecialchars($comment['pseudoMemb']) ?></p>
     <p>Date de création :</p>
+    <p><?= htmlspecialchars($comment['dtCreaCom']) ?></p>
 
     <h2 class="mt-5">Contenu du commentaire</h2>
-    <?php                                  ?>
+    <textarea class="form-control" rows="4"><?= htmlspecialchars($comment['libCom']) ?></textarea>
 
     <h2 class="mt-5">Validation du commentaire</h2>
 
