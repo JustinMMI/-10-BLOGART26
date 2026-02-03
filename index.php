@@ -95,9 +95,18 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
   </div>
 
   <div class="container text-center view-all-wrapper">
-    <a href="/views/frontend/articles-list.php" class="btn btn-primary btn-lg">
-        Voir tous les articles →
-    </a>
+    <div class="row">
+      <div class="column">
+        <a href="/views/frontend/articles-list.php" class="btn btn-primary btn-lg">
+          Voir tous les articles →
+        </a>
+      </div>
+      <div class="column">
+        <a href="/views/frontend/contact.php" class="btn btn-primary btn-lg">
+          Contactez-nous !→
+        </a>
+      </div>
+    </div>
   </div>
 </section>
 
