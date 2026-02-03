@@ -57,14 +57,14 @@ $db = sql_connect();
                                                 <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
                                                 <input type="hidden" name="numArt" value="<?= $numArt ?>">
                                                 <input type="hidden" name="frontend" value="true">
-                                                <button type="submit" class="like-btn" title="Retirer le like">❤️</button>
+                                                <button type="submit" class="like-btn" title="Retirer le like">Je n'aime plus ❤️</button>
                                             </form>
                                         <?php else: ?>
                                             <form action="/api/likes/create.php" method="POST" style="display:inline;">
                                                 <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
                                                 <input type="hidden" name="numArt" value="<?= $numArt ?>">
                                                 <input type="hidden" name="frontend" value="true">
-                                                <button type="submit" class="like-btn" title="J'aime">🤍</button>
+                                                <button type="submit" class="like-btn" title="J'aime">J'aime 🤍</button>
                                             </form>
                                         <?php endif; ?>
                                     <?php else: ?>
