@@ -62,7 +62,7 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
           <li>Marché des Capucins – Rencontre avec les producteurs</li>
         </ul>
         <div class="trait-dore-petit"></div>
-        <a class="sidebar-link" href="#">Voir tous →</a>
+        <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=1">Voir tous →</a>
       </div>
 
       <div class="sidebar-box sidebar-light">
@@ -75,7 +75,7 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
           <li>Les jeunes chefs qui révolutionnent la ville</li>
         </ul>
         <div class="trait-dore-petit"></div>
-        <a class="sidebar-link" href="#">Voir tous →</a>
+        <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=2">Voir tous →</a>
       </div>
 
       <div class="sidebar-box sidebar-black">
@@ -88,7 +88,7 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
           <li>Les producteurs fournissant les restaurants gastronomiques</li>
         </ul>
         <div class="trait-dore-petit"></div>
-        <a class="sidebar-link" href="#">Voir tous →</a>
+        <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=4">Voir tous →</a>
       </div>
     </aside>
 
