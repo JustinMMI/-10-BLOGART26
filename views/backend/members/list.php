@@ -1,8 +1,12 @@
 <?php
 include '../../../header.php'; 
 
+$membres = sql_select("MEMBRE m INNER JOIN STATUT s ON m.numStat = s.numStat", "m.*, s.libStat");
 
-$membres = sql_select("MEMBRE m INNER JOIN STATUT s ON m.numStat = s.numStat","m.*, s.libStat");
+$rqAdminCount = $DB->query("SELECT COUNT(*) FROM membre WHERE numStat = 1");
+$adminCount = $rqAdminCount->fetchColumn();
+
+$currentUserId = $_SESSION['user']['numMemb'] ?? $_SESSION['user']['NumMemb'] ?? null;
 ?>
 
 <div class="container">
@@ -25,9 +29,11 @@ $membres = sql_select("MEMBRE m INNER JOIN STATUT s ON m.numStat = s.numStat","m
                 </thead>
 
                 <tbody>
-                    <?php foreach ($membres as $membre) { ?>
+                    <?php foreach ($membres as $membre) { 
+                        $memberId = $membre['numMemb'] ?? $membre['NumMemb'] ?? null;
+                    ?>
                         <tr>
-                            <td><?php echo $membre['numMemb']; ?></td>
+                            <td><?php echo $memberId; ?></td>
                             <td><?php echo $membre['prenomMemb']; ?></td>
                             <td><?php echo $membre['nomMemb']; ?></td>
                             <td><?php echo $membre['pseudoMemb']; ?></td>
@@ -35,17 +41,20 @@ $membres = sql_select("MEMBRE m INNER JOIN STATUT s ON m.numStat = s.numStat","m
                             <td><?php echo ($membre['accordMemb'] == 1 ? 'Oui' : 'Non'); ?></td>
                             <td><?php echo $membre['libStat']; ?></td>
                             <td>
-                                <a href="edit.php?numMemb=<?php echo $membre['numMemb']; ?>" class="btn btn-warning">Edit</a>
+                                <a href="edit.php?numMemb=<?php echo $memberId; ?>" class="btn btn-warning">Edit</a>
 
-                                <?php if ($membre['numStat'] == 1) { ?>
+                                <?php
+                                if (
+                                    ($membre['numStat'] == 1 && $adminCount == 1) || ($currentUserId && $memberId == $currentUserId)) { ?>
                                     <button class="btn btn-danger" disabled>
-                                        Impossible de supprimer l'administrateur
+                                        Suppression impossible !
                                     </button>
                                 <?php } else { ?>
-                                    <a href="delete.php?numMemb=<?php echo $membre['numMemb']; ?>" class="btn btn-danger">
+                                    <a href="delete.php?numMemb=<?php echo $memberId; ?>" class="btn btn-danger">
                                         Delete
                                     </a>
                                 <?php } ?>
+
                             </td>
                         </tr>
                     <?php } ?>
