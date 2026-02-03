@@ -1,18 +1,14 @@
 <?php
 include '../../../header.php';
 
-// 🔐 Sécurité admin
+
 if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur') {
     header('Location: /');
     exit;
 }
 
-// Charger les articles + thématique
-$articles = sql_select(
-    "ARTICLE a
-     INNER JOIN THEMATIQUE t ON a.numThem = t.numThem",
-    "a.*, t.libThem"
-);
+
+$articles = sql_select("ARTICLE a INNER JOIN THEMATIQUE t ON a.numThem = t.numThem","a.*, t.libThem");
 ?>
 
 <div class="container">

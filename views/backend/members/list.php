@@ -1,16 +1,15 @@
 <?php
-include '../../../header.php'; // contains the header and call to config.php
+include '../../../header.php'; 
 
-//Load all statuts
+
 $membres = sql_select("MEMBRE m INNER JOIN STATUT s ON m.numStat = s.numStat","m.*, s.libStat");
-
 ?>
 
-<!-- Bootstrap default layout to display all statuts in foreach -->
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <h1>Membres</h1>
+
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -24,31 +23,38 @@ $membres = sql_select("MEMBRE m INNER JOIN STATUT s ON m.numStat = s.numStat","m
                         <th>Actions</th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    <?php foreach($membres as $membre){ ?>
+                    <?php foreach ($membres as $membre) { ?>
                         <tr>
-                            <td><?php echo($membre['numMemb']); ?></td>
-                            <td><?php echo($membre['prenomMemb']); ?></td>
-                            <td><?php echo($membre['nomMemb']); ?></td>
-                            <td><?php echo($membre['pseudoMemb']); ?></td>
-                            <td><?php echo($membre['eMailMemb']); ?></td>
+                            <td><?php echo $membre['numMemb']; ?></td>
+                            <td><?php echo $membre['prenomMemb']; ?></td>
+                            <td><?php echo $membre['nomMemb']; ?></td>
+                            <td><?php echo $membre['pseudoMemb']; ?></td>
+                            <td><?php echo $membre['eMailMemb']; ?></td>
                             <td><?php echo ($membre['accordMemb'] == 1 ? 'Oui' : 'Non'); ?></td>
-                            <td><?php echo($membre['libStat']); ?></td>
+                            <td><?php echo $membre['libStat']; ?></td>
                             <td>
-                                <a href="edit.php?numMemb=<?php echo($membre['numMemb']); ?>" class="btn btn-warning">Edit</a>
+                                <a href="edit.php?numMemb=<?php echo $membre['numMemb']; ?>" class="btn btn-warning">Edit</a>
+
                                 <?php if ($membre['numStat'] == 1) { ?>
-                                    <button class="btn btn-danger" disabled>Impossible de supprimer l'administrateur</button>
+                                    <button class="btn btn-danger" disabled>
+                                        Impossible de supprimer l'administrateur
+                                    </button>
                                 <?php } else { ?>
-                                    <a href="delete.php?numMemb=<?php echo($membre['numMemb']); ?>" class="btn btn-danger">Delete</a>
+                                    <a href="delete.php?numMemb=<?php echo $membre['numMemb']; ?>" class="btn btn-danger">
+                                        Delete
+                                    </a>
                                 <?php } ?>
                             </td>
                         </tr>
                     <?php } ?>
                 </tbody>
             </table>
+
             <a href="create.php" class="btn btn-success">Create</a>
         </div>
     </div>
 </div>
-<?php
-include '../../../footer.php'; // contains the footer
+
+<?php include '../../../footer.php'; ?>
