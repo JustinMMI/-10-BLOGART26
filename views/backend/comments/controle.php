@@ -4,7 +4,6 @@ include '../../../header.php';
 
 <?php
 $numCom = $_GET['numCom'] ?? null;
-var_dump($_GET, $numCom);
 
 $comments = sql_select(
     "comment c

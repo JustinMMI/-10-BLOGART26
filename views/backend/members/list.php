@@ -37,15 +37,21 @@ $membres = sql_select("MEMBRE m INNER JOIN STATUT s ON m.numStat = s.numStat","m
                             <td>
                                 <a href="edit.php?numMemb=<?php echo $membre['numMemb']; ?>" class="btn btn-warning">Edit</a>
 
-                                <?php if ($membre['numStat'] == 1) { ?>
+                               <?php
+                               
+                                $rqAdminCount = $DB->query("SELECT COUNT(*) FROM membre WHERE numStat = 1");
+                                $adminCount = $rqAdminCount->fetchColumn();
+
+                                if ($membre['numStat'] == 1 && $adminCount == 1) { ?>
                                     <button class="btn btn-danger" disabled>
-                                        Impossible de supprimer l'administrateur
+                                        Impossible de supprimer le dernier administrateur
                                     </button>
                                 <?php } else { ?>
                                     <a href="delete.php?numMemb=<?php echo $membre['numMemb']; ?>" class="btn btn-danger">
                                         Delete
                                     </a>
                                 <?php } ?>
+
                             </td>
                         </tr>
                     <?php } ?>
