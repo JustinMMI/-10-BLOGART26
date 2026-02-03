@@ -1,38 +1,64 @@
 <?php
 include '../../../header.php';
 
-// Sécurité admin
 if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur') {
     header('Location: /');
     exit;
 }
 
-if (isset($_GET['numThem'])) {
-    $numThem = (int) $_GET['numThem'];
-    $thematique = sql_select("THEMATIQUE", "libThem", "numThem = $numThem")[0];
+$numThem = (int)($_GET['numThem'] ?? 0);
+
+if ($numThem <= 0) {
+    header('Location: list.php?error=Thématique invalide');
+    exit;
 }
+
+$thematique = sql_select("THEMATIQUE", "*", "numThem = $numThem");
+$thematique = $thematique[0] ?? null;
+
+if (!$thematique) {
+    header('Location: list.php?error=Thématique introuvable');
+    exit;
+}
+
+$nbArticles = sql_select(
+    "ARTICLE",
+    "COUNT(*) AS total",
+    "numThem = $numThem"
+)[0]['total'];
+
+$canDelete = ($nbArticles == 0);
 ?>
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Suppression Thématique</h1>
+    <h1>Suppression Thématique</h1>
+
+    <form action="<?= ROOT_URL ?>/api/thematiques/delete.php" method="post">
+
+        <input type="hidden" name="numThem" value="<?= $numThem ?>">
+
+        <div class="form-group mb-3">
+            <label>Thématique</label>
+            <input
+                class="form-control"
+                value="<?= htmlspecialchars($thematique['libThem']) ?>"
+                readonly
+            >
         </div>
 
-        <div class="col-md-12">
-            <form action="<?php echo ROOT_URL . '/api/thematiques/delete.php'; ?>" method="post">
+        <div class="mt-3">
+            <a href="list.php" class="btn btn-primary">List</a>
 
-                <input type="hidden" name="numThem" value="<?= $numThem ?>">
-
-                <div class="form-group">
-                    <label>Thématique</label>
-                    <input class="form-control" value="<?= htmlspecialchars($thematique['libThem']); ?>" disabled>
-                </div>
-
-                <br>
-                <a href="list.php" class="btn btn-primary">List</a>
-                <button type="submit" class="btn btn-danger">Confirmer delete ?</button>
-            </form>
+            <?php if ($canDelete): ?>
+                <button type="submit" class="btn btn-danger">
+                    Confirmer la suppression
+                </button>
+            <?php else: ?>
+                <button type="button" class="btn btn-secondary" disabled>
+                    Veuillez d’abord supprimer tous les articles liés à cette thématique
+                </button>
+            <?php endif; ?>
         </div>
-    </div>
+
+    </form>
 </div>
