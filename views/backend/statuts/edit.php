@@ -6,43 +6,56 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur
     exit;
 }
 
-if(isset($_GET['numStat'])){
-    $numStat = (int)$_GET['numStat'];
-    $libStat = sql_select("STATUT", "libStat", "numStat = $numStat")[0]['libStat'];
+$numStat = (int)($_GET['numStat'] ?? 0);
+
+if ($numStat <= 0) {
+    header('Location: list.php?error=Statut invalide');
+    exit;
+}
+
+$statut = sql_select("STATUT", "*", "numStat = $numStat");
+$statut = $statut[0] ?? null;
+
+if (!$statut) {
+    header('Location: list.php?error=Statut introuvable');
+    exit;
 }
 ?>
 
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Modifier un statut</h1>
+    <h1>Modifier un statut</h1>
+
+    <form action="<?= ROOT_URL ?>/api/statuts/update.php" method="post">
+
+        <input type="hidden" name="numStat" value="<?= $statut['numStat'] ?>">
+
+        <div class="form-group mb-3">
+            <label>Numéro</label>
+            <input class="form-control" type="text" value="<?= $statut['numStat'] ?>" readonly>
         </div>
-        <div class="col-md-12">
-            <form action="<?php echo ROOT_URL . '/api/statuts/update.php' ?>" method="post">
-                <!-- Numéro -->
-                <div class="form-group">
-                    <label for="libStat">Numero</label>
-                    <input id="numStat" name="numStat" class="form-control" style="display: none" type="text" value="<?php echo($numStat); ?>" readonly="readonly" />
-                    <input id="numStat" name="numStat" class="form-control" type="text" value="<?php echo($numStat); ?>" readonly="readonly"  />
-                </div>
 
-                <!-- Date de création -->
-                <div class="form-group">
-                    <label for="libStat">Date de création</label>
-                    <input id="numStat" name="numStat" class="form-control" style="display: none" type="text" value="<?php echo($numStat); ?>" readonly="readonly" />
-                    <input id="libStat" name="libStat" class="form-control" type="text" value="<?php echo($libStat); ?>" readonly="readonly"  />
-                </div>
+        <div class="form-group mb-3">
+            <label>Libellé actuel</label>
+            <input class="form-control" type="text" value="<?= htmlspecialchars($statut['libStat']) ?>" readonly>
+        </div>
 
-                <!-- Libellé -->
-                <div class="form-group">
-                    <label for="libStat">Libellé </label>
-                    <input id="libStat" name="libStat" class="form-control" type="text" autofocus="autofocus" />
-                </div>
-            <div class="form-group mt-2">
-                <a href="list.php" class="btn btn-primary">List</a>
-                <button type="submit" class="btn btn-danger">Confirmer Edit ?</button>
-            </div>
-        </form>
-    </div>
-</div>
+        <div class="form-group mb-3">
+            <label for="libStat">Nouveau libellé</label>
+            <input
+                id="libStat"
+                name="libStat"
+                class="form-control"
+                type="text"
+                value="<?= htmlspecialchars($statut['libStat']) ?>"
+                required
+                autofocus
+            >
+        </div>
+
+        <div class="mt-3">
+            <a href="list.php" class="btn btn-primary">List</a>
+            <button type="submit" class="btn btn-success">Confirmer modification</button>
+        </div>
+
+    </form>
 </div>
