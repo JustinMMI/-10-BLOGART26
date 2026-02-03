@@ -63,12 +63,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         sql_connect();
         global $DB;
 
+        $rqComments = $DB->prepare("SELECT COUNT(*) FROM COMMENTAIRE WHERE numMemb = :numMemb");
+        $rqComments->execute([':numMemb' => $numMemb]);
+        $commentCount = $rqComments->fetchColumn();
+
+        $rqLikes = $DB->prepare("SELECT COUNT(*) FROM `LIKE` WHERE numMemb = :numMemb");
+        $rqLikes->execute([':numMemb' => $numMemb]);
+        $likeCount = $rqLikes->fetchColumn();
+
+        if ($commentCount > 0 || $likeCount > 0) {
+            $msg = "Impossible de supprimer le membre. Supprimez d'abord ses ";
+            if ($commentCount > 0) $msg .= "commentaires ";
+            if ($likeCount > 0) $msg .= ($commentCount > 0 ? "et " : "") . "likes";
+            header('Location: ../../views/backend/members/delete.php?numMemb=' . urlencode($numMemb) . '&error=' . urlencode($msg));
+            exit;
+        }
+
         $sql = "DELETE FROM MEMBRE WHERE numMemb = :numMemb";
         $rq = $DB->prepare($sql);
         $rq->execute([':numMemb' => $numMemb]);
     }
 }
-
 
 header('Location: ../../views/backend/members/list.php');
 exit;
