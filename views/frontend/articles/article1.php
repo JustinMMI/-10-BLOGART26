@@ -60,12 +60,12 @@ if ($article) {
                   <input type="hidden" name="numArt" value="<?= (int)$numArt ?>">
                   <input type="hidden" name="frontend" value="true">
                   <button type="submit" class="like-btn <?= $userLiked ? 'liked' : '' ?>" title="<?= $userLiked ? "Retirer le like" : "Liker" ?>">
-                    <span class="heart"><?= $userLiked ? '♥' : '♡' ?></span>
+                    <span class="heart"><?= $userLiked ? '♥' : '♥' ?></span>
                   </button>
                 </form>
               <?php else: ?>
                 <a class="like-btn ghost" href="<?= ROOT_URL ?>/views/backend/security/login.php" title="Se connecter pour liker">
-                  <span class="heart">♡</span>
+                  <span class="heart">♥</span>
                 </a>
               <?php endif; ?>
             </div>

@@ -151,3 +151,44 @@
     padding: 2rem;
     color: #7a0026;
 }
+
+
+
+.articles-filters{
+    display:grid;
+    grid-template-columns: 2fr 2fr 1.5fr auto;
+    gap:1rem;
+    margin-bottom:3rem;
+}
+
+.articles-filters input,
+.articles-filters select{
+    padding:.75rem;
+    border:1px solid #d8cfc1;
+    font-size:.85rem;
+}
+
+.articles-filters input:focus,
+.articles-filters select:focus{
+    outline:none;
+    border-color:#c7a14a;
+}
+
+.articles-filters button{
+    background:#7a0026;
+    color:#fff;
+    border:none;
+    padding:.75rem 1.4rem;
+    cursor:pointer;
+    font-family:Georgia, serif;
+}
+
+.articles-filters button:hover{
+    background:#5d001d;
+}
+
+@media (max-width: 900px){
+    .articles-filters{
+        grid-template-columns:1fr;
+    }
+}
