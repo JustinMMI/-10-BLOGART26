@@ -33,7 +33,7 @@ $suppressionLogique = array_filter($comments, fn($c) => $c['delLogiq'] == 1);
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 mt-5">
             <h1>Commentaires en attente </h1>
             <table class="table table-striped">
                 <thead>
@@ -62,7 +62,7 @@ $suppressionLogique = array_filter($comments, fn($c) => $c['delLogiq'] == 1);
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 mt-5">
             <h1>Commentaires contrôlés</h1>
             <table class="table table-striped">
                 <thead>
@@ -91,7 +91,7 @@ $suppressionLogique = array_filter($comments, fn($c) => $c['delLogiq'] == 1);
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 mt-5">
             <h1>Suppression logique</h1>
             <table class="table table-striped">
                 <thead>
