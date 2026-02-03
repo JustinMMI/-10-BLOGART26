@@ -45,6 +45,12 @@ if (
 sql_connect();
 global $DB;
 
+if ((int)$_POST['numMemb'] === (int)$_SESSION['user']['id']) {
+    header('Location: ../../views/backend/members/list.php?error=' .
+        urlencode("Vous ne pouvez pas supprimer votre propre compte"));
+    exit;
+}
+
 $rqComments = $DB->prepare("SELECT COUNT(*) FROM comment WHERE numMemb = :numMemb");
 $rqComments->execute([':numMemb' => $numMemb]);
 $commentCount = $rqComments->fetchColumn();
