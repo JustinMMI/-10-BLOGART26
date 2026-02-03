@@ -25,7 +25,15 @@ $statuts = sql_select("STATUT", "*");
                             <td><?php echo($statut['libStat']); ?></td>
                             <td>
                                 <a href="edit.php?numStat=<?php echo($statut['numStat']); ?>" class="btn btn-warning">Edit</a>
-                                <a href="delete.php?numStat=<?php echo($statut['numStat']); ?>" class="btn btn-danger">Delete</a>
+                                <?php if ((int)$statut['numStat'] === 1): ?>
+                                    <button class="btn btn-danger" disabled>
+                                        Impossible de supprimer le statut Administrateur !
+                                    </button>
+                                <?php else: ?>
+                                    <a href="delete.php?numStat=<?php echo($statut['numStat']); ?>" class="btn btn-danger">
+                                        Delete
+                                    </a>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php } ?>

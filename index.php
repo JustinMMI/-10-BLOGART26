@@ -30,7 +30,7 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
 
     <!-- ARTICLE A LA UNE -->
     <div class="featured-main">
-      <h2 class="section-title">À la une</h2>
+      <h2 class="section-title">À la une <span class="trait-dore-alaune"></span></h2>
 
       <article class="featured-article">
         <img src="/src/uploads/<?= htmlspecialchars($featured['urlPhotArt']) ?>" alt="">
