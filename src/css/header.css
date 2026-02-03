@@ -1,0 +1,88 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.header-visual {
+  height: 110px;
+  background: linear-gradient(
+    90deg,
+    #6d0f22 0%,
+    #7c1327 40%,
+    #4a0c18 100%
+  );
+  display: flex;
+  align-items: center;
+}
+
+.header-inner {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+}
+
+/* ----- GAUCHE : label + ligne ----- */
+.header-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 16px;
+}
+
+
+.header-label {
+  font-family: Arial, sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  color: #c7a14a;
+  border: 1px solid #c7a14a;
+  padding: 6px 14px;
+  background: rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+}
+
+/* LIGNE DORÉE */
+.header-line {
+  height: 1px;
+  background-color: #c7a14a;
+  opacity: 0.85;
+  flex-grow: 1;
+}
+
+/* ----- NAV DROITE ----- */
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  margin-left: 2rem;
+}
+
+.header-nav a {
+  color: #f2ede2;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.header-nav a:hover {
+  color: #c7a14a;
+}
+
+.user-name {
+  color: #f2ede2;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.logout {
+  color: #c7a14a;
+  font-size: 0.9rem;
+}
+.logout:hover {
+  text-decoration: underline;
+}
