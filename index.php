@@ -70,6 +70,16 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
         <a class="sidebar-link" href="#">Voir tous →</a>
       </div>
 
+            <div class="sidebar-box sidebar-dark">
+        <h4>Insolite</h4>
+        <ul>
+          <li>Dans le noir / Exp. sensorielles: Dégustations l'obscurité</li>
+          <li>L'autre petit bois - la forêt au coeur dans la salle</li>
+          <li>Le chapon Fin / L'élegance dans une grotte</li>
+          <li>Les producteurs fournissant les restaurants gastronomiques</li>
+        </ul>
+        <a class="sidebar-link" href="#">Voir tous →</a>
+      </div>
     </aside>
 
   </div>
