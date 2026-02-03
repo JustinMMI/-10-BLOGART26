@@ -13,24 +13,6 @@ $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if (empty($_POST['g-recaptcha-response'])) {
-        $error = "Veuillez valider le captcha.";
-    } else {
-
-        $secretKey = '6Ld0GlssAAAAADiS4gh097petnjcA1nTMO1PS-JO'; // 🔐 TA CLÉ SECRÈTE
-        $captchaResponse = $_POST['g-recaptcha-response'];
-
-        $verify = file_get_contents(
-            "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$captchaResponse"
-        );
-
-        $responseData = json_decode($verify);
-
-        if (!$responseData->success) {
-            $error = "Captcha invalide.";
-        }
-    }
-
     if (!$error) {
 
         $email    = $_POST['email'];
@@ -78,6 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form method="post">
 
+        <input type="hidden" name="recaptcha_token" id="recaptcha_token">
         <input class="form-control mb-2"
                name="email"
                type="email"
@@ -90,11 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                placeholder="Mot de passe"
                required>
 
-        <!-- reCAPTCHA v2 -->
-        <div class="g-recaptcha mb-3"
-             data-sitekey="6Ld0GlssAAAAAHLBmEi-bB9vXrPbv1vYF_foDuvk">
-        </div>
-
         <button type="submit" class="btn btn-primary">
             Connexion
         </button>
@@ -105,5 +83,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     </form>
 </div>
+
+<script>
+grecaptcha.ready(function () {
+    grecaptcha.execute('TA_SITE_KEY_V3', { action: 'login' })
+        .then(function (token) {
+            document.getElementById('recaptcha_token').value = token;
+        });
+});
+</script>
 
 

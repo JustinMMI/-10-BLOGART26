@@ -1,3 +1,6 @@
+<script src="https://www.google.com/recaptcha/api.js?render=6LewKl8sAAAAAApTAS7X8kAdof0A4yzZlIq9BoAb"></script>
+
+
 <?php
 session_start();
 require_once 'config.php';
