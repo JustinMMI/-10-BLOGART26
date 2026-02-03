@@ -72,6 +72,7 @@ $suppressionPhysique = $suppressionLogique;
                         <th>Dernière Modification</th>
                         <th>Contenu</th>
                         <th>Publication</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,6 +82,9 @@ $suppressionPhysique = $suppressionLogique;
                             <td><?= $comment['dtModCom']; ?></td>
                             <td><?= $comment['libCom']; ?></td>
                             <td><?= $comment['delLogiq'] ? 'Masqué' : 'Publié'; ?></td>
+                            <td>
+                                <a href="delete.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-danger">Delete</a>
+                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>
