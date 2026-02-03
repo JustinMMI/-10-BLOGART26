@@ -51,7 +51,7 @@ $suppressionPhysique = $suppressionLogique;
                             <td><?= $comment['libCom']; ?></td>
                             <td>
                                 <a href="edit.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-warning">Edit</a>
-                                <a href="controle.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-info">Controle</a>
+                                <a href="update.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-info">Controle</a>
                             </td>
                         </tr>
                     <?php } ?>
