@@ -19,7 +19,7 @@ cookie_notice();
   <div class="header-inner">
 
     <div class="header-left">
-      <span class="header-label">BLOG GASTRONOMIQUE</span>
+      <a class="header-label" href="/">BLOG GASTRONOMIQUE</a>
       <span class="header-line"></span>
     </div>
 
