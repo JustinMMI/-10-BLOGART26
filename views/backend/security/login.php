@@ -13,6 +13,28 @@ $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    if (empty($_POST['recaptcha_token'])) {
+        $error = "Captcha manquant.";
+    } else {
+
+        $secretKey = '6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU';
+        $token = $_POST['recaptcha_token'];
+
+        $verify = file_get_contents(
+            "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$token"
+        );
+
+        $responseData = json_decode($verify, true);
+
+        if (
+            empty($responseData['success']) ||
+            $responseData['score'] < 0.5 ||
+            $responseData['action'] !== 'login'
+        ) {
+            $error = "Comportement suspect détecté.";
+        }
+    }
+
     if (!$error) {
 
         $email    = $_POST['email'];
