@@ -1,5 +1,11 @@
 <?php
 require_once '../../../header.php';
+
+if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur') {
+    header('Location: /');
+    exit;
+}
+
 $numMemb = (int)($_GET['numMemb'] ?? 0);
 
 if ($numMemb === 0) {
@@ -30,7 +36,7 @@ if (!$membre) {
 
         <div class="mb-3">
             <label class="form-label">Pseudo *</label>
-            <input type="text" name="pseudoMemb" class="form-control" value="<?= htmlspecialchars($membre['pseudoMemb']); ?>" required>
+            <input type="text" name="pseudoMemb" class="form-control" value="<?= htmlspecialchars($membre['pseudoMemb']); ?>" disabled>
         </div>
 
         <div class="row">
@@ -89,7 +95,7 @@ if (!$membre) {
             </div>
             <div class="col-md-6 mb-3">
                 <label class="form-label">Dernière Modification (Mise à jour automatique)</label>
-                <input type="text" class="form-control" value="<?= $membre['dtModifMemb'] ?? '-'; ?>" disabled>
+                <input type="text" class="form-control" value="<?= $membre['dtMajMemb'] ?? '-'; ?>" disabled>
             </div>
         </div>
 
@@ -105,14 +111,23 @@ if (!$membre) {
 </div>
 
 <script>
-document.getElementById('formUpdate').addEventListener('submit', function (e) {
+const form = document.getElementById('formUpdate');
+
+form.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    grecaptcha.execute('<?= "6LewKl8sAAAAAApTAS7X8kAdof0A4yzZlIq9BoAb" ?>', { action: 'member_update' })
-        .then(token => {
-            document.getElementById('recaptcha_token').value = token;
-            e.target.submit();
-        });
+    if (typeof grecaptcha === 'undefined') {
+        alert('Captcha indisponible');
+        return;
+    }
+
+    grecaptcha.ready(function () {
+        grecaptcha.execute('<?= "6LewKl8sAAAAAApTAS7X8kAdof0A4yzZlIq9BoAb" ?>', { action: 'member_update' })
+            .then(function (token) {
+                document.getElementById('recaptcha_token').value = token;
+                form.submit();
+            });
+    });
 });
 </script>
 
