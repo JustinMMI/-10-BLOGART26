@@ -52,7 +52,7 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
         <a href="/views/frontend/articles-list.php" class="btn btn-primary btn-lg">
           Voir tous les articles →
         </a>
-        <a href="/views/frontend/contact.php" class="btn btn-primary btn-lg btn-outline">
+        <a href="/views/frontend/contact.php" class="btn btn-primary btn-lg">
             Contactez-nous →
         </a>
       </div>

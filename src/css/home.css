@@ -458,3 +458,60 @@
     gap: 1.2rem;
   }
 }
+
+
+
+/* =========================
+   CONTACT
+========================= */
+
+.auth-card-large {
+  max-width: 520px;
+}
+
+.auth-intro {
+  font-size: 0.9rem;
+  color: #5a001b;
+  margin-bottom: 2rem;
+  opacity: 0.85;
+}
+
+/* champs textarea */
+
+.auth-form textarea {
+  resize: none;
+  padding: 0.9rem;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+}
+
+.auth-form textarea:focus {
+  outline: none;
+  border-color: #c7a14a;
+}
+
+/* ligne double */
+
+.auth-form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.auth-form-row input {
+  flex: 1;
+}
+
+/* bouton */
+
+.auth-form button {
+  margin-top: 1.5rem;
+}
+
+/* responsive */
+
+@media (max-width: 500px) {
+  .auth-form-row {
+    flex-direction: column;
+  }
+}
