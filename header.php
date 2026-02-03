@@ -49,7 +49,7 @@ $isBackend = str_starts_with($_SERVER['REQUEST_URI'], '/views/backend/');
       <?php endif; ?>
 
       <?php if (!empty($_SESSION['user'])): ?>
-        <span class="user-name"><?= htmlspecialchars($_SESSION['user']['pseudo']) ?></span>
+        <a href="/views/frontend/profile.php" class="user-name"><?= htmlspecialchars($_SESSION['user']['pseudo']) ?></a>
         <a class="logout" href="/views/backend/security/login.php?action=logout">
           Déconnexion
         </a>
