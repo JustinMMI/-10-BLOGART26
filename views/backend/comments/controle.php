@@ -10,7 +10,7 @@ if (!$numCom) {
     exit;
 }
 
-$comment = sql_select(
+$comments = sql_select(
     "comment c
      INNER JOIN membre m ON c.numMemb = m.numMemb
      INNER JOIN article a ON c.numArt = a.numArt",
@@ -20,11 +20,12 @@ $comment = sql_select(
      c.libCom,
      c.numCom",
     "c.numCom = " . intval($numCom)
-)
+);
+$comment = $comments[0];
 ?>
 
 
-<form action="traitement_validation.php" method="post">
+<form action="controle.php" method="post">
   <div class="container">
     <h1 class="text-center mt-5">Contrôle commentaire en attente : à valider</h1>
 
