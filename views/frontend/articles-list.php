@@ -51,15 +51,14 @@ $db = sql_connect();
 
                                 <div>
                                     <?php if (isset($_SESSION['user'])): ?>
-                                        <form action="/api/likes/create.php" method="POST" class="like-form">
-                                            <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
-                                            <input type="hidden" name="numArt" value="<?= $numArt ?>">
-                                            <input type="hidden" name="frontend" value="true">
-
-                                            <button type="submit" class="like-btn <?= $userLiked ? 'liked' : '' ?>">
-                                                <span class="heart">♥</span>
-                                            </button>
-                                        </form>
+                                        <button 
+                                            class="like-btn <?= $userLiked ? 'liked' : '' ?>"
+                                            data-art="<?= $numArt ?>"
+                                            data-liked="<?= $userLiked ? '1' : '0' ?>"
+                                            title="J’aime"
+                                        >
+                                            <span class="heart">♥</span>
+                                        </button>
                                     <?php else: ?>
                                         <a href="/views/backend/security/login.php" class="like-btn">
                                             <span class="heart">♡</span>
@@ -78,5 +77,30 @@ $db = sql_connect();
         <?php endif; ?>
     </div>
 </div>
+
+<script>
+document.querySelectorAll('.like-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+
+        const numArt = this.dataset.art;
+        const liked = this.dataset.liked === '1';
+
+        fetch('/api/likes/create.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({
+                numArt: numArt,
+                frontend: 'true'
+            })
+        })
+        .then(() => {
+            this.classList.toggle('liked');
+            this.dataset.liked = liked ? '0' : '1';
+        });
+    });
+});
+</script>
 
 <?php require_once '../../footer.php'; ?>
