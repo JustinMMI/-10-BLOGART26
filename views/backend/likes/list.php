@@ -1,29 +1,52 @@
 <?php
 require_once '../../../header.php'; 
 
+if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur'&& $_SESSION['user']['statut'] !== 'Modérateur') {
+    header('Location: /');
+    exit;
+}
+
+$likes = sql_select(
+    "LIKEART l
+     INNER JOIN MEMBRE m ON l.numMemb = m.numMemb
+     INNER JOIN ARTICLE a ON l.numArt = a.numArt",
+    "l.numMemb,
+     l.numArt,
+     l.likeA,
+     m.pseudoMemb,
+     a.libTitrArt,
+     a.libChapoArt",
+    null,
+    null,
+    "l.numArt DESC, m.pseudoMemb ASC"
+);
+
+$likesGroup = array_filter($likes, fn($l) => $l['likeA'] == 1);
+$dislikesGroup = array_filter($likes, fn($l) => $l['likeA'] == 0);
 ?>
 
 <div class="container">
     <h2>Articles (Un) Likes</h2>
     <a href="create.php" class="btn btn-primary mb-3">Create</a>
 
+    <h3>Likes</h3>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Membre</th>
                 <th>Titre Article</th>
-                <th>Chapeau Article</th>
                 <th>Statut</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Admin99 (1)</td>
-                <td>La surprenante reconversion de la base sous-marine</td>
-                <td>Un bâtiment unique chargé d'histoire...</td>
-                <td>like</td>
-            </tr>
-            </tbody>
+            <?php foreach ($likesGroup as $like) { ?>
+                <tr>
+                    <td><?= htmlspecialchars($like['pseudoMemb']); ?></td>
+                    <td><?= htmlspecialchars($like['libTitrArt']); ?></td>
+                    <td>like</td>
+                </tr>
+            <?php } ?>
+        </tbody>
     </table>
 </div>
 
