@@ -1,7 +1,13 @@
 <?php
 include '../../../header.php';
 
-$idCommentaire = (int)$_GET['id'];
+// Vérifier que l'ID existe et est valide
+if (!isset($_GET['numCom']) || !is_numeric($_GET['numCom'])) {
+    echo '<div class="alert alert-danger" role="alert">Erreur : ID de commentaire invalide.</div>';
+    exit;
+}
+
+$idCommentaire = (int)$_GET['numCom'];
 
 // ÉTAPE 7 : Générer le token CSRF
 if (!isset($_SESSION['csrf_token'])) {
@@ -10,7 +16,8 @@ if (!isset($_SESSION['csrf_token'])) {
 $csrf_token = $_SESSION['csrf_token'];
 
 // ÉTAPE 6 : Récupérer le commentaire avec une requête SELECT
-$commentaire = sql_select('commentaires', ['numCom' => $idCommentaire]);
+// Format correct : sql_select('table', 'attributs', 'WHERE condition')
+$commentaire = sql_select('COMMENT', '*', 'numCom = ' . $idCommentaire);
 
 // ÉTAPE 6 : Vérifier que le commentaire existe
 if (empty($commentaire)) {
@@ -18,8 +25,13 @@ if (empty($commentaire)) {
     exit;
 }
 
+// Récupérer le premier résultat (si c'est un array de résultats)
+if (is_array($commentaire) && !empty($commentaire)) {
+    $commentaire = $commentaire[0];
+}
+
 ?>
-<form method="POST" action="delete.php?id=<?php echo $idCommentaire; ?>">
+<form method="POST" action="delete.php?numCom=<?php echo $idCommentaire; ?>">
     <div class="form-group">
         <label for="libCom">Commentaire</label>
         <textarea class="form-control" id="libCom" rows="3" disabled><?php echo htmlspecialchars($commentaire['libCom']); ?></textarea>
@@ -41,7 +53,8 @@ if (isset($_POST['confirmer'])) {
     }
     
     // ÉTAPE 6 : Appeler la fonction de suppression
-    $resultat = sql_delete('commentaires', ['numCom' => $idCommentaire]);
+    // Format : sql_delete('table', 'WHERE condition')
+    $resultat = sql_delete('COMMENT', 'numCom = ' . $idCommentaire);
     
     // ÉTAPE 6 : Vérifier si la suppression a réussi
     if ($resultat === true) {
