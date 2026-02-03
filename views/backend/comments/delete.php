@@ -1,5 +1,4 @@
 <?php
-// Inclure le header
 include '../../../header.php';
 
 // Vérifier que numCom existe et est valide
@@ -8,10 +7,7 @@ if (!isset($_GET['numCom']) || !is_numeric($_GET['numCom'])) {
     exit;
 }
 
-// Récupérer l'ID du commentaire
 $idCommentaire = (int)$_GET['numCom'];
-
-// Récupérer le commentaire en base de données
 $commentaire = sql_select('COMMENT', '*', 'numCom = ' . $idCommentaire);
 
 // Vérifier que le commentaire existe
@@ -20,7 +16,6 @@ if (empty($commentaire)) {
     exit;
 }
 
-// Récupérer le premier résultat
 if (is_array($commentaire) && !empty($commentaire)) {
     $commentaire = $commentaire[0];
 }
@@ -29,7 +24,6 @@ if (is_array($commentaire) && !empty($commentaire)) {
 <form method="POST" action="delete.php?numCom=<?php echo $idCommentaire; ?>">
     <div class="form-group">
         <label for="libCom">Commentaire</label>
-        <!-- Champ non modifiable -->
         <textarea class="form-control" id="libCom" rows="3" disabled><?php echo ($commentaire['libCom']); ?></textarea>
     </div>
     
@@ -38,13 +32,11 @@ if (is_array($commentaire) && !empty($commentaire)) {
 </form>
 
 <?php
-// Traitement de la soumission du formulaire
 if (isset($_POST['confirmer'])) {
     
     // Supprimer le commentaire
     $resultat = sql_delete('COMMENT', 'numCom = ' . $idCommentaire);
     
-    // Vérifier si la suppression a réussi
     if ($resultat === true) {
         header('Location: list.php?message=Commentaire supprimé avec succès');
         exit;
