@@ -24,7 +24,7 @@ sql_insert(
 	"'$libCom', $numArt, $numMemb, NOW()"
 );
 
-header('Location: /views/backend/comments/list.php');
+header('Location: /');
 exit;
 
 

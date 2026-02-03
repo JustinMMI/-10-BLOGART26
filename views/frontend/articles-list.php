@@ -35,8 +35,8 @@ $db = sql_connect();
                     <article class="article-card">
                         <?php if (!empty($article['urlPhotArt'])): ?>
                             <img src="/src/uploads/<?= htmlspecialchars($article['urlPhotArt']) ?>" 
-                                 alt="<?= htmlspecialchars($article['libTitrArt']) ?>"
-                                 class="article-card-image">
+                                alt="<?= htmlspecialchars($article['libTitrArt']) ?>"
+                                class="article-card-image">
                         <?php endif; ?>
                         
                         <div class="article-card-body">
@@ -49,26 +49,21 @@ $db = sql_connect();
                                     Lire la suite →
                                 </a>
 
-                                <!-- Bouton Like -->
                                 <div>
                                     <?php if (isset($_SESSION['user'])): ?>
-                                        <?php if ($userLiked): ?>
-                                            <form action="/api/likes/create.php" method="POST" style="display:inline;">
-                                                <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
-                                                <input type="hidden" name="numArt" value="<?= $numArt ?>">
-                                                <input type="hidden" name="frontend" value="true">
-                                                <button type="submit" class="like-btn" title="Retirer le like">Je n'aime plus ❤️</button>
-                                            </form>
-                                        <?php else: ?>
-                                            <form action="/api/likes/create.php" method="POST" style="display:inline;">
-                                                <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
-                                                <input type="hidden" name="numArt" value="<?= $numArt ?>">
-                                                <input type="hidden" name="frontend" value="true">
-                                                <button type="submit" class="like-btn" title="J'aime">J'aime 🤍</button>
-                                            </form>
-                                        <?php endif; ?>
+                                        <form action="/api/likes/create.php" method="POST" class="like-form">
+                                            <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
+                                            <input type="hidden" name="numArt" value="<?= $numArt ?>">
+                                            <input type="hidden" name="frontend" value="true">
+
+                                            <button type="submit" class="like-btn <?= $userLiked ? 'liked' : '' ?>">
+                                                <span class="heart">♥</span>
+                                            </button>
+                                        </form>
                                     <?php else: ?>
-                                        <a href="/views/backend/security/login.php" class="like-btn" title="Se connecter pour liker">🤍</a>
+                                        <a href="/views/backend/security/login.php" class="like-btn">
+                                            <span class="heart">♡</span>
+                                        </a>
                                     <?php endif; ?>
                                 </div>
                             </div>
