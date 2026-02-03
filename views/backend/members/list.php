@@ -6,7 +6,7 @@ $membres = sql_select("MEMBRE m INNER JOIN STATUT s ON m.numStat = s.numStat", "
 $rqAdminCount = $DB->query("SELECT COUNT(*) FROM membre WHERE numStat = 1");
 $adminCount = $rqAdminCount->fetchColumn();
 
-$currentUserId = $_SESSION['user']['numMemb'] ?? $_SESSION['user']['NumMemb'] ?? null;
+$currentUserId = $_SESSION['user']['id'] ?? null;
 ?>
 
 <div class="container">
@@ -45,7 +45,7 @@ $currentUserId = $_SESSION['user']['numMemb'] ?? $_SESSION['user']['NumMemb'] ??
 
                                 <?php
                                 if (
-                                    ($membre['numStat'] == 1 && $adminCount == 1) || ($currentUserId && $memberId == $currentUserId)) { ?>
+                                    ($membre['numStat'] == 1 && $adminCount == 1) || ($memberId == $currentUserId)) { ?>
                                     <button class="btn btn-danger" disabled>
                                         Suppression impossible !
                                     </button>
