@@ -109,7 +109,7 @@ if (isset($_GET['success'])) {
             <?php else: ?>
                 <div class="empty-state">
                     <p>Vous n'avez encore aimé aucun article.</p>
-                    <a href="/" class="btn btn-primary">Découvrir les articles</a>
+                    <a href="articles-list.php" class="btn btn-primary">Découvrir les articles</a>
                 </div>
             <?php endif; ?>
         </div>
