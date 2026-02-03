@@ -1,5 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+
 session_start();
 
 if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur') {
@@ -12,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$numMemb = isset($_POST['numMemb']) ? (int) $_POST['numMemb'] : 0;
+$numMemb = (int)($_POST['numMemb'] ?? 0);
 
 if ($numMemb <= 0) {
     header('Location: /views/backend/members/list.php?error=' . urlencode('Membre invalide'));
@@ -20,20 +21,14 @@ if ($numMemb <= 0) {
 }
 
 if (empty($_POST['recaptcha_token'])) {
-    header(
-        'Location: /views/backend/members/delete.php?numMemb=' .
-        $numMemb .
-        '&error=' . urlencode('Captcha manquant')
-    );
+    header('Location: /views/backend/members/delete.php?numMemb=' . $numMemb . '&error=' . urlencode('Captcha manquant'));
     exit;
 }
 
-$token = $_POST['recaptcha_token'];
-
 $verify = file_get_contents(
     'https://www.google.com/recaptcha/api/siteverify'
-    . '?secret=' . "6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU"
-    . '&response=' . $token
+    . '?secret=6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU'
+    . '&response=' . $_POST['recaptcha_token']
 );
 
 $response = json_decode($verify, true);
@@ -41,25 +36,34 @@ $response = json_decode($verify, true);
 if (
     empty($response['success']) ||
     $response['score'] < 0.5 ||
-    $response['action'] !== 'member_delete' ||
-    $response['hostname'] !== $_SERVER['SERVER_NAME']
+    $response['action'] !== 'member_delete'
 ) {
-    header(
-        'Location: /views/backend/members/delete.php?numMemb=' .
-        $numMemb .
-        '&error=' . urlencode('Captcha invalide')
-    );
+    header('Location: /views/backend/members/delete.php?numMemb=' . $numMemb . '&error=' . urlencode('Captcha invalide'));
     exit;
 }
 
 sql_connect();
 global $DB;
 
-$sql = 'DELETE FROM MEMBRE WHERE numMemb = :numMemb';
-$stmt = $DB->prepare($sql);
-$stmt->execute([
-    ':numMemb' => $numMemb
-]);
+$rqComments = $DB->prepare("SELECT COUNT(*) FROM comment WHERE numMemb = :numMemb");
+$rqComments->execute([':numMemb' => $numMemb]);
+$commentCount = $rqComments->fetchColumn();
+
+$rqLikes = $DB->prepare("SELECT COUNT(*) FROM `likeart` WHERE numMemb = :numMemb");
+$rqLikes->execute([':numMemb' => $numMemb]);
+$likeCount = $rqLikes->fetchColumn();
+
+if ($commentCount > 0 || $likeCount > 0) {
+    $msg = "Impossible de supprimer le membre. Supprimez d'abord ses ";
+    if ($commentCount > 0) $msg .= "commentaires ";
+    if ($likeCount > 0) $msg .= ($commentCount > 0 ? "et " : "") . "likes";
+
+    header('Location: /views/backend/members/delete.php?numMemb=' . $numMemb . '&error=' . urlencode($msg));
+    exit;
+}
+
+$rq = $DB->prepare("DELETE FROM MEMBRE WHERE numMemb = :numMemb");
+$rq->execute([':numMemb' => $numMemb]);
 
 header('Location: /views/backend/members/list.php?success=' . urlencode('Membre supprimé'));
 exit;

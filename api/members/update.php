@@ -95,12 +95,21 @@ if (isset($error)) {
 
 $now = date('Y-m-d H:i:s');
 
-update(
+$set = "
+    prenomMemb = " . $DB->quote($prenom) . ",
+    nomMemb = " . $DB->quote($nom) . ",
+    eMailMemb = " . $DB->quote($finalEmail) . ",
+    passMemb = " . $DB->quote($finalPass) . ",
+    numStat = " . (int)$numStat . ",
+    dtMajMemb = " . $DB->quote($now) . "
+";
+
+sql_update(
     'MEMBRE',
-    ['prenomMemb', 'nomMemb', 'eMailMemb', 'passMemb', 'numStat', 'dtModifMemb'],
-    [$prenom, $nom, $finalEmail, $finalPass, $numStat, $now],
-    'numMemb = ' . $numMemb
+    $set,
+    'numMemb = ' . (int)$numMemb
 );
+
 
 header('Location: /views/backend/members/list.php?success=' . urlencode('Membre mis à jour'));
 exit;

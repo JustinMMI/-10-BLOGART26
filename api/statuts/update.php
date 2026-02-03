@@ -1,11 +1,26 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
-require_once '../../functions/ctrlSaisies.php';
 
-$libStat = ($_POST['libStat']);
-$numStat = ($_POST['numStat']);
+session_start();
 
-sql_update('STATUT',"libStat= '$libStat'","numStat = '$numStat'" );
+if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur') {
+    header('Location: /');
+    exit;
+}
 
+$numStat = (int)($_POST['numStat'] ?? 0);
+$libStat = trim($_POST['libStat'] ?? '');
 
-header('Location: ../../views/backend/statuts/list.php');
+if ($numStat <= 0 || $libStat === '') {
+    header('Location: ../../views/backend/statuts/list.php?error=Données invalides');
+    exit;
+}
+
+sql_update(
+    'STATUT',
+    "libStat = '$libStat'",
+    "numStat = $numStat"
+);
+
+header('Location: ../../views/backend/statuts/list.php?success=Statut modifié');
+exit;
