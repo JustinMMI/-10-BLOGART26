@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 document.getElementById('signupForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    grecaptcha.execute('<?= RECAPTCHA_SITE_KEY ?>', { action: 'signup' })
+    grecaptcha.execute('<?= "6LewKl8sAAAAAApTAS7X8kAdof0A4yzZlIq9BoAb" ?>', { action: 'signup' })
         .then(function (token) {
             document.getElementById('recaptcha_token').value = token;
             e.target.submit();
