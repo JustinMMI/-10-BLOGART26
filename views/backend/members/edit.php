@@ -18,12 +18,38 @@ if (!$membre) {
     require_once '../../../footer.php';
     exit();
 }
+
+if (empty($_POST['recaptcha_token'])) {
+    header('Location: ' . $_SERVER['HTTP_REFERER'] . '?error=' . urlencode('Captcha manquant'));
+    exit;
+}
+
+$token = $_POST['recaptcha_token'];
+
+$verify = file_get_contents(
+    "https://www.google.com/recaptcha/api/siteverify?secret=" . "6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU" . "&response=" . $token
+);
+
+$response = json_decode($verify, true);
+
+if (
+    empty($response['success']) ||
+    $response['score'] < 0.5 ||
+    $response['action'] !== 'member_create' ||
+    $response['hostname'] !== $_SERVER['SERVER_NAME']
+) {
+    header('Location: ' . $_SERVER['HTTP_REFERER'] . '?error=' . urlencode('Captcha invalide'));
+    exit;
+}
+
 ?>
 
 <div class="container mt-5">
     <h2>Modification du Membre</h2>
 
     <form action="../../../api/members/update.php" method="POST" id="formUpdate">
+
+        <input type="hidden" id="recaptcha_token" name="recaptcha_token">
         <input type="hidden" name="numMemb" value="<?= $membre['numMemb']; ?>">
 
         <div class="mb-3">
@@ -97,21 +123,22 @@ if (!$membre) {
             <label class="form-check-label">Accord RGPD (Données conservées)</label>
         </div>
 
-        <input type="hidden" id="recaptcha-response" name="recaptcha-response">
-
         <div class="mt-4">
             <button type="submit" class="btn btn-primary">Mettre à jour</button>
         </div>
     </form>
 </div>
 
-<script src="https://www.google.com/recaptcha/api.js?render=TA_CLE_PUBLIQUE_ICI"></script>
 <script>
-    grecaptcha.ready(function() {
-        grecaptcha.execute('TA_CLE_PUBLIQUE_ICI', {action: 'submit'}).then(function(token) {
-            document.getElementById('recaptcha-response').value = token;
+document.getElementById('formUpdate').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    grecaptcha.execute('<?= "6LewKl8sAAAAAApTAS7X8kAdof0A4yzZlIq9BoAb" ?>', { action: 'member_update' })
+        .then(token => {
+            document.getElementById('recaptcha_token').value = token;
+            e.target.submit();
         });
-    });
+});
 </script>
 
 <?php require_once '../../../footer.php'; ?>

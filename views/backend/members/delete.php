@@ -24,6 +24,29 @@ if ($numMemb) {
     }
 }
 
+if (empty($_POST['recaptcha_token'])) {
+    header('Location: ' . $_SERVER['HTTP_REFERER'] . '?error=' . urlencode('Captcha manquant'));
+    exit;
+}
+
+$token = $_POST['recaptcha_token'];
+
+$verify = file_get_contents(
+    "https://www.google.com/recaptcha/api/siteverify?secret=" . "6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU" . "&response=" . $token
+);
+
+$response = json_decode($verify, true);
+
+if (
+    empty($response['success']) ||
+    $response['score'] < 0.5 ||
+    $response['action'] !== 'member_create' ||
+    $response['hostname'] !== $_SERVER['SERVER_NAME']
+) {
+    header('Location: ' . $_SERVER['HTTP_REFERER'] . '?error=' . urlencode('Captcha invalide'));
+    exit;
+}
+
 ?>
 
 <div class="container">
@@ -40,6 +63,8 @@ if ($numMemb) {
 
         <div class="col-md-12">
             <form action="<?php echo ROOT_URL . '/api/members/delete.php'; ?>" method="post">
+
+                <input type="hidden" name="recaptcha_token" id="recaptcha_token">
 
                 <div class="form-group">
 
@@ -77,5 +102,17 @@ if ($numMemb) {
         </div>
     </div>
 </div>
+
+<script>
+document.querySelector('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    grecaptcha.execute('<?= "6LewKl8sAAAAAApTAS7X8kAdof0A4yzZlIq9BoAb" ?>', { action: 'member_delete' })
+        .then(token => {
+            document.getElementById('recaptcha_token').value = token;
+            e.target.submit();
+        });
+});
+</script>
 
 <?php include '../../../footer.php'; ?>
