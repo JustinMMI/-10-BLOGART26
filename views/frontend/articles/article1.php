@@ -5,23 +5,16 @@ $numArt = (int) ($_GET['numArt'] ?? 0);
 $article = null;
 
 if ($numArt > 0) {
-    $article = sql_select(
-        "ARTICLE",
-        "numArt, libTitrArt, libChapoArt, dtCreaArt",
-        "numArt = $numArt"
-    );
+    $article = sql_select("ARTICLE","numArt, libTitrArt, libChapoArt, dtCreaArt","numArt = $numArt");
     $article = $article[0] ?? null;
 }
+
 
 $userLiked = false;
 $numMemb = $_SESSION['user']['id'] ?? null;
 
 if ($numMemb && $article) {
-    $resultCheck = sql_select(
-        "likeart",
-        "*",
-        "numMemb = $numMemb AND numArt = $numArt"
-    );
+    $resultCheck = sql_select("likeart","*","numMemb = $numMemb AND numArt = $numArt");
 
     if (!empty($resultCheck)) {
         $userLiked = true;
@@ -44,16 +37,10 @@ if ($numMemb && $article) {
                href="<?= ROOT_URL ?>/views/frontend/comments/commentaire.php?numArt=<?= $article['numArt']; ?>">
                 Commenter cet article
             </a>
-			<a class="btn btn-primary"
-               href="<?= ROOT_URL ?>/views/frontend/comments/commentaire.php?numArt=<?= $article['numArt']; ?>">
-                Voir plus d'articles
-            </a>
-
         <?php else: ?>
             <a class="btn btn-outline-primary"
                href="<?= ROOT_URL ?>/views/backend/security/login.php">
                 Se connecter pour commenter
-ù
             </a>
         <?php endif; ?>
 
@@ -90,11 +77,16 @@ if ($numMemb && $article) {
         </div>
     </div>
 
+    <a class="btn btn-secondary mb-4"
+       href="<?= ROOT_URL ?>/views/frontend/articles-list.php">
+        Voir plus d'articles
+    </a>
+
     <hr>
     <h4>Commentaires</h4>
 
     <?php
-    $commentairesArt = sql_select("COMMENT","*","numArt = $numArt");
+    $commentairesArt = sql_select("COMMENT", "*", "numArt = $numArt");
 
     if (!empty($commentairesArt)):
         foreach ($commentairesArt as $commentaire):
