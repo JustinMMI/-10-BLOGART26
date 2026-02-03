@@ -13,6 +13,28 @@ $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    if (empty($_POST['recaptcha_token'])) {
+        $error = "Captcha manquant.";
+    } else {
+
+        $secretKey = '6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU';
+        $token = $_POST['recaptcha_token'];
+
+        $verify = file_get_contents(
+            "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$token"
+        );
+
+        $responseData = json_decode($verify, true);
+
+        if (
+            empty($responseData['success']) ||
+            $responseData['score'] < 0.5 ||
+            $responseData['action'] !== 'login'
+        ) {
+            $error = "Comportement suspect détecté.";
+        }
+    }
+
     if (!$error) {
 
         $email    = $_POST['email'];
@@ -51,42 +73,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<div class="container mt-5" style="max-width:500px;">
-    <h2 class="mb-4">Connexion</h2>
+<main class="auth-page">
+  <section class="auth-card">
+
+    <h2 class="auth-title">Connexion</h2>
 
     <?php if ($error): ?>
-        <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+      <div class="auth-error"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
 
-    <form method="post">
+    <form method="post" class="auth-form">
 
-        <input type="hidden" name="recaptcha_token" id="recaptcha_token">
-        <input class="form-control mb-2"
-               name="email"
-               type="email"
-               placeholder="Email"
-               required>
+      <input type="hidden" name="recaptcha_token" id="recaptcha_token">
 
-        <input class="form-control mb-3"
-               name="password"
-               type="password"
-               placeholder="Mot de passe"
-               required>
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        required
+      >
 
-        <button type="submit" class="btn btn-primary">
-            Connexion
-        </button>
+      <input
+        type="password"
+        name="password"
+        placeholder="Mot de passe"
+        required
+      >
 
-        <a href="signup.php" class="btn btn-secondary ms-2">
-            Créer un compte
-        </a>
+      <button type="submit" class="btn-primary">
+        Connexion
+      </button>
+
+      <a href="signup.php" class="auth-link">
+        Créer un compte
+      </a>
 
     </form>
-</div>
+
+  </section>
+</main>
 
 <script>
 grecaptcha.ready(function () {
-    grecaptcha.execute('TA_SITE_KEY_V3', { action: 'login' })
+    grecaptcha.execute('6LewKl8sAAAAAApTAS7X8kAdof0A4yzZlIq9BoAb', { action: 'login' })
         .then(function (token) {
             document.getElementById('recaptcha_token').value = token;
         });

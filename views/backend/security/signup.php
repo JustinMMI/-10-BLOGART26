@@ -65,62 +65,84 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<div class="container mt-5" style="max-width:500px;">
-    <h2 class="mb-4">Inscription</h2>
+<main class="auth-page">
+  <section class="auth-card">
+
+    <h2 class="auth-title">Inscription</h2>
 
     <?php if ($error): ?>
-        <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+      <div class="auth-error"><?= htmlspecialchars($error) ?></div>
     <?php elseif ($success): ?>
-        <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
+      <div class="auth-success"><?= htmlspecialchars($success) ?></div>
     <?php endif; ?>
 
-    <form method="post">
+    <form method="post" class="auth-form" id="signupForm">
 
-        <input class="form-control mb-2"
-               name="prenom"
-               placeholder="Prénom"
-               required>
+      <input type="hidden" name="recaptcha_token" id="recaptcha_token">
 
-        <input class="form-control mb-2"
-               name="nom"
-               placeholder="Nom"
-               required>
+      <input
+        type="text"
+        name="prenom"
+        placeholder="Prénom"
+        required
+      >
 
-        <input class="form-control mb-2"
-               name="pseudo"
-               placeholder="Pseudo"
-               required>
+      <input
+        type="text"
+        name="nom"
+        placeholder="Nom"
+        required
+      >
 
-        <input class="form-control mb-2"
-               name="email"
-               type="email"
-               placeholder="Email"
-               required>
+      <input
+        type="text"
+        name="pseudo"
+        placeholder="Pseudo"
+        required
+      >
 
-        <input class="form-control mb-2"
-               name="password"
-               type="password"
-               placeholder="Mot de passe"
-               required>
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        required
+      >
 
-        <input class="form-control mb-3"
-               name="confirm"
-               type="password"
-               placeholder="Confirmation"
-               required>
+      <input
+        type="password"
+        name="password"
+        placeholder="Mot de passe"
+        required
+      >
 
-        <!-- reCAPTCHA v2 -->
-        <div class="g-recaptcha mb-3"
-             data-sitekey="6Ld0GlssAAAAAHLBmEi-bB9vXrPbv1vYF_foDuvk">
-        </div>
+      <input
+        type="password"
+        name="confirm"
+        placeholder="Confirmation du mot de passe"
+        required
+      >
 
-        <button type="submit" class="btn btn-success">
-            Créer le compte
-        </button>
+      <button type="submit" class="btn-primary">
+        Créer le compte
+      </button>
 
-        <a href="login.php" class="btn btn-primary ms-2">
-            Connexion
-        </a>
+      <a href="login.php" class="auth-link">
+        Déjà un compte ? Connexion
+      </a>
 
     </form>
-</div>
+
+  </section>
+</main>
+
+<script>
+document.getElementById('signupForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    grecaptcha.execute('<?= RECAPTCHA_SITE_KEY ?>', { action: 'signup' })
+        .then(function (token) {
+            document.getElementById('recaptcha_token').value = token;
+            e.target.submit();
+        });
+});
+</script>

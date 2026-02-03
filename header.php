@@ -38,8 +38,11 @@ cookie_notice();
         <a class="logout" href="/views/backend/security/login.php?action=logout">
           Déconnexion
         </a>
+      <?php else: ?>
+        <a class="login" href="/views/backend/security/login.php">
+          Connexion
+        </a>
       <?php endif; ?>
     </nav>
-
   </div>
 </header>

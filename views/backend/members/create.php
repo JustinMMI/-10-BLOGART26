@@ -102,7 +102,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur
 
                 <div class="form-group mt-2">
                     <a href="list.php" class="btn btn-primary">List</a>
-                    <button type="submit" class="btn btn-success">Confirmer la création</button>
+                    <button type="submit" class="btn btn-success">Confirmer Create?</button>
                 </div>
 
             </form>
