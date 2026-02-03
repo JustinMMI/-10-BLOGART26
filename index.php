@@ -48,7 +48,7 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
     <!-- SIDEBAR -->
     <aside class="featured-sidebar">
 
-      <div class="sidebar-box sidebar-dark">
+      <div class="sidebar-box sidebar-red">
         <h4>Événements</h4>
         <ul>
           <li>BON ! Festival gourmand</li>
