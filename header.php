@@ -24,6 +24,7 @@ cookie_notice();
     </div>
 
     <nav class="header-nav">
+      <a href="/">Accueil</a>
 
       <?php if (!empty($_SESSION['user']) && $_SESSION['user']['statut'] === 'Administrateur'): ?>
         <a href="/views/backend/dashboard.php">Admin</a>
