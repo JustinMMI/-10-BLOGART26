@@ -73,7 +73,7 @@ if ($_SESSION['user']['statut'] !== 'Administrateur') {
                             <td>
                                 <a href="/views/backend/comments/list.php" class="btn btn-primary">List</a>
                                 </td>
-                            <td>Gestion côté front et côté back, modération. Utilisation de mise en forme (emojies...)</td>
+                            <td>Gestion côté front et côté back, modération. Utilisation de mise en forme (emojis...)</td>
                         </tr>
                         <tr>
                             <td>Likes</td>
