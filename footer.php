@@ -9,16 +9,6 @@
       </p>
     </div>
 
-    <div class="footer-links">
-      <a href="/">Accueil</a>
-      <a href="/views/frontend/articles-list.php">Articles</a>
-      <a href="/views/frontend/contact.php">Contact</a>
-
-      <?php if (!empty($_SESSION['user'])): ?>
-        <a href="/views/frontend/profile.php">Mon profil</a>
-      <?php endif; ?>
-    </div>
-
     <div class="footer-bottom">
       <p>
         &copy; 2026 Bordeaux Gastronomie — Tous droits réservés
