@@ -33,6 +33,12 @@ $canDelete = ($nbLiens == 0);
 <div class="container">
     <h1>Suppression Mot-clé</h1>
 
+    <?php if (isset($_GET['success'])): ?>
+        <div class="alert alert-success">
+            <?= htmlspecialchars($_GET['success']); ?>
+        </div>
+    <?php endif; ?>
+
     <form action="<?= ROOT_URL ?>/api/keywords/delete.php" method="post">
 
         <input type="hidden" name="numMotCle" value="<?= $numMotCle ?>">
@@ -57,6 +63,11 @@ $canDelete = ($nbLiens == 0);
                 <button type="button" class="btn btn-secondary" disabled>
                     Veuillez d’abord supprimer tous les liens associés à ce mot-clé
                 </button>
+                <a href="<?= ROOT_URL ?>/api/keywords/delete.php?numMotCle=<?= $numMotCle ?>&unlink=1"
+                   class="btn btn-warning ms-2"
+                   onclick="return confirm('Délier ce mot-clé de tous les articles ?');">
+                    Délier le mot-clé de tous les articles
+                </a>
             <?php endif; ?>
         </div>
 

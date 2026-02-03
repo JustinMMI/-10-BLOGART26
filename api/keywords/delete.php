@@ -8,6 +8,21 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur
     exit;
 }
 
+// Délier un mot-clé de tous ses articles
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['numMotCle']) && isset($_GET['unlink'])) {
+    $numMotCle = (int)($_GET['numMotCle'] ?? 0);
+
+    if ($numMotCle <= 0) {
+        header('Location: ../../views/backend/keywords/list.php?error=Donnée invalide');
+        exit;
+    }
+
+    sql_delete('MOTCLEARTICLE', "numMotCle = $numMotCle");
+
+    header('Location: ../../views/backend/keywords/delete.php?numMotCle=' . $numMotCle . '&success=' . urlencode('Mot-clé délié de tous les articles'));
+    exit;
+}
+
 $numMotCle = (int)($_POST['numMotCle'] ?? 0);
 
 if ($numMotCle <= 0) {

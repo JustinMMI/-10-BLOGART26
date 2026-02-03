@@ -39,10 +39,23 @@ $nbComments = sql_select(
     "COUNT(*) AS total",
     "numArt = $numArt"
 )[0]['total'];
+
+// Likes
+$nbLikes = sql_select(
+    "LIKEART",
+    "COUNT(*) AS total",
+    "numArt = $numArt"
+)[0]['total'];
 ?>
 
 <div class="container">
     <h1>Suppression Article</h1>
+
+    <?php if (isset($_GET['success'])): ?>
+        <div class="alert alert-success">
+            <?= htmlspecialchars($_GET['success']); ?>
+        </div>
+    <?php endif; ?>
 
     <form action="<?= ROOT_URL . '/api/articles/delete.php'; ?>" method="post">
 
@@ -138,10 +151,26 @@ $nbComments = sql_select(
             <p class="text-danger fw-bold">
                 Remarque : Suppression impossible, il existe des commentaires associés à cet article.
             </p>
+            <a href="<?= ROOT_URL . '/api/comments/delete.php?numArt=' . $numArt; ?>"
+               class="btn btn-warning btn-sm"
+               onclick="return confirm('Supprimer tous les commentaires de cet article ?');">
+                Supprimer tous les commentaires
+            </a>
+        <?php endif; ?>
+
+        <?php if ($nbLikes > 0): ?>
+            <p class="text-danger fw-bold mt-3">
+                Remarque : Suppression impossible, il existe des likes associés à cet article.
+            </p>
+            <a href="<?= ROOT_URL . '/api/likes/delete.php?numArt=' . $numArt; ?>"
+               class="btn btn-warning btn-sm"
+               onclick="return confirm('Supprimer tous les likes de cet article ?');">
+                Supprimer tous les likes
+            </a>
         <?php endif; ?>
 
         <a href="list.php" class="btn btn-primary">List</a>
-        <button class="btn btn-danger" <?= $nbComments > 0 ? 'disabled' : '' ?>>
+        <button class="btn btn-danger" <?= ($nbComments > 0 || $nbLikes > 0) ? 'disabled' : '' ?> >
             Confirmer Delete ?
         </button>
 

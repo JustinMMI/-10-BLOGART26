@@ -14,6 +14,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['numMemb']) && !isset($_
     }
 }
 
+// Suppression tous les commentaires d'un article
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['numArt']) && !isset($_GET['numCom'])) {
+    $numArt = (int) ($_GET['numArt'] ?? 0);
+
+    if ($numArt > 0) {
+        sql_delete('COMMENT', 'numArt = ' . $numArt);
+        header('Location: /views/backend/articles/delete.php?numArt=' . $numArt . '&success=' . urlencode('Tous les commentaires de l\'article ont été supprimés'));
+        exit;
+    }
+}
+
 if (
     empty($_POST['numCom']) ||
     empty($_POST['redirect'])

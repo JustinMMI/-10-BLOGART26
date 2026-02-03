@@ -33,6 +33,12 @@ $canDelete = ($nbArticles == 0);
 <div class="container">
     <h1>Suppression Thématique</h1>
 
+    <?php if (isset($_GET['success'])): ?>
+        <div class="alert alert-success">
+            <?= htmlspecialchars($_GET['success']); ?>
+        </div>
+    <?php endif; ?>
+
     <form action="<?= ROOT_URL ?>/api/thematiques/delete.php" method="post">
 
         <input type="hidden" name="numThem" value="<?= $numThem ?>">
@@ -57,6 +63,11 @@ $canDelete = ($nbArticles == 0);
                 <button type="button" class="btn btn-secondary" disabled>
                     Veuillez d’abord supprimer tous les articles liés à cette thématique
                 </button>
+                <a href="<?= ROOT_URL ?>/api/thematiques/delete.php?numThem=<?= $numThem ?>&deleteArticles=1"
+                   class="btn btn-warning ms-2"
+                   onclick="return confirm('Voulez vous vraiment supprimer tous les articles liés à cette thématique ? /!\\ ATTENTION /!\\ Cela supprimera également les commentaires et les likes liés à ces derniers.');">
+                    Supprimer tous les articles liés à cette thématique
+                </a>
             <?php endif; ?>
         </div>
 
