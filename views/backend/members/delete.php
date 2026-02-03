@@ -33,21 +33,31 @@ if ($numMemb) {
 
             <?php if (isset($_GET['error'])) { ?>
                 <div class="alert alert-danger">
-                    <?php echo htmlspecialchars($_GET['error']); 
-                    if (isset($_GET['error'])) { ?>
-                        <div class="alert alert-danger">
-                            <?php echo htmlspecialchars($_GET['error']); 
-                            echo ?>
-                        </div>
-                    <?php } ?>
-        
+                    <?php echo htmlspecialchars($_GET['error']); ?>
+                </div>
+
+                <?php 
+                // Si le message d'erreur contient "commentaires" ou "likes", afficher les boutons de suppression
+                $errorMsg = $_GET['error'];
+                $hasComments = strpos($errorMsg, 'commentaires') !== false;
+                $hasLikes = strpos($errorMsg, 'likes') !== false;
+                
+                if ($hasComments || $hasLikes) { 
+                ?>
                     <div class="alert alert-warning">
-                        <p><strong>Actions supplémentaires :</strong></p>
-                        <a href="<?php echo ROOT_URL . '/api/members/delete-comments.php?numMemb=' . urlencode($membre['numMemb']); ?>" class="btn btn-warning btn-sm" onclick="return confirm('Supprimer tous les commentaires du membre ?');">Supprimer tous les commentaires</a>
-                        <a href="<?php echo ROOT_URL . '/api/members/delete-likes.php?numMemb=' . urlencode($membre['numMemb']); ?>" class="btn btn-warning btn-sm" onclick="return confirm('Supprimer tous les likes du membre ?');">Supprimer tous les likes</a>
+                        <p><strong>Actions supplémentaires requises :</strong></p>
+                        <?php if ($hasComments) { ?>
+                            <a href="javascript:deleteComments(<?php echo $membre['numMemb']; ?>)" class="btn btn-warning btn-sm">
+                                <i class="fas fa-trash"></i> Supprimer les commentaires
+                            </a>
+                        <?php } ?>
+                        <?php if ($hasLikes) { ?>
+                            <a href="javascript:deleteLikes(<?php echo $membre['numMemb']; ?>)" class="btn btn-warning btn-sm">
+                                <i class="fas fa-trash"></i> Supprimer les likes
+                            </a>
+                        <?php } ?>
                     </div>
-                </div>
-                </div>
+                <?php } ?>
             <?php } ?>
         </div>
 
@@ -94,6 +104,18 @@ if ($numMemb) {
 </div>
 
 <script>
+function deleteComments(numMemb) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer tous les commentaires de ce membre ?')) {
+        window.location.href = '<?php echo ROOT_URL; ?>/api/comments/delete.php?numMemb=' + numMemb;
+    }
+}
+
+function deleteLikes(numMemb) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer tous les likes de ce membre ?')) {
+        window.location.href = '<?php echo ROOT_URL; ?>/api/likes/delete.php?numMemb=' + numMemb;
+    }
+}
+
 document.querySelector('form').addEventListener('submit', function (e) {
     e.preventDefault();
 
