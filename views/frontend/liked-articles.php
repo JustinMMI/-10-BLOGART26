@@ -42,78 +42,62 @@ if (isset($_GET['success'])) {
 }
 ?>
 
-<main class="auth-page">
-    <section class="auth-card">
-        <h2 class="auth-title">Mes articles likés</h2>
+<main class="liked-page">
 
-        <?php if ($message): ?>
-            <div class="auth-success"><?= htmlspecialchars($message) ?></div>
-        <?php endif; ?>
+  <link rel="stylesheet" href="/src/css/liked-articles.css">
 
-        <?php if ($error): ?>
-            <div class="auth-error"><?= htmlspecialchars($error) ?></div>
-        <?php endif; ?>
+  <section class="liked-hero">
+    <h1>Mes coups de cœur</h1>
+    <span class="liked-separator"></span>
+    <p>Les articles que vous avez choisis de garder en mémoire</p>
+  </section>
 
-        <div class="liked-articles-container">
-            <?php if (!empty($likedArticles)): ?>
-                
-                <?php if (!empty($likedArticles)): ?>
-                    <div class="articles-section">
-                        <h3>Articles aimés</h3>
-                        <div class="articles-list">
-                            <?php foreach ($likedArticles as $article): ?>
-                                <div class="article-card">
-                                    <div class="article-header">
-                                        <h4><?= htmlspecialchars($article['libTitrArt']) ?></h4>
-                                    </div>
-                                    <p class="article-chapo"><?= htmlspecialchars($article['libChapoArt']) ?></p>
-                                    <div class="article-actions">
-                                        <a href="/views/frontend/articles/article1.php?numArt=<?= $article['numArt'] ?>" class="btn btn-primary">Lire l'article</a>
-                                        <form method="POST" style="display: inline;">
-                                            <input type="hidden" name="action" value="removeLike">
-                                            <input type="hidden" name="numArt" value="<?= $article['numArt'] ?>">
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir retirer ce like ?');">Retirer mon like</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                <?php endif; ?>
+  <section class="liked-timeline container">
 
-                <?php if (!empty($dislikedArticles)): ?>
-                    <div class="articles-section">
-                        <h3>Articles non aimés</h3>
-                        <div class="articles-list">
-                            <?php foreach ($dislikedArticles as $article): ?>
-                                <div class="article-card">
-                                    <div class="article-header">
-                                        <h4><?= htmlspecialchars($article['libTitrArt']) ?></h4>
-                                        <span class="badge badge-danger">👎 Non aimé</span>
-                                    </div>
-                                    <p class="article-chapo"><?= htmlspecialchars($article['libChapoArt']) ?></p>
-                                    <div class="article-actions">
-                                        <a href="/views/frontend/articles/article1.php?numArt=<?= $article['numArt'] ?>" class="btn btn-primary">Lire l'article</a>
-                                        <form method="POST" style="display: inline;">
-                                            <input type="hidden" name="action" value="removeLike">
-                                            <input type="hidden" name="numArt" value="<?= $article['numArt'] ?>">
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir retirer ce vote ?');">Retirer mon vote</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                <?php endif; ?>
+    <?php if (!empty($likedArticles)): ?>
+      <div class="timeline">
 
-            <?php else: ?>
-                <div class="empty-state">
-                    <p>Vous n'avez encore aimé aucun article.</p>
-                    <a href="articles-list.php" class="btn btn-primary">Découvrir les articles</a>
-                </div>
-            <?php endif; ?>
-        </div>
-    </section>
+        <?php foreach ($likedArticles as $article): ?>
+          <article class="timeline-item">
+
+            <div class="timeline-marker">
+              ♥
+            </div>
+
+            <div class="timeline-content">
+              <h2><?= htmlspecialchars($article['libTitrArt']) ?></h2>
+
+              <p><?= htmlspecialchars($article['libChapoArt']) ?></p>
+
+              <div class="timeline-actions">
+                <a href="/views/frontend/articles/article1.php?numArt=<?= $article['numArt'] ?>">
+                  Lire l’article →
+                </a>
+
+                <form method="POST">
+                  <input type="hidden" name="action" value="removeLike">
+                  <input type="hidden" name="numArt" value="<?= $article['numArt'] ?>">
+                  <button type="submit">
+                    Retirer le like
+                  </button>
+                </form>
+              </div>
+            </div>
+
+          </article>
+        <?php endforeach; ?>
+
+      </div>
+    <?php else: ?>
+      <div class="liked-empty">
+        <p>Vous n’avez encore aimé aucun article.</p>
+        <a href="/views/frontend/articles-list.php">Découvrir les articles →</a>
+      </div>
+    <?php endif; ?>
+
+  </section>
 </main>
+
+
 
 <?php require_once '../../footer.php'; ?>
