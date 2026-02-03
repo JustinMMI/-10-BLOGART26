@@ -150,25 +150,25 @@ $urlArticle = ROOT_URL . '/views/frontend/articles/article1.php?numArt=' . $arti
 $encodedUrl = urlencode($urlArticle);
 $encodedTitle = urlencode($titreArticle);
 ?>
-<div class="social-share">
-  <div class="container mt-5">
-    <p class="mt-5">Partager cet article :</p>
-    <a href="https://www.facebook.com/sharer/sharer.php?u=<?= $encodedUrl ?>"
-      target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-        Facebook
-    </a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= $encodedUrl ?>&title=<?= $encodedTitle ?>"
-      target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-        LinkedIn
-    </a>
+<div class="container mt-5">
+  <p class="mt-5">Partager cet article :</p>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=<?= $encodedUrl ?>"
+    target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+      Facebook
+  </a>
 
-    <a href="https://api.whatsapp.com/send?text=<?= $encodedTitle ?>%20<?= $encodedUrl ?>"
-      target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-        WhatsApp
-    </a>
-  </div>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= $encodedUrl ?>&title=<?= $encodedTitle ?>"
+    target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+      LinkedIn
+  </a>
+
+  <a href="https://api.whatsapp.com/send?text=<?= $encodedTitle ?>%20<?= $encodedUrl ?>"
+    target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+      WhatsApp
+  </a>
 </div>
+
 
 
 
