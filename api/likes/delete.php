@@ -5,14 +5,33 @@ require_once '../../functions/query/insert.php';
 require_once '../../functions/query/select.php';
 require_once '../../functions/query/delete.php';
 
-$numMemb = $_POST['numMemb'];
-$numArt = $_POST['numArt'];
-
-sql_delete("likeart", "numMemb='$numMemb' AND numArt='$numArt'");
-
-if (isset($_POST['frontend'])) {
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
-} else {
-    header('Location: ../../views/backend/likes/list.php');
+// Suppression tous likes
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['numMemb']) && !isset($_GET['numArt'])) {
+    $numMemb = (int)($_GET['numMemb'] ?? 0);
+    
+    if ($numMemb > 0) {
+        sql_delete("LIKEART", "numMemb = $numMemb");
+        header('Location: ../../views/backend/members/delete.php?numMemb=' . $numMemb . '&success=' . urlencode('Tous les likes du membre ont été supprimés'));
+        exit;
+    }
 }
-exit();
+
+// Suppression normale
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $numMemb = (int)($_POST['numMemb'] ?? 0);
+    $numArt = (int)($_POST['numArt'] ?? 0);
+
+    if ($numMemb > 0 && $numArt > 0) {
+        sql_delete("LIKEART", "numMemb = $numMemb AND numArt = $numArt");
+
+        if (isset($_POST['frontend'])) {
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+        } else {
+            header('Location: ../../views/backend/likes/list.php');
+        }
+        exit;
+    }
+}
+
+exit;
+?>

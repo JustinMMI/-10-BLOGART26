@@ -48,27 +48,33 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
     <!-- SIDEBAR -->
     <aside class="featured-sidebar">
 
-      <div class="sidebar-box sidebar-red">
+      <div class="sidebar-box sidebar-red coins-dore">
+        <span class="coin-tl"></span>
+        <span class="coin-tr"></span>
+        <span class="coin-bl"></span>
+        <span class="coin-br"></span>
         <h4>Événements</h4>
-        <div class = 'trait-dore'></div>
+        <div class="trait-dore"></div>
         <ul>
           <li>BON ! Festival gourmand</li>
           <li>Gourmet Business meeting</li>
           <li>Place de la comédie à Bordeaux</li>
           <li>Marché des Capucins – Rencontre avec les producteurs</li>
         </ul>
+        <div class="trait-dore-petit"></div>
         <a class="sidebar-link" href="#">Voir tous →</a>
       </div>
 
       <div class="sidebar-box sidebar-light">
         <h4>Acteurs Clés</h4>
-        <div class = 'trait-dore'></div>
+        <div class="trait-dore"></div>
         <ul>
           <li>Les étoiles qui illuminent Bordeaux</li>
           <li>Sucré – À la croisée de l’art et des saveurs</li>
           <li>Trompe l’œil (Viviente Andrieux)</li>
           <li>Les jeunes chefs qui révolutionnent la ville</li>
         </ul>
+        <div class="trait-dore-petit"></div>
         <a class="sidebar-link" href="#">Voir tous →</a>
       </div>
 
@@ -81,6 +87,7 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
           <li>Le chapon Fin / L'élegance dans une grotte</li>
           <li>Les producteurs fournissant les restaurants gastronomiques</li>
         </ul>
+        <div class="trait-dore-petit"></div>
         <a class="sidebar-link" href="#">Voir tous →</a>
       </div>
     </aside>

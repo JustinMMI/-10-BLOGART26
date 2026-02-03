@@ -1,138 +1,120 @@
 <?php
 require_once '../../../header.php';
 
-$numArt = (int) ($_GET['numArt'] ?? 0);
+$numArt = (int)($_GET['numArt'] ?? 0);
 $article = null;
 
-// ---------- ARTICLE ----------
 if ($numArt > 0) {
-    $article = sql_select(
-        "ARTICLE",
-        "numArt, libTitrArt, libChapoArt, dtCreaArt",
-        "numArt = $numArt"
-    );
+    $article = sql_select("ARTICLE", "numArt, libTitrArt, libChapoArt, dtCreaArt", "numArt = $numArt");
     $article = $article[0] ?? null;
 }
 
-// ---------- LIKE ----------
 $userLiked = false;
 $numMemb = $_SESSION['user']['id'] ?? null;
 
 if ($numMemb && $article) {
-    $resultCheck = sql_select(
-        "likeart",
-        "*",
-        "numMemb = $numMemb AND numArt = $numArt"
-    );
+    $resultCheck = sql_select("LIKEART", "*", "numMemb = $numMemb AND numArt = $numArt");
+    $userLiked = !empty($resultCheck);
+}
 
-    if (!empty($resultCheck)) {
-        $userLiked = true;
-    }
+$commentairesArt = [];
+if ($article) {
+    $commentairesArt = sql_select("COMMENT", "*", "numArt = $numArt", null, "dtCreaCom DESC");
 }
 ?>
 
-<div class="container mt-4">
+<link rel="stylesheet" href="/src/css/article1.css">
 
-<?php if ($article): ?>
+<main class="article-page">
+  <div class="article-container">
 
-    <h1><?= htmlspecialchars($article['libTitrArt']); ?></h1>
-    <p class="text-muted">Publié le <?= htmlspecialchars($article['dtCreaArt']); ?></p>
-    <p><?= nl2br(htmlspecialchars($article['libChapoArt'])); ?></p>
+    <a class="back-link" href="<?= ROOT_URL ?>/views/frontend/articles-list.php">← Retour aux articles</a>
 
-    <div class="d-flex gap-2 mb-3">
+    <?php if ($article): ?>
 
-        <?php if (isset($_SESSION['user'])): ?>
-            <a class="btn btn-primary"
-               href="<?= ROOT_URL ?>/views/frontend/comments/commentaire.php?numArt=<?= $article['numArt']; ?>">
-                Commenter cet article
-            </a>
-        <?php else: ?>
-            <a class="btn btn-outline-primary"
-               href="<?= ROOT_URL ?>/views/backend/security/login.php">
-                Se connecter pour commenter
-ù
-            </a>
-        <?php endif; ?>
+      <section class="article-layout">
 
-        <!-- LIKE -->
-        <div class="like-container">
-
-        <?php if (isset($_SESSION['user'])): ?>
-
-            <?php if ($userLiked): ?>
-                <form action="<?= ROOT_URL ?>/api/likes/create.php" method="POST">
-                    <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
-                    <input type="hidden" name="numArt" value="<?= $numArt ?>">
-                    <input type="hidden" name="frontend" value="true">
-                    <button type="submit" class="btn btn-danger btn-sm">
-                        ❤️ Je n'aime plus
-                    </button>
-                </form>
-            <?php else: ?>
-                <form action="<?= ROOT_URL ?>/api/likes/create.php" method="POST">
-                    <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
-                    <input type="hidden" name="numArt" value="<?= $numArt ?>">
-                    <input type="hidden" name="frontend" value="true">
-                    <button type="submit" class="btn btn-outline-danger btn-sm">
-                        🤍 J'aime
-                    </button>
-                </form>
-            <?php endif; ?>
-
-        <?php else: ?>
-            <small class="text-muted">
-                <a href="<?= ROOT_URL ?>/views/backend/security/login.php">Se connecter</a> pour liker
-            </small>
-        <?php endif; ?>
-
-        </div>
-    </div>
-
-    <!-- ---------- COMMENTAIRES ---------- -->
-    <hr>
-    <h4>Commentaires</h4>
-
-    <?php
-    $commentairesArt = sql_select(
-        "COMMENT",
-        "*",
-        "numArt = $numArt"
-    );
-
-    if (!empty($commentairesArt)):
-        foreach ($commentairesArt as $commentaire):
-
-            // récupération du pseudo depuis MEMBRE
-            $membre = sql_select(
-                "MEMBRE",
-                "pseudoMemb",
-                "numMemb = " . (int)$commentaire['numMemb']
-            );
-
-            $pseudo = $membre[0]['pseudoMemb'] ?? 'Utilisateur supprimé';
-    ?>
-            <div class="border rounded p-3 mb-3">
-                <strong><?= htmlspecialchars($pseudo); ?></strong><br>
-
-                <small class="text-muted">
-                    <?= htmlspecialchars($commentaire['dtCreaCom']); ?>
-                </small>
-
-                <p class="mt-2">
-                    <?= nl2br(htmlspecialchars($commentaire['libCom'])); ?>
-                </p>
+        <article class="article-main">
+          <div class="article-top">
+            <div>
+              <h1 class="article-title"><?= htmlspecialchars($article['libTitrArt']); ?></h1>
+              <div class="article-meta">
+                Publié le <?= htmlspecialchars(date('d/m/Y', strtotime($article['dtCreaArt']))); ?>
+              </div>
             </div>
-    <?php
-        endforeach;
-    else:
-    ?>
-        <p class="text-muted">Aucun commentaire pour cet article.</p>
+
+            <div class="article-actions">
+              <?php if (!empty($_SESSION['user'])): ?>
+                <a class="action-btn" href="<?= ROOT_URL ?>/views/frontend/comments/commentaire.php?numArt=<?= (int)$article['numArt']; ?>">
+                  Commenter
+                </a>
+              <?php else: ?>
+                <a class="action-btn ghost" href="<?= ROOT_URL ?>/views/backend/security/login.php">
+                  Se connecter pour commenter
+                </a>
+              <?php endif; ?>
+
+              <?php if (!empty($_SESSION['user'])): ?>
+                <form action="<?= ROOT_URL ?>/api/likes/create.php" method="POST" class="like-form">
+                  <input type="hidden" name="numMemb" value="<?= (int)$numMemb ?>">
+                  <input type="hidden" name="numArt" value="<?= (int)$numArt ?>">
+                  <input type="hidden" name="frontend" value="true">
+                  <button type="submit" class="like-btn <?= $userLiked ? 'liked' : '' ?>" title="<?= $userLiked ? "Retirer le like" : "Liker" ?>">
+                    <span class="heart"><?= $userLiked ? '♥' : '♡' ?></span>
+                  </button>
+                </form>
+              <?php else: ?>
+                <a class="like-btn ghost" href="<?= ROOT_URL ?>/views/backend/security/login.php" title="Se connecter pour liker">
+                  <span class="heart">♡</span>
+                </a>
+              <?php endif; ?>
+            </div>
+          </div>
+
+          <p class="article-chapo"><?= nl2br(htmlspecialchars($article['libChapoArt'])); ?></p>
+
+          <div class="article-divider"></div>
+
+          <a class="more-link" href="<?= ROOT_URL ?>/views/frontend/articles-list.php">
+            Voir plus d’articles →
+          </a>
+        </article>
+
+        <aside class="comments-panel">
+          <div class="comments-head">
+            <h2>Commentaires</h2>
+            <span class="comments-count"><?= count($commentairesArt) ?></span>
+          </div>
+
+          <?php if (!empty($commentairesArt)): ?>
+            <div class="comments-list">
+              <?php foreach ($commentairesArt as $commentaire): ?>
+                <?php
+                  $membre = sql_select("MEMBRE", "pseudoMemb", "numMemb = " . (int)$commentaire['numMemb']);
+                  $pseudo = $membre[0]['pseudoMemb'] ?? 'Utilisateur supprimé';
+                ?>
+                <div class="comment">
+                  <div class="comment-head">
+                    <strong class="comment-user"><?= htmlspecialchars($pseudo); ?></strong>
+                    <span class="comment-date"><?= htmlspecialchars(date('d/m/Y H:i', strtotime($commentaire['dtCreaCom']))); ?></span>
+                  </div>
+                  <p class="comment-text"><?= nl2br(htmlspecialchars($commentaire['libCom'])); ?></p>
+                </div>
+              <?php endforeach; ?>
+            </div>
+          <?php else: ?>
+            <p class="comments-empty">Aucun commentaire pour cet article.</p>
+          <?php endif; ?>
+
+        </aside>
+
+      </section>
+
+    <?php else: ?>
+      <div class="article-notfound">Article introuvable.</div>
     <?php endif; ?>
 
-<?php else: ?>
-    <div class="alert alert-warning">Article introuvable.</div>
-<?php endif; ?>
-
-</div>
+  </div>
+</main>
 
 <?php require_once '../../../footer.php'; ?>
