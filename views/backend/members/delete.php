@@ -33,7 +33,20 @@ if ($numMemb) {
 
             <?php if (isset($_GET['error'])) { ?>
                 <div class="alert alert-danger">
-                    <?php echo htmlspecialchars($_GET['error']); ?>
+                    <?php echo htmlspecialchars($_GET['error']); 
+                    if (isset($_GET['error'])) { ?>
+                        <div class="alert alert-danger">
+                            <?php echo htmlspecialchars($_GET['error']); 
+                            echo ?>
+                        </div>
+                    <?php } ?>
+        
+                    <div class="alert alert-warning">
+                        <p><strong>Actions supplémentaires :</strong></p>
+                        <a href="<?php echo ROOT_URL . '/api/members/delete-comments.php?numMemb=' . urlencode($membre['numMemb']); ?>" class="btn btn-warning btn-sm" onclick="return confirm('Supprimer tous les commentaires du membre ?');">Supprimer tous les commentaires</a>
+                        <a href="<?php echo ROOT_URL . '/api/members/delete-likes.php?numMemb=' . urlencode($membre['numMemb']); ?>" class="btn btn-warning btn-sm" onclick="return confirm('Supprimer tous les likes du membre ?');">Supprimer tous les likes</a>
+                    </div>
+                </div>
                 </div>
             <?php } ?>
         </div>
