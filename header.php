@@ -51,8 +51,18 @@ $isAuthPage =
     <nav class="header-nav">
       <a href="/">Accueil</a>
 
-      <?php if (!empty($_SESSION['user']) && $_SESSION['user']['statut'] === 'Administrateur'): ?>
-        <a href="/views/backend/dashboard.php">Admin</a>
+      <?php if (
+          !empty($_SESSION['user']) 
+          && (
+              $_SESSION['user']['statut'] === 'Administrateur'
+              || $_SESSION['user']['statut'] === 'Modérateur'
+          )
+      ): ?>
+          <a href="/views/backend/dashboard.php">Admin</a>
+      <?php endif; ?>
+
+      <?php if (!empty($_SESSION['user'])): ?>
+        <a href="/views/frontend/liked-articles.php">Mes articles likés</a>
       <?php endif; ?>
 
       <?php if (!empty($_SESSION['user'])): ?>

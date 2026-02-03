@@ -50,6 +50,7 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
 
       <div class="sidebar-box sidebar-red">
         <h4>Événements</h4>
+        <div class = 'trait-dore'></div>
         <ul>
           <li>BON ! Festival gourmand</li>
           <li>Gourmet Business meeting</li>
@@ -61,6 +62,7 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
 
       <div class="sidebar-box sidebar-light">
         <h4>Acteurs Clés</h4>
+        <div class = 'trait-dore'></div>
         <ul>
           <li>Les étoiles qui illuminent Bordeaux</li>
           <li>Sucré – À la croisée de l’art et des saveurs</li>
@@ -70,8 +72,9 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
         <a class="sidebar-link" href="#">Voir tous →</a>
       </div>
 
-            <div class="sidebar-box sidebar-dark">
+      <div class="sidebar-box sidebar-black">
         <h4>Insolite</h4>
+        <div class = 'trait-dore'></div>
         <ul>
           <li>Dans le noir / Exp. sensorielles: Dégustations l'obscurité</li>
           <li>L'autre petit bois - la forêt au coeur dans la salle</li>
