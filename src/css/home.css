@@ -134,7 +134,7 @@
   font-size: 0.85rem;
 }
 
-.sidebar-dark {
+.sidebar-red {
   background: #6d0f22;
   color: #f3eee3;
 }
@@ -142,6 +142,11 @@
 .sidebar-light {
   background: #fff;
   color: #222;
+}
+
+.sidebar-red {
+  background: #6d0f22;
+  color: #f3eee3;
 }
 
 .sidebar-link {
