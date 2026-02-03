@@ -9,7 +9,13 @@ cookie_notice();
 ?>
 
 <?php
-$isBackend = str_starts_with($_SERVER['REQUEST_URI'], '/views/backend/');
+$uri = $_SERVER['REQUEST_URI'];
+
+$isBackend = str_starts_with($uri, '/views/backend/');
+$isAuthPage =
+    str_contains($uri, '/security/login.php') ||
+    str_contains($uri, '/security/signup.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -21,13 +27,14 @@ $isBackend = str_starts_with($_SERVER['REQUEST_URI'], '/views/backend/');
 
   <link rel="stylesheet" href="/src/css/header.css">
 
-  <?php if ($isBackend): ?>
-    <!-- BACKEND -->
+  <?php if ($isBackend && !$isAuthPage): ?>
+    <!-- BACKEND CLASSIQUE -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <?php else: ?>
-    <!-- FRONT -->
+    <!-- FRONT + LOGIN / SIGNUP -->
     <link rel="stylesheet" href="/src/css/home.css">
   <?php endif; ?>
+
 
   
 </head>
