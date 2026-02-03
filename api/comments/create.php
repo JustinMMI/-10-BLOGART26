@@ -24,8 +24,13 @@ sql_insert(
 	"'$libCom', $numArt, $numMemb, NOW()"
 );
 
-header("Location: /views/frontend/articles/article1.php?numArt=<?= (int) $article['numArt']; ?>");
+$redirect = $_POST['redirect'] ?? '/';
 
+if (!str_starts_with($redirect, '/')) {
+    $redirect = '/';
+}
+
+header('Location: ' . $redirect);
 exit;
 
 

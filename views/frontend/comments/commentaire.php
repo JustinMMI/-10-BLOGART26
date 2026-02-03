@@ -62,6 +62,8 @@ if (isset($_GET['error'])) {
 
 		<button class="btn btn-success">Publier le commentaire</button>
 		<a href="/views/frontend/articles/article1.php?numArt=<?= (int) $article['numArt']; ?>" class="btn btn-secondary">Retour à l'article</a>
+		<input type="hidden" name="redirect"
+       value="/views/frontend/articles/article1.php?numArt=<?= (int)$article['numArt']; ?>">
 	</form>
 </div>
 
