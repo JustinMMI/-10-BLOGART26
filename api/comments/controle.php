@@ -2,13 +2,14 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 require_once '../../functions/ctrlSaisies.php';
 
-$numCom = $_POST['numCom'] ?? null;
-$validation = $_POST['validation'] ?? null; // 1 = valider, 0 = refuser
-$raison = $_POST['RaisonRefus'] ?? null;
+$numCom = intval($_POST['numCom'] ?? 0);
+$validation = intval($_POST['validation'] ?? -1);
+$raison = ctrlSaisies($_POST['RaisonRefus'] ?? '');
 
 if (!$numCom || $validation === null) {
     die("Données manquantes.");
 }
+
 
 $attributs = [
     'attmodOK' => 1,
