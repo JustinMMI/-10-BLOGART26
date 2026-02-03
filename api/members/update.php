@@ -1,17 +1,36 @@
 <?php
-require_once '../../config.php'; 
-require_once '../../functions/query/update.php'; 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 require_once '../../functions/query/select.php';
+require_once '../../functions/query/update.php';
 
-if (empty($_POST['recaptcha_token'])) {
-    header('Location: ' . $_SERVER['HTTP_REFERER'] . '?error=' . urlencode('Captcha manquant'));
+session_start();
+
+if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur') {
+    header('Location: /');
     exit;
 }
 
-$token = $_POST['recaptcha_token'];
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: /views/backend/members/list.php');
+    exit;
+}
+
+$numMemb = (int)($_POST['numMemb'] ?? 0);
+
+if ($numMemb <= 0) {
+    header('Location: /views/backend/members/list.php');
+    exit;
+}
+
+if (empty($_POST['recaptcha_token'])) {
+    header('Location: /views/backend/members/edit.php?numMemb=' . $numMemb . '&error=' . urlencode('Captcha manquant'));
+    exit;
+}
 
 $verify = file_get_contents(
-    "https://www.google.com/recaptcha/api/siteverify?secret=" . "6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU" . "&response=" . $token
+    'https://www.google.com/recaptcha/api/siteverify'
+    . '?secret=' . "6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU"
+    . '&response=' . $_POST['recaptcha_token']
 );
 
 $response = json_decode($verify, true);
@@ -19,76 +38,69 @@ $response = json_decode($verify, true);
 if (
     empty($response['success']) ||
     $response['score'] < 0.5 ||
-    $response['action'] !== 'member_create' ||
+    $response['action'] !== 'member_update' ||
     $response['hostname'] !== $_SERVER['SERVER_NAME']
 ) {
-    header('Location: ' . $_SERVER['HTTP_REFERER'] . '?error=' . urlencode('Captcha invalide'));
+    header('Location: /views/backend/members/edit.php?numMemb=' . $numMemb . '&error=' . urlencode('Captcha invalide'));
     exit;
 }
-if (empty($_POST['recaptcha-response'])) {
-    die("Erreur : Captcha manquant.");
+
+$membre = sql_select('MEMBRE', '*', 'numMemb = ' . $numMemb)[0] ?? null;
+
+if (!$membre) {
+    header('Location: /views/backend/members/list.php?error=' . urlencode('Membre introuvable'));
+    exit;
 }
 
-$url = 'https://www.google.com/recaptcha/api/siteverify';
-$secret = 'TA_CLE_SECRETE_ICI'; 
-$response = $_POST['recaptcha-response'];
-$verify = file_get_contents($url . '?secret=' . $secret . '&response=' . $response);
-$captcha_data = json_decode($verify);
-
-if (!$captcha_data->success || $captcha_data->score < 0.5) {
-    die("Erreur : Vous êtes détecté comme un robot.");
-}
-
-$numMemb = $_POST['numMemb'];
-$prenom = htmlspecialchars($_POST['prenomMemb']);
-$nom = htmlspecialchars($_POST['nomMemb']);
+$prenom = trim($_POST['prenomMemb']);
+$nom = trim($_POST['nomMemb']);
 $numStat = $_POST['numStat'];
-$email = $_POST['eMailMemb'];
-$emailConf = $_POST['eMailMembConf'];
+$email = trim($_POST['eMailMemb']);
+$emailConf = trim($_POST['eMailMembConf']);
 $pass = $_POST['passMemb'];
 $passConf = $_POST['passMembConf'];
 
-$currentMemb = sql_select("MEMBRE", "*", "numMemb = $numMemb")[0];
-if (!$currentMemb) die("Membre introuvable.");
+$finalEmail = $membre['eMailMemb'];
 
-$finalEmail = $currentMemb['eMailMemb']; 
-if ($email != $currentMemb['eMailMemb']) {
+if ($email !== $membre['eMailMemb']) {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        die("Erreur : Format email invalide.");
+        $error = 'Email invalide';
+    } elseif ($email !== $emailConf) {
+        $error = 'Emails différents';
+    } else {
+        $check = sql_select('MEMBRE', 'numMemb', "eMailMemb = '$email' AND numMemb != $numMemb");
+        if (!empty($check)) {
+            $error = 'Email déjà utilisé';
+        }
+        $finalEmail = $email;
     }
-    if ($email !== $emailConf) {
-        die("Erreur : Les deux emails ne correspondent pas.");
-    }
-    $check = sql_select("MEMBRE", "numMemb", "eMailMemb = '$email' AND numMemb != $numMemb");
-    if (count($check) > 0) {
-        die("Erreur : Cet email est déjà utilisé.");
-    }
-    $finalEmail = $email;
 }
 
-$finalPass = $currentMemb['passMemb']; 
+$finalPass = $membre['passMemb'];
 
 if (!empty($pass)) {
     $regex = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$/';
-    
     if (!preg_match($regex, $pass)) {
-        die("Erreur : Le mot de passe doit faire 8 à 15 caractères, avec Majuscule, minuscule et chiffre.");
-    }
-    if ($pass !== $passConf) {
-        die("Erreur : Les mots de passe ne correspondent pas.");
+        $error = 'Mot de passe invalide';
+    } elseif ($pass !== $passConf) {
+        $error = 'Mots de passe différents';
     }
     $finalPass = password_hash($pass, PASSWORD_DEFAULT);
 }
 
-$dtModif = date("Y-m-d H:i:s");
+if (isset($error)) {
+    header('Location: /views/backend/members/edit.php?numMemb=' . $numMemb . '&error=' . urlencode($error));
+    exit;
+}
+
+$now = date('Y-m-d H:i:s');
 
 update(
-    "MEMBRE", 
-    ["prenomMemb", "nomMemb", "eMailMemb", "passMemb", "numStat", "dtModifMemb"], 
-    [$prenom, $nom, $finalEmail, $finalPass, $numStat, $dtModif], 
-    "numMemb = $numMemb"
+    'MEMBRE',
+    ['prenomMemb', 'nomMemb', 'eMailMemb', 'passMemb', 'numStat', 'dtModifMemb'],
+    [$prenom, $nom, $finalEmail, $finalPass, $numStat, $now],
+    'numMemb = ' . $numMemb
 );
 
-header('Location: ../../views/backend/members/list.php');
-exit();
-?>
+header('Location: /views/backend/members/list.php?success=' . urlencode('Membre mis à jour'));
+exit;
