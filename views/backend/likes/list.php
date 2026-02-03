@@ -25,27 +25,30 @@ $likesGroup = array_filter($likes, fn($l) => $l['likeA'] == 1);
 $dislikesGroup = array_filter($likes, fn($l) => $l['likeA'] == 0);
 ?>
 
-<div class="container">
-    <h2>Articles Likes</h2>
+<!-- Bootstrap default layout to display all statuts in foreach -->
+<main class="container my-5">
+    <div class="container">
+        <h2>Articles Likes</h2>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Membre</th>
-                <th>Titre Article</th>
-                <th>Statut</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($likesGroup as $like) { ?>
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td><?= htmlspecialchars($like['pseudoMemb']); ?></td>
-                    <td><?= htmlspecialchars($like['libTitrArt']); ?></td>
-                    <td>like</td>
+                    <th>Membre</th>
+                    <th>Titre Article</th>
+                    <th>Statut</th>
                 </tr>
-            <?php } ?>
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                <?php foreach ($likesGroup as $like) { ?>
+                    <tr>
+                        <td><?= htmlspecialchars($like['pseudoMemb']); ?></td>
+                        <td><?= htmlspecialchars($like['libTitrArt']); ?></td>
+                        <td>like</td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+</main>
 
 <?php require_once '../../../footer.php'; ?>

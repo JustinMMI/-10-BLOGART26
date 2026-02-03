@@ -9,61 +9,64 @@ $adminCount = $rqAdminCount->fetchColumn();
 $currentUserId = $_SESSION['user']['id'] ?? null;
 ?>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Membres</h1>
+<!-- Bootstrap default layout to display all statuts in foreach -->
+<main class="container my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Membres</h1>
 
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Prénom</th>
-                        <th>Nom</th>
-                        <th>Pseudo</th>
-                        <th>Email</th>
-                        <th>Accord RGPD</th>
-                        <th>Statut</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <?php foreach ($membres as $membre) { 
-                        $memberId = $membre['numMemb'] ?? $membre['NumMemb'] ?? null;
-                    ?>
+                <table class="table table-striped">
+                    <thead>
                         <tr>
-                            <td><?php echo $memberId; ?></td>
-                            <td><?php echo $membre['prenomMemb']; ?></td>
-                            <td><?php echo $membre['nomMemb']; ?></td>
-                            <td><?php echo $membre['pseudoMemb']; ?></td>
-                            <td><?php echo $membre['eMailMemb']; ?></td>
-                            <td><?php echo ($membre['accordMemb'] == 1 ? 'Oui' : 'Non'); ?></td>
-                            <td><?php echo $membre['libStat']; ?></td>
-                            <td>
-                                <a href="edit.php?numMemb=<?php echo $memberId; ?>" class="btn btn-warning">Edit</a>
-
-                                <?php
-                                if (
-                                    ($membre['numStat'] == 1 && $adminCount == 1) || ($memberId == $currentUserId)) { ?>
-                                    <button class="btn btn-danger" disabled>
-                                        Suppression impossible !
-                                    </button>
-                                <?php } else { ?>
-                                    <a href="delete.php?numMemb=<?php echo $memberId; ?>" class="btn btn-danger">
-                                        Delete
-                                    </a>
-                                <?php } ?>
-
-                            </td>
+                            <th>Id</th>
+                            <th>Prénom</th>
+                            <th>Nom</th>
+                            <th>Pseudo</th>
+                            <th>Email</th>
+                            <th>Accord RGPD</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
                         </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
+                    </thead>
 
-            <a href="create.php" class="btn btn-success">Create</a>
+                    <tbody>
+                        <?php foreach ($membres as $membre) { 
+                            $memberId = $membre['numMemb'] ?? $membre['NumMemb'] ?? null;
+                        ?>
+                            <tr>
+                                <td><?php echo $memberId; ?></td>
+                                <td><?php echo $membre['prenomMemb']; ?></td>
+                                <td><?php echo $membre['nomMemb']; ?></td>
+                                <td><?php echo $membre['pseudoMemb']; ?></td>
+                                <td><?php echo $membre['eMailMemb']; ?></td>
+                                <td><?php echo ($membre['accordMemb'] == 1 ? 'Oui' : 'Non'); ?></td>
+                                <td><?php echo $membre['libStat']; ?></td>
+                                <td>
+                                    <a href="edit.php?numMemb=<?php echo $memberId; ?>" class="btn btn-warning">Edit</a>
+
+                                    <?php
+                                    if (
+                                        ($membre['numStat'] == 1 && $adminCount == 1) || ($memberId == $currentUserId)) { ?>
+                                        <button class="btn btn-danger" disabled>
+                                            Suppression impossible !
+                                        </button>
+                                    <?php } else { ?>
+                                        <a href="delete.php?numMemb=<?php echo $memberId; ?>" class="btn btn-danger">
+                                            Delete
+                                        </a>
+                                    <?php } ?>
+
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+
+                <a href="create.php" class="btn btn-success">Create</a>
+            </div>
         </div>
     </div>
-</div>
+</main>
 
 <?php include '../../../footer.php'; ?>
