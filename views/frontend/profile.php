@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$error) {
         if (!empty($existingEmail)) {
             $error = "Cet email est déjà utilisé.";
         } else {
-            $updateFields = "prenomMemb = '$prenom', nomMemb = '$nom', eMailMemb = '$email'";
+            $updateFields = "pseudoMemb = '$pseudo', prenomMemb = '$prenom', nomMemb = '$nom', eMailMemb = '$email'";
 
             if (!empty($pass)) {
                 $hashedPass = password_hash($pass, PASSWORD_DEFAULT);
