@@ -14,7 +14,6 @@ require_once '../../../header.php';
                 <th>Titre Article</th>
                 <th>Chapeau Article</th>
                 <th>Statut</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -23,10 +22,6 @@ require_once '../../../header.php';
                 <td>La surprenante reconversion de la base sous-marine</td>
                 <td>Un bâtiment unique chargé d'histoire...</td>
                 <td>like</td>
-                <td>
-                    <a href="edit.php?id1=1&id2=1" class="btn btn-sm btn-warning">Edit</a>
-                    <a href="delete.php?id1=1&id2=1" class="btn btn-sm btn-danger">Delete</a>
-                </td>
             </tr>
             </tbody>
     </table>
