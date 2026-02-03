@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Veuillez valider le captcha.";
     } else {
 
-        $secretKey = '6Ld0GlssAAAAADiS4gh097petnjcA1nTMO1PS-JO';
+        $secretKey = '6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU';
         $captchaResponse = $_POST['g-recaptcha-response'];
 
         $verify = file_get_contents(
