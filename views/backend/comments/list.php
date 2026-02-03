@@ -72,8 +72,6 @@ $suppressionPhysique = $suppressionLogique;
                         <th>Dernière Modification</th>
                         <th>Contenu</th>
                         <th>Publication</th>
-                        <th>Raison refus</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,7 +81,6 @@ $suppressionPhysique = $suppressionLogique;
                             <td><?= $comment['dtModCom']; ?></td>
                             <td><?= $comment['libCom']; ?></td>
                             <td><?= $comment['delLogiq'] ? 'Masqué' : 'Publié'; ?></td>
-                            <td><?= $comment['notifComKOAff']; ?></td>
                         </tr>
                     <?php } ?>
                 </tbody>
@@ -101,7 +98,6 @@ $suppressionPhysique = $suppressionLogique;
                         <th>Contenu</th>
                         <th>Publication</th>
                         <th>Raison refus</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -112,8 +108,6 @@ $suppressionPhysique = $suppressionLogique;
                             <td><?= $comment['libCom']; ?></td>
                             <td>REFUS</td>
                             <td><?= $comment['notifComKOAff']; ?></td>
-                            <td>
-                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>
