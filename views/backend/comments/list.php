@@ -29,7 +29,6 @@ $comments = sql_select(
 $enAttente = array_filter($comments, fn($c) => $c['delLogiq'] == 0 && $c['attModOK'] == 0);
 $dejaControle = array_filter($comments, fn($c) => $c['delLogiq'] == 0 && $c['attModOK'] == 1);
 $suppressionLogique = array_filter($comments, fn($c) => $c['delLogiq'] == 1);
-$suppressionPhysique = $suppressionLogique;
 ?>
 
 <div class="container">
@@ -72,6 +71,7 @@ $suppressionPhysique = $suppressionLogique;
                         <th>Dernière Modification</th>
                         <th>Contenu</th>
                         <th>Publication</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,6 +81,9 @@ $suppressionPhysique = $suppressionLogique;
                             <td><?= $comment['dtModCom']; ?></td>
                             <td><?= $comment['libCom']; ?></td>
                             <td><?= $comment['delLogiq'] ? 'Masqué' : 'Publié'; ?></td>
+                            <td>
+                                <a href="delete.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-danger">Delete logique</a>
+                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>
@@ -98,6 +101,7 @@ $suppressionPhysique = $suppressionLogique;
                         <th>Contenu</th>
                         <th>Publication</th>
                         <th>Raison refus</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -108,37 +112,8 @@ $suppressionPhysique = $suppressionLogique;
                             <td><?= $comment['libCom']; ?></td>
                             <td>REFUS</td>
                             <td><?= $comment['notifComKOAff']; ?></td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Suppression Physique</h1>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Pseudo</th>
-                        <th>Date suppr logique</th>
-                        <th>Contenu</th>
-                        <th>Publication</th>
-                        <th>Raison refus</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($suppressionPhysique as $comment) { ?>
-                        <tr>
-                            <td><?= $comment['pseudoMemb']; ?></td>
-                            <td><?= $comment['dtModCom']; ?></td>
-                            <td><?= $comment['libCom']; ?></td>
-                            <td>REFUS</td>
-                            <td><?= $comment['notifComKOAff']; ?></td>
                             <td>
-                                <a href="delete.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-danger">Delete</a>
+                                <a href="delete.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-danger">Delete Physique</a>
                             </td>
                         </tr>
                     <?php } ?>

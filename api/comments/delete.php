@@ -1,37 +1,30 @@
 <?php
-require '../../header.php';
-require_once '../../config.php';
-require_once '../../functions/query/insert.php';
-require_once '../../functions/query/select.php';
-require_once '../../functions/query/delete.php';
+session_start();
+require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/ctrlSaisies.php';
 
-// Suppression tous commentaires
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['numMemb']) && !isset($_GET['numArt'])) {
-    $numMemb = (int)($_GET['numMemb'] ?? 0);
-    
-    if ($numMemb > 0) {
-        sql_delete("COMMENT", "numMemb = $numMemb");
-        header('Location: ../../views/backend/members/delete.php?numMemb=' . $numMemb . '&success=' . urlencode('Tous les commentaires du membre ont été supprimés'));
-        exit;
-    }
+if (
+    empty($_POST['numCom']) ||
+    empty($_POST['redirect'])
+) {
+    header('Location: /');
+    exit;
 }
 
-// Suppression normale
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $numMemb = (int)($_POST['numMemb'] ?? 0);
-    $numArt = (int)($_POST['numArt'] ?? 0);
+$numCom   = (int) $_POST['numCom'];
+$redirect = $_POST['redirect'];
 
-    if ($numMemb > 0 && $numArt > 0) {
-        sql_delete("COMMENT", "numMemb = $numMemb AND numArt = $numArt");
-
-        if (isset($_POST['frontend'])) {
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-        } else {
-            header('Location: ../../views/backend/comments/list.php');
-        }
-        exit;
-    }
+if (!str_starts_with($redirect, '/')) {
+    $redirect = '/';
 }
 
+$resultat = sql_delete('COMMENT', 'numCom = ' . $numCom);
+
+if ($resultat === true) {
+    header('Location: ' . $redirect . '?message=deleted');
+} else {
+    header('Location: ' . $redirect . '?message=error');
+}
 exit;
-?>
+
+

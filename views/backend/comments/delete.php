@@ -1,47 +1,53 @@
 <?php
 include '../../../header.php';
+?>
 
-// Vérifier que numCom existe et est valide
+<?php
+// Vérifier que numCom est fourni et est un nombre
 if (!isset($_GET['numCom']) || !is_numeric($_GET['numCom'])) {
     echo '<div class="alert alert-danger" role="alert">Erreur : ID de commentaire invalide.</div>';
     exit;
 }
 
+// Récupérer et sécuriser l'ID
 $idCommentaire = (int)$_GET['numCom'];
-$commentaire = sql_select('COMMENT', '*', 'numCom = ' . $idCommentaire);
-
-// Vérifier que le commentaire existe
-if (empty($commentaire)) {
-    echo '<div class="alert alert-danger" role="alert">Commentaire non trouvé.</div>';
+if ($idCommentaire <= 0) {
+    echo '<div class="alert alert-danger">ID du commentaire invalide.</div>';
     exit;
 }
 
-if (is_array($commentaire) && !empty($commentaire)) {
-    $commentaire = $commentaire[0];
+// Récupérer le commentaire depuis la BDD
+$commentaire = sql_select('COMMENT', '*', 'numCom = ' . $idCommentaire);
+if (empty($commentaire)) {
+    echo '<div class="alert alert-danger">Commentaire non trouvé.</div>';
+    exit;
 }
-
+$commentaire = $commentaire[0];
 ?>
-<form method="POST" action="delete.php?numCom=<?php echo $idCommentaire; ?>">
-    <div class="form-group">
-        <label for="libCom">Commentaire</label>
-        <textarea class="form-control" id="libCom" rows="3" disabled><?php echo ($commentaire['libCom']); ?></textarea>
-    </div>
-    
-    <button type="submit" name="confirmer" class="btn btn-danger">Supprimer le commentaire</button>
-    <a href="list.php" class="btn btn-secondary">Annuler</a>
-</form>
 
-<?php
-if (isset($_POST['confirmer'])) {
-    
-    // Supprimer le commentaire
-    $resultat = sql_delete('COMMENT', 'numCom = ' . $idCommentaire);
-    
-    if ($resultat === true) {
-        header('Location: list.php?message=Commentaire supprimé avec succès');
-        exit;
-    } else {
-        echo '<div class="alert alert-danger" role="alert">Erreur lors de la suppression du commentaire.</div>';
-    }
-}
+
+<div class="container">
+    <form method="POST" action="<?= ROOT_URL . '/api/comments/delete.php'; ?>">
+
+    <input type="hidden" name="numCom" value="<?= $commentaire['numCom']; ?>">
+
+    <input type="hidden" name="redirect"
+           value="/views/backend/comments/list.php">
+
+    <div class="form-group">
+        <h2 class="mt-5" for="libCom">Commentaire</h2>
+        <textarea class="form-control mt-3" id="libCom" rows="3" disabled>
+    <?= htmlspecialchars($commentaire['libCom']); ?>
+        </textarea>
+    </div>
+
+    <button type="submit" class="btn btn-danger mt-3">
+        Supprimer le commentaire
+    </button>
+
+    <a href="list.php" class="btn btn-secondary mt-3">Annuler</a>
+    </form>
+</div>
+
+
 
