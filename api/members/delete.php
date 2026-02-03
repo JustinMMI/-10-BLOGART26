@@ -1,86 +1,65 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
-require_once '../../functions/getExistPseudo.php';
-
 session_start();
 
-// 🔐 Sécurité admin
 if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur') {
     header('Location: /');
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: /views/backend/members/list.php');
+    exit;
+}
 
-    $pseudo = $_POST['pseudoMemb'];
-    $prenom = $_POST['prenomMemb'];
-    $nom = $_POST['nomMemb'];
-    $passwrd = $_POST['passMemb'];
-    $passwrdConf = $_POST['passMembConfirm'];
-    $email = trim($_POST['eMailMemb']);
-    $emailConf = trim($_POST['eMailMembConfirm']);
-    $numStat = $_POST['numStat'];
-    $accord = $_POST['accordMemb'] ?? '0';
-    $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$/';
-    $dateCreation = date("Y-m-d H:i:s");
-    $dtMajMemb = null;
+$numMemb = isset($_POST['numMemb']) ? (int) $_POST['numMemb'] : 0;
 
-    if (get_ExistPseudo($pseudo) > 0) {
-        $error = "Ce pseudo existe déjà.";
-    } elseif (strlen($pseudo) < 6) {
-        $error = "Pseudo trop court.";
-    } elseif ($email !== $emailConf) {
-        $error = "Les emails ne correspondent pas.";
-    } elseif (!preg_match($pattern, $passwrd)) {
-        $error = "Mot de passe invalide.";
-    } elseif ($passwrd !== $passwrdConf) {
-        $error = "Les mots de passe ne correspondent pas.";
-    } elseif ($accord !== '1') {
-        $error = "Vous devez accepter le RGPD.";
-    } elseif (empty($numStat)) {
-        $error = "Statut obligatoire.";
-    }
+if ($numMemb <= 0) {
+    header('Location: /views/backend/members/list.php?error=' . urlencode('Membre invalide'));
+    exit;
+}
 
-    if (isset($error)) {
-        header('Location: ../../views/backend/members/create.php?error=' . urlencode($error));
-        exit;
-    }
-
-    $passwrd = password_hash($passwrd, PASSWORD_DEFAULT);
-
-    $error = '';
-
-    if (empty($_POST['g-recaptcha-response'])) {
-        $error = "Captcha requis.";
-    } else {
-
-    $secretKey = '6Ld0GlssAAAAADiS4gh097petnjcA1nTMO1PS-JO';
-    $captchaResponse = $_POST['g-recaptcha-response'];
-
-    $verify = file_get_contents(
-        "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$captchaResponse"
+if (empty($_POST['recaptcha_token'])) {
+    header(
+        'Location: /views/backend/members/delete.php?numMemb=' .
+        $numMemb .
+        '&error=' . urlencode('Captcha manquant')
     );
-
-    $responseData = json_decode($verify);
-
-    if (!$responseData->success) {
-        $error = "Captcha invalide.";
-    }
-}
-    
-    $numMemb = $_GET['numMemb'] ?? null;
-
-    if ($numMemb) {
-        sql_connect();
-        global $DB;
-
-        $sql = "DELETE FROM MEMBRE WHERE numMemb = :numMemb";
-        $rq = $DB->prepare($sql);
-        $rq->execute([':numMemb' => $numMemb]);
-    }
-
-
+    exit;
 }
 
-header('Location: ../../views/backend/members/list.php');
+$token = $_POST['recaptcha_token'];
+
+$verify = file_get_contents(
+    'https://www.google.com/recaptcha/api/siteverify'
+    . '?secret=' . "6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU"
+    . '&response=' . $token
+);
+
+$response = json_decode($verify, true);
+
+if (
+    empty($response['success']) ||
+    $response['score'] < 0.5 ||
+    $response['action'] !== 'member_delete' ||
+    $response['hostname'] !== $_SERVER['SERVER_NAME']
+) {
+    header(
+        'Location: /views/backend/members/delete.php?numMemb=' .
+        $numMemb .
+        '&error=' . urlencode('Captcha invalide')
+    );
+    exit;
+}
+
+sql_connect();
+global $DB;
+
+$sql = 'DELETE FROM MEMBRE WHERE numMemb = :numMemb';
+$stmt = $DB->prepare($sql);
+$stmt->execute([
+    ':numMemb' => $numMemb
+]);
+
+header('Location: /views/backend/members/list.php?success=' . urlencode('Membre supprimé'));
 exit;

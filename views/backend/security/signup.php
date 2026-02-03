@@ -6,21 +6,26 @@ $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if (empty($_POST['g-recaptcha-response'])) {
-        $error = "Veuillez valider le captcha.";
+    if (empty($_POST['recaptcha_token'])) {
+        $error = "Captcha manquant.";
     } else {
 
-        $secretKey = '6Ld0GlssAAAAADiS4gh097petnjcA1nTMO1PS-JO';
-        $captchaResponse = $_POST['g-recaptcha-response'];
+        $secretKey = "6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU";
+        $token = $_POST['recaptcha_token'];
 
         $verify = file_get_contents(
-            "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$captchaResponse"
+            "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$token"
         );
 
-        $responseData = json_decode($verify);
+        $responseData = json_decode($verify, true);
 
-        if (!$responseData->success) {
-            $error = "Captcha invalide.";
+        if (
+            empty($responseData['success']) ||
+            $responseData['score'] < 0.5 ||
+            $responseData['action'] !== 'signup' ||
+            $responseData['hostname'] !== $_SERVER['SERVER_NAME']
+        ) {
+            $error = "Comportement suspect détecté.";
         }
     }
 
@@ -139,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 document.getElementById('signupForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    grecaptcha.execute('<?= RECAPTCHA_SITE_KEY ?>', { action: 'signup' })
+    grecaptcha.execute('<?= "6LewKl8sAAAAAApTAS7X8kAdof0A4yzZlIq9BoAb" ?>', { action: 'signup' })
         .then(function (token) {
             document.getElementById('recaptcha_token').value = token;
             e.target.submit();
