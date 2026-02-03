@@ -4,7 +4,6 @@ require_once '../../../header.php';
 $numArt = (int) ($_GET['numArt'] ?? 0);
 $article = null;
 
-// ---------- ARTICLE ----------
 if ($numArt > 0) {
     $article = sql_select(
         "ARTICLE",
@@ -14,7 +13,6 @@ if ($numArt > 0) {
     $article = $article[0] ?? null;
 }
 
-// ---------- LIKE ----------
 $userLiked = false;
 $numMemb = $_SESSION['user']['id'] ?? null;
 
@@ -46,6 +44,11 @@ if ($numMemb && $article) {
                href="<?= ROOT_URL ?>/views/frontend/comments/commentaire.php?numArt=<?= $article['numArt']; ?>">
                 Commenter cet article
             </a>
+			<a class="btn btn-primary"
+               href="<?= ROOT_URL ?>/views/frontend/comments/commentaire.php?numArt=<?= $article['numArt']; ?>">
+                Voir plus d'articles
+            </a>
+
         <?php else: ?>
             <a class="btn btn-outline-primary"
                href="<?= ROOT_URL ?>/views/backend/security/login.php">
@@ -54,7 +57,6 @@ if ($numMemb && $article) {
             </a>
         <?php endif; ?>
 
-        <!-- LIKE -->
         <div class="like-container">
 
         <?php if (isset($_SESSION['user'])): ?>
@@ -88,26 +90,16 @@ if ($numMemb && $article) {
         </div>
     </div>
 
-    <!-- ---------- COMMENTAIRES ---------- -->
     <hr>
     <h4>Commentaires</h4>
 
     <?php
-    $commentairesArt = sql_select(
-        "COMMENT",
-        "*",
-        "numArt = $numArt"
-    );
+    $commentairesArt = sql_select("COMMENT","*","numArt = $numArt");
 
     if (!empty($commentairesArt)):
         foreach ($commentairesArt as $commentaire):
 
-            // récupération du pseudo depuis MEMBRE
-            $membre = sql_select(
-                "MEMBRE",
-                "pseudoMemb",
-                "numMemb = " . (int)$commentaire['numMemb']
-            );
+            $membre = sql_select("MEMBRE","pseudoMemb","numMemb = " . (int)$commentaire['numMemb']);
 
             $pseudo = $membre[0]['pseudoMemb'] ?? 'Utilisateur supprimé';
     ?>
