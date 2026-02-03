@@ -29,7 +29,7 @@ if (empty($_POST['recaptcha_token'])) {
 
 $verify = file_get_contents(
     'https://www.google.com/recaptcha/api/siteverify'
-    . '?secret=' . "6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU"
+    . '?secret=' . '6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU'
     . '&response=' . $_POST['recaptcha_token']
 );
 
@@ -52,13 +52,13 @@ if (!$membre) {
     exit;
 }
 
-$prenom = trim($_POST['prenomMemb']);
-$nom = trim($_POST['nomMemb']);
-$numStat = $_POST['numStat'];
-$email = trim($_POST['eMailMemb']);
-$emailConf = trim($_POST['eMailMembConf']);
-$pass = $_POST['passMemb'];
-$passConf = $_POST['passMembConf'];
+$prenom    = trim($_POST['prenomMemb'] ?? '');
+$nom       = trim($_POST['nomMemb'] ?? '');
+$numStat   = (int)($_POST['numStat'] ?? 0);
+$email     = trim($_POST['eMailMemb'] ?? '');
+$emailConf = trim($_POST['eMailMembConf'] ?? '');
+$pass      = $_POST['passMemb'] ?? '';
+$passConf  = $_POST['passMembConf'] ?? '';
 
 $finalEmail = $membre['eMailMemb'];
 
@@ -68,24 +68,31 @@ if ($email !== $membre['eMailMemb']) {
     } elseif ($email !== $emailConf) {
         $error = 'Emails différents';
     } else {
-        $check = sql_select('MEMBRE', 'numMemb', "eMailMemb = '$email' AND numMemb != $numMemb");
+        $check = sql_select(
+            'MEMBRE',
+            'numMemb',
+            "eMailMemb = " . $DB->quote($email) . " AND numMemb != $numMemb"
+        );
         if (!empty($check)) {
             $error = 'Email déjà utilisé';
+        } else {
+            $finalEmail = $email;
         }
-        $finalEmail = $email;
     }
 }
 
 $finalPass = $membre['passMemb'];
 
+$regex = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$/';
+
 if (!empty($pass)) {
-    $regex = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$/';
     if (!preg_match($regex, $pass)) {
         $error = 'Mot de passe invalide';
     } elseif ($pass !== $passConf) {
         $error = 'Mots de passe différents';
+    } else {
+        $finalPass = password_hash($pass, PASSWORD_DEFAULT);
     }
-    $finalPass = password_hash($pass, PASSWORD_DEFAULT);
 }
 
 if (isset($error)) {
@@ -97,19 +104,18 @@ $now = date('Y-m-d H:i:s');
 
 $set = "
     prenomMemb = " . $DB->quote($prenom) . ",
-    nomMemb = " . $DB->quote($nom) . ",
-    eMailMemb = " . $DB->quote($finalEmail) . ",
-    passMemb = " . $DB->quote($finalPass) . ",
-    numStat = " . (int)$numStat . ",
-    dtMajMemb = " . $DB->quote($now) . "
+    nomMemb    = " . $DB->quote($nom) . ",
+    eMailMemb  = " . $DB->quote($finalEmail) . ",
+    passMemb   = " . $DB->quote($finalPass) . ",
+    numStat    = $numStat,
+    dtMajMemb  = " . $DB->quote($now) . "
 ";
 
 sql_update(
     'MEMBRE',
     $set,
-    'numMemb = ' . (int)$numMemb
+    'numMemb = ' . $numMemb
 );
-
 
 header('Location: /views/backend/members/list.php?success=' . urlencode('Membre mis à jour'));
 exit;

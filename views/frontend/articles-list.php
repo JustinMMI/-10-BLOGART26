@@ -35,8 +35,8 @@ $db = sql_connect();
                     <article class="article-card">
                         <?php if (!empty($article['urlPhotArt'])): ?>
                             <img src="/src/uploads/<?= htmlspecialchars($article['urlPhotArt']) ?>" 
-                                 alt="<?= htmlspecialchars($article['libTitrArt']) ?>"
-                                 class="article-card-image">
+                                alt="<?= htmlspecialchars($article['libTitrArt']) ?>"
+                                class="article-card-image">
                         <?php endif; ?>
                         
                         <div class="article-card-body">
@@ -49,26 +49,20 @@ $db = sql_connect();
                                     Lire la suite →
                                 </a>
 
-                                <!-- Bouton Like -->
                                 <div>
                                     <?php if (isset($_SESSION['user'])): ?>
-                                        <?php if ($userLiked): ?>
-                                            <form action="/api/likes/create.php" method="POST" style="display:inline;">
-                                                <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
-                                                <input type="hidden" name="numArt" value="<?= $numArt ?>">
-                                                <input type="hidden" name="frontend" value="true">
-                                                <button type="submit" class="like-btn" title="Retirer le like">Je n'aime plus ❤️</button>
-                                            </form>
-                                        <?php else: ?>
-                                            <form action="/api/likes/create.php" method="POST" style="display:inline;">
-                                                <input type="hidden" name="numMemb" value="<?= $numMemb ?>">
-                                                <input type="hidden" name="numArt" value="<?= $numArt ?>">
-                                                <input type="hidden" name="frontend" value="true">
-                                                <button type="submit" class="like-btn" title="J'aime">J'aime 🤍</button>
-                                            </form>
-                                        <?php endif; ?>
+                                        <button 
+                                            class="like-btn <?= $userLiked ? 'liked' : '' ?>"
+                                            data-art="<?= $numArt ?>"
+                                            data-liked="<?= $userLiked ? '1' : '0' ?>"
+                                            title="J’aime"
+                                        >
+                                            <span class="heart">♥</span>
+                                        </button>
                                     <?php else: ?>
-                                        <a href="/views/backend/security/login.php" class="like-btn" title="Se connecter pour liker">🤍</a>
+                                        <a href="/views/backend/security/login.php" class="like-btn">
+                                            <span class="heart">♡</span>
+                                        </a>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -83,5 +77,30 @@ $db = sql_connect();
         <?php endif; ?>
     </div>
 </div>
+
+<script>
+document.querySelectorAll('.like-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+
+        const numArt = this.dataset.art;
+        const liked = this.dataset.liked === '1';
+
+        fetch('/api/likes/create.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({
+                numArt: numArt,
+                frontend: 'true'
+            })
+        })
+        .then(() => {
+            this.classList.toggle('liked');
+            this.dataset.liked = liked ? '0' : '1';
+        });
+    });
+});
+</script>
 
 <?php require_once '../../footer.php'; ?>

@@ -73,11 +73,14 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
     </aside>
 
   </div>
+
+  <div class="container text-center view-all-wrapper">
+    <a href="/views/frontend/articles-list.php" class="btn btn-primary btn-lg">
+        Voir tous les articles →
+    </a>
+  </div>
 </section>
 
-<div class="text-center mt-5 mb-5">
-  <a href="/views/frontend/articles-list.php" class="btn btn-primary btn-lg">Voir tous les articles →</a>
-</div>
 
 <?php endif; ?>
 
