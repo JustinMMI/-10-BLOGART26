@@ -19,12 +19,11 @@ cookie_notice();
   <div class="header-inner">
 
     <div class="header-left">
-      <span class="header-label">BLOG GASTRONOMIQUE</span>
+      <a class="header-label" href="/">BLOG GASTRONOMIQUE</a>
       <span class="header-line"></span>
     </div>
 
     <nav class="header-nav">
-      <a href="/">Accueil</a>
 
       <?php if (!empty($_SESSION['user']) && $_SESSION['user']['statut'] === 'Administrateur'): ?>
         <a href="/views/backend/dashboard.php">Admin</a>
