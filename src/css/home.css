@@ -31,7 +31,7 @@
 
 .hero-separator {
   display: block;
-  width: 60px;
+  width: 140px;
   height: 1px;
   background: #c7a14a;
   margin: 1.2rem 0;
@@ -103,7 +103,11 @@
 
 
 
-
+.trait-dore{
+  width:80%;
+  height:1px;
+  background:#d6c07a;
+  margin:12px auto 0}
 
 .featured-sidebar {
   display: flex;
@@ -144,8 +148,8 @@
   color: #222;
 }
 
-.sidebar-red {
-  background: #6d0f22;
+.sidebar-black {
+  background: #1a1a1a;
   color: #f3eee3;
 }
 
@@ -156,11 +160,6 @@
   color: #c7a14a;
   font-weight: bold;
 }
-
-
-
-
-
 
 .auth-page {
   min-height: calc(100vh - 110px);
