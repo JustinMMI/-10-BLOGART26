@@ -1,6 +1,11 @@
 <?php
 include '../../../header.php';
 $statuts = sql_select("STATUT", "*");
+if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur') {
+    header('Location: /');
+    exit;
+}
+
 ?>
 
 <div class="container">

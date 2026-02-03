@@ -41,8 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $passwrd = password_hash($passwrd, PASSWORD_DEFAULT);
+    
+    sql_connect();
+    global $DB;
 
-    $rq = BDD::get()->prepare("INSERT INTO MEMBRE(pseudoMemb, prenomMemb, nomMemb, passMemb, eMailMemb, dtCreaMemb, dtMajMemb, numStat) VALUES(:pseudo, :prenom, :nom, :passwrd, :email, :dtCreaMemb, :dtMajMemb, :numStat)");
+    $rq = $DB->prepare("INSERT INTO MEMBRE(pseudoMemb, prenomMemb, nomMemb, passMemb, eMailMemb, dtCreaMemb, dtMajMemb, numStat) VALUES(:pseudo, :prenom, :nom, :passwrd, :email, :dtCreaMemb, :dtMajMemb, :numStat)");
     $rq->execute([':pseudo' => $pseudo,':prenom' => $prenom,':nom' => $nom,':passwrd' => $passwrd,':email' => $email,':dtCreaMemb' => $dateCreation,':dtMajMemb' => $dtMajMemb,':numStat' => $numStat]);
 }
 
