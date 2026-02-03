@@ -29,9 +29,8 @@ if (!$membre) {
         <input type="hidden" name="numMemb" value="<?= $membre['numMemb']; ?>">
 
         <div class="mb-3">
-            <label class="form-label">Pseudo</label>
-            <input type="text" class="form-control" value="<?= htmlspecialchars($membre['pseudoMemb']); ?>" disabled>
-            <small class="text-muted">Le pseudo ne peut pas être modifié (supprimez le compte pour en changer).</small>
+            <label class="form-label">Pseudo *</label>
+            <input type="text" name="pseudoMemb" class="form-control" value="<?= htmlspecialchars($membre['pseudoMemb']); ?>" required>
         </div>
 
         <div class="row">
