@@ -30,7 +30,6 @@ $suppressionPhysique = $suppressionLogique;
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <a href="create.php" class="btn btn-success">Create</a>
             <h1>Commentaires en attente </h1>
             <table class="table table-striped">
                 <thead>
@@ -50,8 +49,7 @@ $suppressionPhysique = $suppressionLogique;
                             <td><?= $comment['dtCreaCom']; ?></td>
                             <td><?= $comment['libCom']; ?></td>
                             <td>
-                                <a href="edit.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-warning">Edit</a>
-                                <a href="controle.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-info">Controle</a>
+                                <a href="update.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-info">Controle</a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -81,9 +79,6 @@ $suppressionPhysique = $suppressionLogique;
                             <td><?= $comment['libCom']; ?></td>
                             <td><?= $comment['delLogiq'] ? 'Masqué' : 'Publié'; ?></td>
                             <td><?= $comment['notifComKOAff']; ?></td>
-                            <td>
-                                <a href="edit.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-warning">Edit</a>
-                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>
@@ -113,7 +108,6 @@ $suppressionPhysique = $suppressionLogique;
                             <td>REFUS</td>
                             <td><?= $comment['notifComKOAff']; ?></td>
                             <td>
-                                <a href="edit.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-warning">Edit</a>
                             </td>
                         </tr>
                     <?php } ?>

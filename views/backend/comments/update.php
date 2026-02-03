@@ -20,7 +20,7 @@ $comment = $comments[0];
 ?>
 
 
-<form action="<?= ROOT_URL . '/api/comments/controle.php'; ?>" method="POST">
+<form action="<?= ROOT_URL . '/api/comments/update.php'; ?>" method="POST">
   <input type="hidden" name="numCom" value="<?= htmlspecialchars($comment['numCom']) ?>">
   <div class="container">
     <h1 class="text-center mt-5">Contrôle commentaire en attente : à valider</h1>
@@ -35,7 +35,7 @@ $comment = $comments[0];
     <p><?= htmlspecialchars($comment['dtCreaCom']) ?></p>
 
     <h2 class="mt-5">Contenu du commentaire</h2>
-    <textarea class="form-control" rows="4" readonly><?= htmlspecialchars($comment['libCom']) ?></textarea>
+    <textarea class="form-control" rows="4"><?= htmlspecialchars($comment['libCom']) ?></textarea>
 
     <h2 class="mt-5">Validation du commentaire</h2>
 
