@@ -3,23 +3,24 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 require_once '../../functions/ctrlSaisies.php';
 
 $numCom = intval($_POST['numCom'] ?? 0);
-$validation = intval($_POST['validation'] ?? -1);
+$validation = intval($_POST['validation'] ?? -1); 
 $raison = ctrlSaisies($_POST['RaisonRefus'] ?? '');
 
-if (!$numCom || $validation === null) {
-    die("Données manquantes.");
+
+if ($numCom <= 0 || ($validation !== 0 && $validation !== 1)) {
+    die("Données manquantes ou invalides.");
 }
 
+$attmodOK = ($validation === 1) ? 1 : 0;               // 0 = en attente de contrôle, 1 = déjà contrôlé
+$delLogiq = ($validation === 0) ? 1 : 0;              // 1 = refusé / supprimé logiquement, 0 = valide
+$notifComKOAff = ($validation === 0) ? "'".addslashes($raison)."'" : "NULL"; 
 
-$attributs = [
-    'attmodOK' => 1,
-    'delLogiq' => ($validation == 0) ? 1 : 0,
-    'notifComKOAff' => ($validation == 0) ? $raison : null
-];
+// Transformation en chaîne SQL
+$attributs = "attmodOK = $attmodOK, delLogiq = $delLogiq, notifComKOAff = $notifComKOAff";
+$where = "numCom = $numCom";
 
-$where = "numCom = " . intval($numCom);
 
 sql_update('comment', $attributs, $where);
 
-header('Location: list.php');
+header('Location: /views/backend/comments/list.php');
 exit;

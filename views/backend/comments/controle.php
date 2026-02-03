@@ -21,7 +21,7 @@ $comment = $comments[0];
 ?>
 
 
-<form action="controle.php" method="POST">
+<form action="<?= ROOT_URL . '/api/comments/controle.php'; ?>" method="POST">
   <input type="hidden" name="numCom" value="<?= htmlspecialchars($comment['numCom']) ?>">
   <div class="container">
     <h1 class="text-center mt-5">Contrôle commentaire en attente : à valider</h1>
