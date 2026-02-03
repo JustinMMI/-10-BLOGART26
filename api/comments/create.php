@@ -24,7 +24,13 @@ sql_insert(
 	"'$libCom', $numArt, $numMemb, NOW()"
 );
 
-header('Location: /');
+$redirect = $_POST['redirect'] ?? '/';
+
+if (!str_starts_with($redirect, '/')) {
+    $redirect = '/';
+}
+
+header('Location: ' . $redirect);
 exit;
 
 
