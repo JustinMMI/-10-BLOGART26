@@ -73,38 +73,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<div class="container mt-5" style="max-width:500px;">
-    <h2 class="mb-4">Connexion</h2>
+<main class="auth-page">
+  <section class="auth-card">
+
+    <h2 class="auth-title">Connexion</h2>
 
     <?php if ($error): ?>
-        <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+      <div class="auth-error"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
 
-    <form method="post">
+    <form method="post" class="auth-form">
 
-        <input type="hidden" name="recaptcha_token" id="recaptcha_token">
-        <input class="form-control mb-2"
-               name="email"
-               type="email"
-               placeholder="Email"
-               required>
+      <input type="hidden" name="recaptcha_token" id="recaptcha_token">
 
-        <input class="form-control mb-3"
-               name="password"
-               type="password"
-               placeholder="Mot de passe"
-               required>
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        required
+      >
 
-        <button type="submit" class="btn btn-primary">
-            Connexion
-        </button>
+      <input
+        type="password"
+        name="password"
+        placeholder="Mot de passe"
+        required
+      >
 
-        <a href="signup.php" class="btn btn-secondary ms-2">
-            Créer un compte
-        </a>
+      <button type="submit" class="btn-primary">
+        Connexion
+      </button>
+
+      <a href="signup.php" class="auth-link">
+        Créer un compte
+      </a>
 
     </form>
-</div>
+
+  </section>
+</main>
 
 <script>
 grecaptcha.ready(function () {
