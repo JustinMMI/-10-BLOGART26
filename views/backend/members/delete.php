@@ -59,6 +59,12 @@ if ($numMemb) {
                     </div>
                 <?php } ?>
             <?php } ?>
+
+            <?php if (isset($_GET['success'])) { ?>
+                <div class="alert alert-success">
+                    <?php echo htmlspecialchars($_GET['success']); ?>
+                </div>
+            <?php } ?>
         </div>
 
         <div class="col-md-12">
