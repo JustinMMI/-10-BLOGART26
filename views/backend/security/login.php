@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script>
 grecaptcha.ready(function () {
-    grecaptcha.execute('TA_SITE_KEY_V3', { action: 'login' })
+    grecaptcha.execute('6LewKl8sAAAAAApTAS7X8kAdof0A4yzZlIq9BoAb', { action: 'login' })
         .then(function (token) {
             document.getElementById('recaptcha_token').value = token;
         });
