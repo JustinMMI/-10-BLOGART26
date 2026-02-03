@@ -19,32 +19,11 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
   </div>
 </section>
 
-<<<<<<< Updated upstream
-    <?php if ($articles): ?>
-        <?php foreach ($articles as $article): ?>
-            
-            <?php
-            // --- LOGIQUE LIKE POUR CHAQUE ARTICLE ---
-            $userLiked = false;
-            $numMemb = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
-            $numArt = $article['numArt'];
-
-            if ($numMemb) {
-                $resultCheck = sql_select("likeart", "*", "numMemb='$numMemb' AND numArt='$numArt'");
-                
-                if (!empty($resultCheck)) {
-                    $userLiked = true;
-                }
-            }
-            // ----------------------------------------
-            ?>
-=======
 <!-- CONTENU BEIGE -->
 <main class="page-content">
 
 <?php if (!empty($articles)): ?>
 <?php $featured = $articles[0]; ?>
->>>>>>> Stashed changes
 
 <section class="featured-section">
   <div class="container featured-layout">
