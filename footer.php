@@ -13,6 +13,7 @@
       <div class="footer-links">
         <a href="/views/frontend/rgpd/rgpd.php">RGPD</a>
         <a href="/views/frontend/rgpd/cgu.php">CGU</a>
+        <a href="/views/frontend/contact.php">Contactez-nous</a>
       </div>
       <p>
         &copy; 2026 Bordeaux Gastronomie — Tous droits réservés
