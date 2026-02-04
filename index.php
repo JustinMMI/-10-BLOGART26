@@ -90,7 +90,29 @@ $featured = $articles[0];
       </div>
     </div>
 
-    
+ <?php // Index articles par themes
+
+    $articlesRecup = sql_select(
+    "article a",
+    "a.numThem,
+    a.libTitrArt",
+    null,
+    null,
+    null,
+);
+
+$trieArticles = [
+    1 => [],
+    2 => [],
+    3 => [],
+    4 => []
+];
+
+foreach ($articlesRecup as $article) {
+    $trieArticles[$article['numThem']][] = $article['libTitrArt']; // le [] permet de mettre l'indice dans les [] dans l'indice de trieArticles
+}
+?>
+
 
     <!-- SIDEBAR -->
     <aside class="featured-sidebar">
@@ -104,10 +126,9 @@ $featured = $articles[0];
         <h4>Événements</h4>
         <div class="trait-dore"></div>
         <ul>
-          <li>BON ! Festival gourmand</li>
-          <li>Gourmet Business meeting</li>
-          <li>Place de la comédie à Bordeaux</li>
-          <li>Marché des Capucins – Rencontre avec les producteurs</li>
+        <?php foreach ($trieArticles[1] as $titre): ?>
+            <li><?= htmlspecialchars($titre) ?></li>
+        <?php endforeach; ?>
         </ul>
         <div class="trait-dore-petit"></div>
         <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=1">Voir tous →</a>
@@ -116,39 +137,30 @@ $featured = $articles[0];
       <div class="sidebar-box sidebar-light">
         <h4>Acteurs Clés</h4>
         <div class="trait-dore"></div>
-        <ul>
-          <li>Les étoiles qui illuminent Bordeaux</li>
-          <li>Sucré – À la croisée de l’art et des saveurs</li>
-          <li>Trompe l’œil (Viviente Andrieux)</li>
-          <li>Les jeunes chefs qui révolutionnent la ville</li>
-        </ul>
+        <?php foreach ($trieArticles[2] as $titre): ?>
+            <li><?= htmlspecialchars($titre) ?></li>
+        <?php endforeach; ?>
         <div class="trait-dore-petit"></div>
         <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=2">Voir tous →</a>
       </div>
 
       <div class="sidebar-box sidebar-black">
-        <h4>Insolite</h4>
+        <h4>Mouvement émergeant</h4>
         <div class="trait-dore"></div>
-        <ul>
-          <li>Expériences sensorielles</li>
-          <li>Restaurants atypiques</li>
-          <li>Chefs hors normes</li>
-          <li>Produits d’exception</li>
-        </ul>
+        <?php foreach ($trieArticles[3] as $titre): ?>
+            <li><?= htmlspecialchars($titre) ?></li>
+        <?php endforeach; ?>
         <div class="trait-dore-petit"></div>
         <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=4">Voir tous →</a>
       </div>
 
 
       <div class="sidebar-box sidebar-light-inverse">
-        <h4>Mouvement émergeant</h4>
+        <h4>Insolite</h4>
         <div class="trait-dore"></div>
-        <ul>
-          <li>u</li>
-          <li>u</li>
-          <li>u</li>
-          <li>u</li>
-        </ul>
+        <?php foreach ($trieArticles[4] as $titre): ?>
+            <li><?= htmlspecialchars($titre) ?></li>
+        <?php endforeach; ?>
         <div class="trait-dore-petit"></div>
         <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=2">Voir tous →</a>
       </div>
