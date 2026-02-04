@@ -97,11 +97,12 @@ $featured = $articles[0];
       </div>
     </div>
 
- <?php // Index articles par themes
+ <?php // Index - articles par themes
 
     $articlesRecup = sql_select(
     "article a",
     "a.numThem,
+    a.numArt,
     a.libTitrArt",
     null,
     null,
@@ -116,7 +117,7 @@ $trieArticles = [
 ];
 
 foreach ($articlesRecup as $article) {
-    $trieArticles[$article['numThem']][] = $article['libTitrArt']; // le [] permet de mettre l'indice dans les [] dans l'indice de trieArticles
+    $trieArticles[$article['numThem']][] = ['titre' => $article['libTitrArt'],'numArt' => $article['numArt']];
 }
 ?>
 
@@ -141,8 +142,12 @@ foreach ($articlesRecup as $article) {
         <h4>Événements</h4>
         <div class="trait-dore"></div>
         <ul>
-        <?php foreach ($trieArticles[1] as $titre): ?>
-            <li><?= htmlspecialchars($titre) ?></li>
+        <?php foreach ($trieArticles[1] as $article): ?>
+            <li>
+                <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
+                    <?= htmlspecialchars($article['titre']) ?>
+                </a>
+            </li>
         <?php endforeach; ?>
         </ul>
         <div class="trait-dore-petit"></div>
@@ -153,8 +158,12 @@ foreach ($articlesRecup as $article) {
         <h4>Acteurs Clés</h4>
         <div class="trait-dore"></div>
         <ul>
-        <?php foreach ($trieArticles[2] as $titre): ?>
-            <li><?= htmlspecialchars($titre) ?></li>
+        <?php foreach ($trieArticles[2] as $article): ?>
+            <li>
+                <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
+                    <?= htmlspecialchars($article['titre']) ?>
+                </a>
+            </li>
         <?php endforeach; ?>
         </ul>
         <div class="trait-dore-petit"></div>
@@ -165,8 +174,12 @@ foreach ($articlesRecup as $article) {
         <h4>Mouvement émergeant</h4>
         <div class="trait-dore"></div>
         <ul>
-        <?php foreach ($trieArticles[3] as $titre): ?>
-            <li><?= htmlspecialchars($titre) ?></li>
+        <?php foreach ($trieArticles[3] as $article): ?>
+            <li>
+                <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
+                    <?= htmlspecialchars($article['titre']) ?>
+                </a>
+            </li>
         <?php endforeach; ?>
         </ul>
         <div class="trait-dore-petit"></div>
@@ -178,8 +191,12 @@ foreach ($articlesRecup as $article) {
         <h4>Insolite</h4>
         <div class="trait-dore"></div>
         <ul>
-        <?php foreach ($trieArticles[4] as $titre): ?>
-            <li class="blanc1"><?= htmlspecialchars($titre) ?></li>
+        <?php foreach ($trieArticles[4] as $article): ?>
+            <li>
+                <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
+                    <?= htmlspecialchars($article['titre']) ?>
+                </a>
+            </li>
         <?php endforeach; ?>
         </ul>
         <div class="trait-dore-petit"></div>
