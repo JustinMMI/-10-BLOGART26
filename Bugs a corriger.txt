@@ -9,3 +9,5 @@ Modification dashboard : sortir les commentaire et transformer les boutons lists
 Ajouter les contenus des articles et leur image sur la page de l'article
 
 Vérifier BBCODE partout
+
+Demander a martine si on peut remplacer Delete logique/Delet physique par Corbeille/Suppression
