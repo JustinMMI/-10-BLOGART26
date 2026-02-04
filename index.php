@@ -137,9 +137,11 @@ foreach ($articlesRecup as $article) {
       <div class="sidebar-box sidebar-light">
         <h4>Acteurs Clés</h4>
         <div class="trait-dore"></div>
+        <ul>
         <?php foreach ($trieArticles[2] as $titre): ?>
             <li><?= htmlspecialchars($titre) ?></li>
         <?php endforeach; ?>
+        </ul>
         <div class="trait-dore-petit"></div>
         <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=2">Voir tous →</a>
       </div>
@@ -147,9 +149,11 @@ foreach ($articlesRecup as $article) {
       <div class="sidebar-box sidebar-black">
         <h4>Mouvement émergeant</h4>
         <div class="trait-dore"></div>
+        <ul>
         <?php foreach ($trieArticles[3] as $titre): ?>
             <li><?= htmlspecialchars($titre) ?></li>
         <?php endforeach; ?>
+        </ul>
         <div class="trait-dore-petit"></div>
         <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=4">Voir tous →</a>
       </div>
@@ -158,9 +162,11 @@ foreach ($articlesRecup as $article) {
       <div class="sidebar-box sidebar-light-inverse">
         <h4>Insolite</h4>
         <div class="trait-dore"></div>
+        <ul>
         <?php foreach ($trieArticles[4] as $titre): ?>
             <li class="blanc1"><?= htmlspecialchars($titre) ?></li>
         <?php endforeach; ?>
+        </ul>
         <div class="trait-dore-petit"></div>
         <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=2">Voir tous →</a>
       </div>
