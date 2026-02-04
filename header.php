@@ -42,7 +42,7 @@ $isAuthPage =
   <div class="header-inner">
 
     <div class="header-left">
-      <a class="header-label" href="/">BORDEAUX SAGASTRONOMIE</a>
+      <a class="header-label" href="/">BORDEAUX SAGASTRONOMIQUE</a>
       <span class="header-line"></span>
     </div>
 

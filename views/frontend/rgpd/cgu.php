@@ -11,14 +11,14 @@ require_once '../../../header.php';
       
       <section>
         <h2>1. Objet et acceptation</h2>
-        <p>Les présentes CGU définissent les conditions d'accès et d'utilisation du blog Bordeaux Gastro. Toute utilisation du site implique l'acceptation pleine et entière des présentes CGU.</p>
+        <p>Les présentes CGU définissent les conditions d'accès et d'utilisation du blog Bordeaux SAGAstronomique. Toute utilisation du site implique l'acceptation pleine et entière des présentes CGU.</p>
       </section>
 
       <section>
         <h2>2. Éditeur et contact</h2>
-        <p><strong>Le blog Bordeaux Gastro est édité par :</strong></p>
+        <p><strong>Le blog Bordeaux SAGAstronomique est édité par :</strong></p>
         <p>Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam</p>
-        <p><strong>Adresse e-mail :</strong> <a href="mailto:Blogastro@mmibordeaux.com">Blogastro@mmibordeaux.com</a></p>
+        <p><strong>Adresse e-mail :</strong> <a href="mailto:sagastronomique@mmibordeaux.com">sagastronomique@mmibordeaux.com</a></p>
         <p>Le blog est un site personnel, non professionnel et non monétisé.</p>
       </section>
 
