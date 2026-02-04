@@ -81,6 +81,10 @@ $articles = sql_select("ARTICLE a INNER JOIN THEMATIQUE t ON a.numThem = t.numTh
                                 class="btn btn-danger btn-sm">
                                 Delete
                                 </a>
+
+                                <button class="btn btn-info btn-sm toggle-pin" data-art="<?= $article['numArt']; ?>" data-pinned="<?= $article['isEpingle'] ?? 0 ?>">
+                                    <?= ($article['isEpingle'] ?? 0) ? 'Dépingler' : 'Épingler' ?>
+                                </button>
                             </td>
                         </tr>
 
@@ -94,4 +98,53 @@ $articles = sql_select("ARTICLE a INNER JOIN THEMATIQUE t ON a.numThem = t.numTh
         </div>
     </div>
 </main>
-<?php include '../../../footer.php'; ?>
+
+<script>
+document.querySelectorAll('.toggle-pin').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const numArt = this.dataset.art;
+        const isPinned = this.dataset.pinned === '1';
+        const button = this;
+
+        console.log('Épinglage article:', numArt, 'Action:', isPinned ? 'unpin' : 'pin');
+
+        fetch('/api/articles/pin.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            credentials: 'same-origin',
+            body: new URLSearchParams({
+                numArt: numArt,
+                action: isPinned ? 'unpin' : 'pin'
+            })
+        })
+        .then(response => {
+            console.log('Réponse reçue:', response.status);
+            if (!response.ok) {
+                throw new Error('HTTP error ' + response.status);
+            }
+            return response.text();
+        })
+        .then(text => {
+            console.log('Réponse texte:', text);
+            try {
+                const data = JSON.parse(text);
+                if (data.success) {
+                    console.log('Succès, rechargement...');
+                    location.reload();
+                } else {
+                    alert('Erreur: ' + (data.message || 'Erreur inconnue'));
+                }
+            } catch (e) {
+                console.error('Erreur parsing JSON:', e);
+                alert('Erreur serveur: ' + text);
+            }
+        })
+        .catch(error => {
+            console.error('Erreur fetch:', error);
+            alert('Erreur: ' + error.message);
+        });
+    });
+});
+</script>
+

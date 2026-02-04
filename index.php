@@ -1,6 +1,13 @@
 <?php 
 require_once 'header.php';
+
+// Récupérer l'article épinglé s'il existe
+$epingled = sql_select("ARTICLE", "*", "isEpingle = 1", null, "dtCreaArt DESC", "1");
+$featured_epingle = !empty($epingled) ? $epingled[0] : null;
+
+// Récupérer les 6 derniers articles
 $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
+$featured = $articles[0];
 ?>
 
 <!-- HERO -->
@@ -32,6 +39,26 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
     <div class="featured-main">
       <h2 class="section-title">À la une</h2>
 
+      <?php if ($featured_epingle): ?>
+        <!-- ARTICLE ÉPINGLÉ -->
+        <article class="featured-article featured-pinned">
+          <img src="/src/uploads/<?= htmlspecialchars($featured_epingle['urlPhotArt']) ?>" alt="">
+          <div class="featured-meta">
+            <span class="date">
+              <?= date('d F Y', strtotime($featured_epingle['dtCreaArt'])) ?>
+            </span>
+            <h3><?= htmlspecialchars($featured_epingle['libTitrArt']) ?></h3>
+            <p><?= nl2br(htmlspecialchars($featured_epingle['libChapoArt'])) ?></p>
+
+            <a class="read-more"
+               href="/views/frontend/articles/article1.php?numArt=<?= (int)$featured_epingle['numArt'] ?>">
+              Lire la suite →
+            </a>
+          </div>
+        </article>
+      <?php endif; ?>
+
+      <!-- DERNIER ARTICLE PUBLIÉ -->
       <article class="featured-article">
         <img src="/src/uploads/<?= htmlspecialchars($featured['urlPhotArt']) ?>" alt="">
         <div class="featured-meta">
