@@ -141,7 +141,7 @@ $featured = $articles[0];
 
 
       <div class="sidebar-box sidebar-light-inverse">
-        <h4>Le mouvement émergent</h4>
+        <h4>Mouvement émergeant</h4>
         <div class="trait-dore"></div>
         <ul>
           <li>u</li>
