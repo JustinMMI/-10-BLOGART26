@@ -211,6 +211,11 @@
   line-height: 1.4;
 }
 
+.sidebar-box a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .sidebar-box li::marker {
   color: #c7a14a;
 }
