@@ -14,10 +14,48 @@ $where  = [];
 $joins  = [];
 $params = [];
 
-/* Recherche titre + chapeau */
+/* Recherche avancée (TD14) */
 if ($search !== '') {
-    $where[] = "(a.libTitrArt LIKE :search OR a.libChapoArt LIKE :search)";
-    $params['search'] = "%$search%";
+    $input = trim($search);
+
+    $keywordsList = [];
+    preg_match_all('/[""«»‹›]([^""«»‹›]+)[""«»‹›]/', $input, $matches);
+
+    $expressions = $matches[1];
+    $remaining = preg_replace('/[""«»‹›][^""«»‹›]+[""«»‹›]/', '', $input);
+
+    $motsSimples = preg_split('/\s+/', trim($remaining));
+    $motsSimples = array_filter($motsSimples, function ($mot) {
+        return trim($mot) !== '';
+    });
+
+    $keywordsList = array_merge($expressions, $motsSimples);
+
+    if (!empty($keywordsList)) {
+        $tabChamps = [
+            "a.libTitrArt",
+            "a.libChapoArt",
+            "a.libAccrochArt",
+            "a.parag1Art",
+            "a.libSsTitr1Art",
+            "a.parag2Art",
+            "a.libSsTitr2Art",
+            "a.parag3Art",
+            "a.libConclArt"
+        ];
+
+        $clauses = [];
+        foreach ($keywordsList as $key => $keyword) {
+            $orParts = [];
+            foreach ($tabChamps as $champ) {
+                $orParts[] = "$champ LIKE :search$key";
+            }
+            $clauses[] = '(' . implode(' OR ', $orParts) . ')';
+            $params["search$key"] = "%$keyword%";
+        }
+
+        $where[] = '(' . implode(' AND ', $clauses) . ')';
+    }
 }
 
 /* Filtre thématique */
