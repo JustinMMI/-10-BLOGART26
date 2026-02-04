@@ -60,11 +60,11 @@ Le blog présente :
 
 ## 🔐 Accès et identifiants des comptes de test
 
-|Pseudo |  Password   |      Rôle      |
-|-------|-------------|----------------|
-| Admin | Admin!12345 | Administrateur |
-| Modo  | Modo!12345  | Modérateur     |
-| User  | User!12345  | Utilisateur    |
+| Pseudo |  Password   |      Rôle      |           Email            |
+|--------|-------------|----------------|----------------------------|
+| Admin01| Admin!12345 | Administrateur | admin@blogart26.com        |
+| Modo01 | Modo!12345  | Modérateur     | modo@blogart26.com   |
+| User01 | User!12345  | Utilisateur    | user@blogart26.com  |
 
 > ⚠️ **IMPORTANT** : Ces identifiants sont pour les tests uniquement. Les mots de passe en production doivent être forts et uniques.
 
