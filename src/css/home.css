@@ -290,6 +290,10 @@
   font-weight: bold;
 }
 
+.sidebar-light-inverse .sidebar-link {
+  color: #f3eee3;
+}
+
 .auth-page {
   min-height: calc(100vh - 110px);
   background: #f3eee3;
