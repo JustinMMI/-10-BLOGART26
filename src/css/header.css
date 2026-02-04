@@ -164,3 +164,111 @@ html, body {
     font-size: 0.75rem;
   }
 }
+
+/* =========================
+   MENU ARTICLES DROPDOWN
+========================= */
+
+.nav-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Bouton Articles */
+.nav-link-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #f3eee3;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0.35rem 0;
+  line-height: 1;
+}
+
+/* Soulignement animé */
+.nav-link-dropdown::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 1px;
+  background: #c7a14a;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.nav-dropdown:hover .nav-link-dropdown::after {
+  transform: scaleX(1);
+}
+
+/* Flèche */
+.nav-link-dropdown .arrow {
+  font-size: 0.7rem;
+  transition: transform 0.25s ease;
+}
+
+.nav-dropdown:hover .arrow {
+  transform: rotate(180deg);
+}
+
+/* MENU DÉROULANT */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  min-width: 220px;
+  background: linear-gradient(180deg, #5a0a19, #3b060f);
+  border: 1px solid #c7a14a;
+  padding: 0.6rem 0;
+  display: none;
+  z-index: 1000;
+}
+
+/* Zone tampon anti-clignotement */
+.nav-dropdown::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  height: 10px;
+  width: 100%;
+}
+
+/* Affichage stable */
+.nav-dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Liens */
+.dropdown-menu a {
+  display: block;
+  padding: 0.6rem 1.2rem;
+  color: #f3eee3;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.dropdown-menu a:hover {
+  background: rgba(199, 161, 74, 0.15);
+  color: #c7a14a;
+}
+
+/* Petit losange */
+.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 18px;
+  width: 10px;
+  height: 10px;
+  background: #5a0a19;
+  border-left: 1px solid #c7a14a;
+  border-top: 1px solid #c7a14a;
+  transform: rotate(45deg);
+}

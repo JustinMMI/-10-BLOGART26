@@ -46,35 +46,57 @@ $isAuthPage =
       <span class="header-line"></span>
     </div>
 
-    <nav class="header-nav">
-      <a href="/">Accueil</a>
-      <a href="/views/frontend/articles-list.php">Tous les articles</a>
+  <nav class="header-nav">
+    <a href="/">Accueil</a>
 
-      <?php if (!empty($_SESSION['user'])): ?>
-        <a href="/views/frontend/liked-articles.php">Mes articles likés</a>
-      <?php endif; ?>
-
-      <?php if (!empty($_SESSION['user'])): ?>
-        <a href="/views/frontend/profile.php" class="user-name"><?= htmlspecialchars($_SESSION['user']['pseudo']) ?></a>
-        <a class="logout" href="/views/backend/security/login.php?action=logout">
-          Déconnexion
+    <!-- MENU ARTICLES -->
+      <div class="nav-dropdown">
+        <a class="nav-link nav-link-dropdown">
+          Articles <span class="arrow">▾</span>
         </a>
-      <?php else: ?>
-        <a class="login" href="/views/backend/security/login.php">
-          Connexion
-        </a>
-      <?php endif; ?>
 
-      <?php if (
-          !empty($_SESSION['user']) 
-          && (
+        <div class="dropdown-menu">
+          <a href="/views/frontend/articles-list.php">Tous les articles</a>
+
+          <?php if (!empty($_SESSION['user'])): ?>
+            <a href="/views/frontend/liked-articles.php">Mes articles likés</a>
+          <?php endif; ?>
+
+          <?php if (
+            !empty($_SESSION['user']) &&
+            (
               $_SESSION['user']['statut'] === 'Administrateur'
               || $_SESSION['user']['statut'] === 'Modérateur'
-          )
-      ): ?>
-          <a href="/views/backend/articles/create.php">Créer un article</a>
-          <a href="/views/backend/dashboard.php">Admin</a>
-      <?php endif; ?>
-    </nav>
+            )
+          ): ?>
+            <a href="/views/backend/articles/create.php">Créer un article</a>
+          <?php endif; ?>
+        </div>
+      </div>
+
+    <?php if (
+      !empty($_SESSION['user']) &&
+      (
+        $_SESSION['user']['statut'] === 'Administrateur'
+        || $_SESSION['user']['statut'] === 'Modérateur'
+      )
+    ): ?>
+      <a href="/views/backend/dashboard.php">Admin</a>
+    <?php endif; ?>
+
+    <?php if (!empty($_SESSION['user'])): ?>
+      <a href="/views/frontend/profile.php" class="user-name">
+        <?= htmlspecialchars($_SESSION['user']['pseudo']) ?>
+      </a>
+      <a class="logout" href="/views/backend/security/login.php?action=logout">
+        Déconnexion
+      </a>
+    <?php else: ?>
+      <a class="login" href="/views/backend/security/login.php">
+        Connexion
+      </a>
+    <?php endif; ?>
+  </nav>
+
   </div>
 </header>

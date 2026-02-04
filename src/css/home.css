@@ -1,7 +1,7 @@
 /* INDEX */
 
 .hero {
-  position: relative;
+  position: relative; /* 👈 OBLIGATOIRE */
   height: 420px;
   background:
     linear-gradient(90deg, rgba(90,10,25,.85), rgba(40,5,12,.95)),
@@ -9,6 +9,7 @@
   display: flex;
   align-items: center;
 }
+
 
 .hero-overlay { display:none; }
 
@@ -41,22 +42,6 @@
   max-width: 520px;
   font-size: 0.95rem;
   opacity: 0.9;
-}
-
-.hero-cta {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #7a0026;
-  color: #f3eee3;
-  padding: 1.3rem 3.5rem;
-  text-decoration: none;
-  font-family: Georgia, serif;
-  font-size: 1.3rem;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s ease;
 }
 
 .hero-cta:hover {
@@ -524,4 +509,73 @@
 
 .blanc1{
   color:#fff;
+}
+
+
+
+.hero-cta {
+  position: absolute;
+  right: -28%;
+  top: 40%;
+  transform: translateY(-50%);
+  background: #7a0026;
+  color: #f3eee3;
+  padding: 1.1rem 2.6rem;
+  font-family: Georgia, serif;
+  font-size: 1.05rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.hero-cta:hover {
+  background: #5d001d;
+}
+
+
+.gold-corners {
+  position: relative;
+}
+
+/* Coins */
+.gold-corners .coin-tl,
+.gold-corners .coin-tr,
+.gold-corners .coin-bl,
+.gold-corners .coin-br {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+}
+
+/* Haut gauche */
+.gold-corners .coin-tl {
+  top: 6px;
+  left: 6px;
+  border-top: 2px solid #d6c07a;
+  border-left: 2px solid #d6c07a;
+}
+
+/* Haut droite */
+.gold-corners .coin-tr {
+  top: 6px;
+  right: 6px;
+  border-top: 2px solid #d6c07a;
+  border-right: 2px solid #d6c07a;
+}
+
+/* Bas gauche */
+.gold-corners .coin-bl {
+  bottom: 6px;
+  left: 6px;
+  border-bottom: 2px solid #d6c07a;
+  border-left: 2px solid #d6c07a;
+}
+
+/* Bas droite */
+.gold-corners .coin-br {
+  bottom: 6px;
+  right: 6px;
+  border-bottom: 2px solid #d6c07a;
+  border-right: 2px solid #d6c07a;
 }
