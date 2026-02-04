@@ -27,18 +27,22 @@ if (empty($article)) {
 }
 
 // Connecter à la base de données
-sql_connect();
-global $DB;
+$jsonFile = '../../pinned_article.json';
 
 try {
-    // Si on épingle cet article, dépingler les autres
+    // Lire le fichier JSON
+    $data = json_decode(file_get_contents($jsonFile), true);
+    
+    // Si on épingle
     if ($action === 'pin') {
-        $DB->query("UPDATE ARTICLE SET isEpingle = 0 WHERE isEpingle = 1");
-        $DB->query("UPDATE ARTICLE SET isEpingle = 1 WHERE numArt = $numArt");
+        $data['numArt'] = $numArt;
     } else {
-        // Dépingler l'article
-        $DB->query("UPDATE ARTICLE SET isEpingle = 0 WHERE numArt = $numArt");
+        // Si on dépingle
+        $data['numArt'] = null;
     }
+    
+    // Écrire le fichier JSON
+    file_put_contents($jsonFile, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     
     echo json_encode(['success' => true]);
 } catch (Exception $e) {
