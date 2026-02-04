@@ -1,7 +1,9 @@
 <?php
 require_once '../../../header.php';
-
-echo ("
+?><!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
 	<body>
 		<h1>Mentions légales</h1>
 
@@ -96,5 +98,3 @@ echo ("
 		</p>
 	</body>
 </html>
-
-");
