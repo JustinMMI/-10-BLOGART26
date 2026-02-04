@@ -124,6 +124,14 @@ foreach ($articlesRecup as $article) {
     <!-- SIDEBAR -->
     <aside class="featured-sidebar">
 
+      <a href="/views/frontend/articles-list.php" class="hero-cta gold-corners">
+        Voir tous les articles →
+        <span class="coin-tl"></span>
+        <span class="coin-tr"></span>
+        <span class="coin-bl"></span>
+        <span class="coin-br"></span>
+      </a>
+
       <div class="sidebar-box sidebar-red coins-dore">
         <span class="coin-tl"></span>
         <span class="coin-tr"></span>
