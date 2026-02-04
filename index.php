@@ -202,6 +202,10 @@ foreach ($articlesRecup as $article) {
         <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=2">Voir tous →</a>
       </div>
 
+      <div class="sidebar-box map-box">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d17290.13044340734!2d-0.5923902137353435!3d44.84475231300805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1srestaurants%20gastronomiques%20bordeaux!5e0!3m2!1sfr!2sfr!4v1770215811079!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
 
     </aside>
   </div>
