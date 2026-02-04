@@ -191,7 +191,7 @@ foreach ($articlesRecup as $article) {
         <div class="trait-dore"></div>
         <ul>
         <?php foreach ($trieArticles[4] as $article): ?>
-            <li>
+            <li class="blanc1">
                 <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
                     <?= htmlspecialchars($article['titre']) ?>
                 </a>
