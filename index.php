@@ -135,6 +135,21 @@ $featured = $articles[0];
         <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=4">Voir tous →</a>
       </div>
 
+
+      <div class="sidebar-box sidebar-light-inverse">
+        <h4>Le mouvement émergent</h4>
+        <div class="trait-dore"></div>
+        <ul>
+          <li>u</li>
+          <li>u</li>
+          <li>u</li>
+          <li>u</li>
+        </ul>
+        <div class="trait-dore-petit"></div>
+        <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=2">Voir tous →</a>
+      </div>
+
+
     </aside>
   </div>
 </section>

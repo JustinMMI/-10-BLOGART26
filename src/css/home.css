@@ -221,6 +221,13 @@
   color: #f3eee3;
 }
 
+.sidebar-light-reverse{
+  background:#6d0f22;
+  padding: 2rem;
+  position: relative;
+  border: 1px solid #f6f1ed;
+}
+
 .sidebar-light{
   background:#f6f1ed;
   padding: 2rem;
