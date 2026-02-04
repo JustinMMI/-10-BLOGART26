@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['message']) && !empty
 
     <?php if (!empty($_GET['success'])): ?>
       <div class="auth-success">
-        Message envoyé avec succès ✨
+        Message envoyé avec succès 🌟
       </div>
     <?php endif; ?>
 

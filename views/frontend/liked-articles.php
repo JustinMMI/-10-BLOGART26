@@ -10,19 +10,7 @@ $numMemb = $_SESSION['user']['id'];
 $message = '';
 $error = '';
 
-$likedArticles = sql_select(
-    "LIKEART l
-     INNER JOIN ARTICLE a ON l.numArt = a.numArt",
-    "l.numMemb,
-     l.numArt,
-     l.likeA,
-     a.libTitrArt,
-     a.libChapoArt,
-     a.numArt",
-    "l.numMemb = $numMemb AND l.likeA = 1",
-    null,
-    "l.numArt DESC"
-);
+$likedArticles = sql_select("LIKEART l INNER JOIN ARTICLE a ON l.numArt = a.numArt", "l.numMemb, l.numArt, l.likeA, a.libTitrArt, a.libChapoArt, a.numArt", "l.numMemb = $numMemb AND l.likeA = 1", null, "l.numArt DESC");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'removeLike') {
     $numArt = (int)($_POST['numArt'] ?? 0);
@@ -82,8 +70,11 @@ if (isset($_GET['success'])) {
                   </button>
                 </form>
               </div>
+        </br>
+              <a class="more-link" href="<?= ROOT_URL ?>/views/frontend/articles-list.php">
+              Voir plus d’articles →
+              </a>
             </div>
-
           </article>
         <?php endforeach; ?>
 
