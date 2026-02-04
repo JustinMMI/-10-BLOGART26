@@ -48,8 +48,7 @@ $featured = $articles[0];
 
     <!-- ARTICLE À LA UNE -->
     <div class="featured-main">
-      <h2 class="section-title">À la une</h2>
-
+      <h2 class="section-title">À la une<div class="trait-dore-alaune"></div></h2>
       <?php if ($featured_epingle): ?>
         <!-- ARTICLE ÉPINGLÉ -->
         <article class="featured-article featured-pinned">
