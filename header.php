@@ -48,6 +48,7 @@ $isAuthPage =
 
     <nav class="header-nav">
       <a href="/">Accueil</a>
+      <a href="/views/frontend/articles-list.php">Tous les articles</a>
 
       <?php if (
           !empty($_SESSION['user']) 

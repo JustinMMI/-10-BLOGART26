@@ -66,12 +66,26 @@
 }
 
 
+.article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
 .article-date {
     font-size: 0.7rem;
     color: #7a0026;
     letter-spacing: 1px;
     text-transform: uppercase;
-    margin-bottom: 0.8rem;
+}
+
+.article-theme {
+    font-size: 0.7rem;
+    color: #e91e63;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: right;
 }
 
 .article-card-title {

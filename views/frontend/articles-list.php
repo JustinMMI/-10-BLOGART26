@@ -47,8 +47,9 @@ if ($keywords !== '') {
 
 /* SQL final */
 $sql = "
-    SELECT DISTINCT a.*
+    SELECT DISTINCT a.*, t.libThem
     FROM ARTICLE a
+    LEFT JOIN THEMATIQUE t ON a.numThem = t.numThem
     " . implode(' ', $joins);
 
 if (!empty($where)) {
@@ -130,9 +131,17 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="article-card-body">
 
-                            <span class="article-date">
-                                <?= date('d F Y', strtotime($article['dtCreaArt'])) ?>
-                            </span>
+                            <div class="article-meta">
+                                <span class="article-date">
+                                    <?= date('d F Y', strtotime($article['dtCreaArt'])) ?>
+                                </span>
+
+                                <?php if (!empty($article['libThem'])): ?>
+                                    <span class="article-theme">
+                                        <?= htmlspecialchars($article['libThem']) ?>
+                                    </span>
+                                <?php endif; ?>
+                            </div>
 
                             <h2 class="article-card-title">
                                 <?= htmlspecialchars($article['libTitrArt']) ?>
