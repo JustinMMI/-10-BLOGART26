@@ -62,9 +62,6 @@
   }
 }
 
-
-
-
 .page-content {
   background: #f3eee3;
   padding: 4rem 0;
@@ -75,10 +72,6 @@
   margin: 0 auto;
   padding: 0 2rem;
 }
-
-
-
-
 
 .featured-layout {
   display: grid;
@@ -532,6 +525,7 @@
 
 .featured-sidebar .hero-cta {
   position: relative;
+  top: -150px;
   transform: none;
   align-self: center;
   width: fit-content;
