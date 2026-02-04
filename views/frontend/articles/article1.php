@@ -1,5 +1,7 @@
 <?php
 require_once '../../../header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/ctrlSaisies.php';
 
 $numArt = (int)($_GET['numArt'] ?? 0);
 $article = null;
@@ -114,6 +116,49 @@ if ($article) {
       <div class="article-notfound">Article introuvable.</div>
     <?php endif; ?>
 
+  </div>
+
+    <?php
+  $articleId = isset($_GET['numArt']) ? (int)$_GET['numArt'] : 0;
+
+  if ($articleId <= 0) {
+      http_response_code(404);
+      echo "Article invalide";
+      exit;
+  }
+
+  $article = sql_select('ARTICLE', '*', 'numArt = ' . $articleId);
+
+  if (empty($article)) {
+      http_response_code(404);
+      echo "Article non trouvé";
+      exit;
+  }
+
+  $article = $article[0];
+
+  $titreArticle = htmlspecialchars($article['libTitrArt'], ENT_QUOTES, 'UTF-8');
+  $urlArticle = ROOT_URL . '/views/frontend/articles/article1.php?numArt=' . $articleId;
+  $encodedUrl = urlencode($urlArticle);
+  $encodedTitle = urlencode($titreArticle);
+  ?>
+
+  <div class="container">
+    <h2 class="TRS">Partager cet article :</h2>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=<?= $encodedUrl ?>"
+      target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        Facebook
+    </a>
+
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= $encodedUrl ?>&title=<?= $encodedTitle ?>"
+      target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        LinkedIn
+    </a>
+
+    <a href="https://api.whatsapp.com/send?text=<?= $encodedTitle ?>%20<?= $encodedUrl ?>"
+      target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        WhatsApp
+    </a>
   </div>
 </main>
 

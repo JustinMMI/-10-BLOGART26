@@ -26,17 +26,15 @@ $isAuthPage =
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="/src/css/header.css">
+  <link rel="stylesheet" href="/src/css/footer.css">
 
   <?php if ($isBackend && !$isAuthPage): ?>
-    <!-- BACKEND CLASSIQUE -->
+    <!-- BACKEND -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <?php else: ?>
     <!-- FRONT + LOGIN / SIGNUP -->
     <link rel="stylesheet" href="/src/css/home.css">
   <?php endif; ?>
-
-
-  
 </head>
 <body>
 

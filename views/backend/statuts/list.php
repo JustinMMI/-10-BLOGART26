@@ -6,42 +6,45 @@ $statuts = sql_select("STATUT", "*");
 ?>
 
 <!-- Bootstrap default layout to display all statuts in foreach -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Statuts</h1>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nom des statuts</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach($statuts as $statut){ ?>
+<main class="container my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Statuts</h1>
+                <table class="table table-striped">
+                    <thead>
                         <tr>
-                            <td><?php echo($statut['numStat']); ?></td>
-                            <td><?php echo($statut['libStat']); ?></td>
-                            <td>
-                                <a href="edit.php?numStat=<?php echo($statut['numStat']); ?>" class="btn btn-warning">Edit</a>
-                                <?php if ((int)$statut['numStat'] === 1): ?>
-                                    <button class="btn btn-danger" disabled>
-                                        Impossible de supprimer le statut Administrateur !
-                                    </button>
-                                <?php else: ?>
-                                    <a href="delete.php?numStat=<?php echo($statut['numStat']); ?>" class="btn btn-danger">
-                                        Delete
-                                    </a>
-                                <?php endif; ?>
-                            </td>
+                            <th>Id</th>
+                            <th>Nom des statuts</th>
+                            <th>Actions</th>
                         </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-            <a href="create.php" class="btn btn-success">Create</a>
+                    </thead>
+                    <tbody>
+                        <?php foreach($statuts as $statut){ ?>
+                            <tr>
+                                <td><?php echo($statut['numStat']); ?></td>
+                                <td><?php echo($statut['libStat']); ?></td>
+                                <td>
+                                    <a href="edit.php?numStat=<?php echo($statut['numStat']); ?>" class="btn btn-warning">Edit</a>
+                                    <?php if ((int)$statut['numStat'] === 1): ?>
+                                        <button class="btn btn-danger" disabled>
+                                            Impossible de supprimer le statut Administrateur !
+                                        </button>
+                                    <?php else: ?>
+                                        <a href="delete.php?numStat=<?php echo($statut['numStat']); ?>" class="btn btn-danger">
+                                            Delete
+                                        </a>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+                <a href="create.php" class="btn btn-success">Create</a>
+            </div>
         </div>
     </div>
-</div>
+  <!-- CONTENU BACKEND -->
+</main>
 <?php
 include '../../../footer.php'; // contains the footer
