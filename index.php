@@ -1,9 +1,13 @@
 <?php 
 require_once 'header.php';
 
-// Récupérer l'article épinglé s'il existe
-$epingled = sql_select("ARTICLE", "*", "isEpingle = 1", null, "dtCreaArt DESC", "1");
-$featured_epingle = !empty($epingled) ? $epingled[0] : null;
+// Récupérer l'article épinglé depuis le fichier JSON
+$featured_epingle = null;
+$pinFileContent = json_decode(file_get_contents('pinned_article.json'), true);
+if ($pinFileContent['numArt']) {
+    $epingled = sql_select("ARTICLE", "*", "numArt = " . (int)$pinFileContent['numArt']);
+    $featured_epingle = !empty($epingled) ? $epingled[0] : null;
+}
 
 // Récupérer les 6 derniers articles
 $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");

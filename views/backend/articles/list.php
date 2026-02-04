@@ -7,6 +7,9 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur
     exit;
 }
 
+// Récupérer l'article épinglé depuis le fichier JSON
+$pinFileContent = json_decode(file_get_contents('../../../pinned_article.json'), true);
+$pinnedId = $pinFileContent['numArt'];
 
 $articles = sql_select("ARTICLE a INNER JOIN THEMATIQUE t ON a.numThem = t.numThem","a.*, t.libThem");
 ?>
@@ -82,8 +85,8 @@ $articles = sql_select("ARTICLE a INNER JOIN THEMATIQUE t ON a.numThem = t.numTh
                                 Delete
                                 </a>
 
-                                <button class="btn btn-info btn-sm toggle-pin" data-art="<?= $article['numArt']; ?>" data-pinned="<?= $article['isEpingle'] ?? 0 ?>">
-                                    <?= ($article['isEpingle'] ?? 0) ? 'Dépingler' : 'Épingler' ?>
+                                <button class="btn btn-info btn-sm toggle-pin" data-art="<?= $article['numArt']; ?>" data-pinned="<?= $article['numArt'] === $pinnedId ? '1' : '0' ?>">
+                                    <?= ($article['numArt'] === $pinnedId) ? 'Dépingler' : 'Épingler' ?>
                                 </button>
                             </td>
                         </tr>
