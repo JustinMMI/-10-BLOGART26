@@ -18,8 +18,4 @@ if (getenv('APP_DEBUG') == 'true') {
 //load functions
 require_once ROOT . '/functions/global.inc.php';
 
-//load security
-require_once ROOT . '/config/security.php';
-
-
 // test

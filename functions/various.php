@@ -47,6 +47,11 @@ function cookie_notice(){
 
             <p style="margin: 0 0 15px 0;">Acceptez-vous les cookies ?</p>
 
+            <div style="margin-bottom: 15px; font-size: 0.9em;">
+                <a href="/views/frontend/rgpd/rgpd.php" style="color: #c7a14a; text-decoration: none; margin-right: 15px;">RGPD</a>
+                <a href="/views/frontend/rgpd/cgu.php" style="color: #c7a14a; text-decoration: none;">CGU</a>
+            </div>
+
             <button onclick="acceptCookies()"
                 style="background-color: #4CAF50; color: white;
                        border: none; padding: 10px 20px;
