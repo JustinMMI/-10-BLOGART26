@@ -24,10 +24,17 @@ $featured = $articles[0];
     <span class="hero-separator"></span>
     <p>
       Explorez les saveurs, les talents et les lieux qui font de Bordeaux une
-      capitale de la gastronomie française
+      capitale de la Gastronomie
     </p>
   </div>
-  <a href="/views/frontend/articles-list.php" class="hero-cta">Voir tous les articles</a>
+
+  <a href="/views/frontend/articles-list.php" class="hero-cta gold-corners">
+    Voir tous les articles →
+    <span class="coin-tl"></span>
+    <span class="coin-tr"></span>
+    <span class="coin-bl"></span>
+    <span class="coin-br"></span>
+  </a>
 </section>
 
 <!-- CONTENU -->
