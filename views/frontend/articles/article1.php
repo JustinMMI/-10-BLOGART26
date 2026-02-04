@@ -21,7 +21,7 @@ if ($numMemb && $article) {
 
 $commentairesArt = [];
 if ($article) {
-    $commentairesArt = sql_select("COMMENT", "*", "numArt = $numArt", null, "dtCreaCom DESC");
+    $commentairesArt = sql_select("COMMENT", "*", "numArt = $numArt AND attModOK = 1 AND delLogiq = 0", null, "dtCreaCom DESC");
 }
 ?>
 
