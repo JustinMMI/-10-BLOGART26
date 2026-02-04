@@ -159,7 +159,7 @@ foreach ($articlesRecup as $article) {
         <h4>Insolite</h4>
         <div class="trait-dore"></div>
         <?php foreach ($trieArticles[4] as $titre): ?>
-            <li><?= htmlspecialchars($titre) ?></li>
+            <li class="blanc1"><?= htmlspecialchars($titre) ?></li>
         <?php endforeach; ?>
         <div class="trait-dore-petit"></div>
         <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=2">Voir tous →</a>
