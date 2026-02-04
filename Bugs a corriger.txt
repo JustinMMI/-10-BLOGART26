@@ -7,3 +7,5 @@ Création de thématiques n'entraine pas uen création de cartes de thématique 
 Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
 
 Ajouter les contenus des articles et leur image sur la page de l'article
+
+Vérifier BBCODE partout
