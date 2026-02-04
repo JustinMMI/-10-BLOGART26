@@ -110,6 +110,39 @@
   text-decoration: underline;
 }
 
+
+.more-link {
+  margin-top: 1.4rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.more-link a {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #7a0026;
+  text-decoration: none;
+}
+
+.more-link a:hover {
+  color: #c7a14a;
+}
+
+.more-link button {
+  background: transparent;
+  border: none;
+  color: #c7a14a;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.more-link button:hover {
+  text-decoration: underline;
+}
+
+
 /* EMPTY */
 
 .liked-empty {
@@ -118,10 +151,3 @@
   color: #7a0026;
 }
 
-.more-link{
-  display:inline-block;
-  color:#7a0026;
-  text-decoration:none;
-  font-weight:700;
-}
-.more-link:hover{ color:#c7a14a; }
