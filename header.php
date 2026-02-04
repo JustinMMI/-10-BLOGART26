@@ -51,7 +51,7 @@ $isAuthPage =
 
     <!-- MENU ARTICLES -->
       <div class="nav-dropdown">
-        <a class="nav-link nav-link-dropdown">
+        <a class="nav-link nav-link-dropdown" href="/views/frontend/articles-list.php">
           Articles <span class="arrow">▾</span>
         </a>
 
