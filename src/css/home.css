@@ -237,11 +237,20 @@
   color: #f3eee3;
 }
 
-.sidebar-light-reverse{
+
+.sidebar-light-inverse{
   background:#6d0f22;
   padding: 2rem;
   position: relative;
   border: 1px solid #f6f1ed;
+}
+
+.sidebar-light-inverse::before{
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border: 1px solid #d6c07a;
+  pointer-events: none;
 }
 
 .sidebar-light{
