@@ -50,16 +50,6 @@ $isAuthPage =
       <a href="/">Accueil</a>
       <a href="/views/frontend/articles-list.php">Tous les articles</a>
 
-      <?php if (
-          !empty($_SESSION['user']) 
-          && (
-              $_SESSION['user']['statut'] === 'Administrateur'
-              || $_SESSION['user']['statut'] === 'Modérateur'
-          )
-      ): ?>
-          <a href="/views/backend/dashboard.php">Admin</a>
-      <?php endif; ?>
-
       <?php if (!empty($_SESSION['user'])): ?>
         <a href="/views/frontend/liked-articles.php">Mes articles likés</a>
       <?php endif; ?>
@@ -73,6 +63,17 @@ $isAuthPage =
         <a class="login" href="/views/backend/security/login.php">
           Connexion
         </a>
+      <?php endif; ?>
+
+      <?php if (
+          !empty($_SESSION['user']) 
+          && (
+              $_SESSION['user']['statut'] === 'Administrateur'
+              || $_SESSION['user']['statut'] === 'Modérateur'
+          )
+      ): ?>
+          <a href="/views/backend/articles/create.php">Créer un article</a>
+          <a href="/views/backend/dashboard.php">Admin</a>
       <?php endif; ?>
     </nav>
   </div>
