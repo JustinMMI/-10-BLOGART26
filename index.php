@@ -16,6 +16,7 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
       capitale de la gastronomie française
     </p>
   </div>
+  <a href="/views/frontend/articles-list.php" class="hero-cta">Voir tous les articles</a>
 </section>
 
 <!-- CONTENU -->

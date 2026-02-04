@@ -43,6 +43,25 @@
   opacity: 0.9;
 }
 
+.hero-cta {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #7a0026;
+  color: #f3eee3;
+  padding: 1.3rem 3.5rem;
+  text-decoration: none;
+  font-family: Georgia, serif;
+  font-size: 1.3rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.hero-cta:hover {
+  background: #5d001d;
+}
 
 
 
