@@ -1,6 +1,7 @@
 Julianne : Création de pseudos de moins de 6 charactères dans le front via le bouton créer un compte et aussi la conformité du mot de passe et du mail
 
-Justin : Bug de la page d'accueil lorsqu'aucun article dans la bdd
+Corrigé ✅ : Bug de la page d'accueil lorsqu'aucun article dans la bdd
+--> index.php
 
 Création de thématiques n'entraine pas uen création de cartes de thématique sur index
 
@@ -10,7 +11,8 @@ Ajouter les contenus des articles et leur image sur la page de l'article
 
 Vérifier BBCODE partout
 
-Demander a martine si on peut remplacer Delete logique/Delet physique par Corbeille/Suppression
+Corrigé ✅ : Remplacer Delete logique/Delet physique par Corbeille/Suppression
+--> views/backend/comments/list.php
 
-Lisa C FAIT : Limiter a 4 ou 5 le nombre de liens d'articles dans les cartes de thématiques sur le index
--> index.php
+Corrigé ✅ : Limiter a 4 ou 5 le nombre de liens d'articles dans les cartes de thématiques sur le index
+--> index.php
