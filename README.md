@@ -380,15 +380,6 @@ Bibliothèque de fonctions réutilisables :
 - **CGU** : `/views/frontend/rgpd/cgu.php`
 - **Mentions légales** : Intégrées dans la page RGPD
 
-### Conformité RGPD
-
-✅ Politique de confidentialité accessible
-✅ Consentement utilisateur (commentaires, contact)
-✅ Droit d'accès aux données
-✅ Droit à l'oubli
-✅ Formulaire de contact sécurisé
-✅ Mentions légales complètes
-
 ---
 
 ## 🌐 URLs
