@@ -46,7 +46,7 @@ $email = trim($_POST['eMailMemb']);
 $emailConf = trim($_POST['eMailMembConfirm']);
 $numStat = $_POST['numStat'] ?? null;
 $accord = $_POST['accordMemb'] ?? '0';
-
+$exist = sql_select("MEMBRE", "*", "eMailMemb = '$email'");
 $regex = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$/';
 
 if (get_ExistPseudo($pseudo) > 0) {
@@ -65,7 +65,9 @@ if (get_ExistPseudo($pseudo) > 0) {
     $error = 'RGPD requis';
 } elseif (empty($numStat)) {
     $error = 'Statut requis';
-}
+}elseif (!empty($exist)) {
+    $error = "Un compte avec cet email existe déjà.";
+} 
 
 if (isset($error)) {
     header('Location: /views/backend/members/create.php?error=' . urlencode($error));
