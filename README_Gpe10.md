@@ -68,6 +68,61 @@ Le panneau d’administration général a subi des modifications dans son organi
 
 Le panneau de contrôle des commentaires a fait l’objet de modifications concernant son organisation visuelle et sa nomenclature. La section « Suppression logique » a été renommée « Corbeille » et comprend désormais un bouton « Supprimer de la corbeille » pour chaque itération, afin d’améliorer la clarté des actions possibles et de réduire la surcharge visuelle. Par ailleurs, un bouton « Placer dans la corbeille » a été ajouté à chaque itération de la section « Commentaires contrôlés », Afin de permettre la suppression de commentaires déjà validés en cas d’erreur.
 
+### Ajouts fonctionnels
+
+Gestion des articles
+    Article épinglé
+    Dernier article en page d’accueil
+    Encart des articles cliquables, triés par thème sur la page d’accueil
+
+Lors de la suppression d’un article :
+    Notification si suppression impossible à cause de commentaires existants.
+    Bouton pour supprimer tous les commentaires (n’apparaît que si des commentaires existent).
+    Bouton pour supprimer tous les likes (n’apparaît que si des likes existent).
+    Bouton pour voir la liste des likes associés.
+
+Gestion des thèmes et mots-clés
+    Suppression de thématique :
+    Notification si des articles sont liés.
+    Bouton pour supprimer les articles liés.
+
+Mots-clés :
+    Notification si des mots-clés sont liés à des articles.
+    Bouton pour délier les mots-clés des articles.
+
+Gestion des membres
+    Menu déroulant dans le menu (navigation)
+    Suppression d’un membre :
+        Message clair expliquant pourquoi la suppression est impossible (ex. likes ou commentaires).
+        2 boutons intégrés dans la page :
+        Supprimer les likes (n’apparaît que si le membre a des likes)
+        Supprimer les commentaires (n’apparaît que si le membre a des commentaires)
+    Modification du profil membre (front) :
+        Changement du mot de passe, nom, email, etc.
+
+Gestion des statuts
+
+    Lors de la suppression d’un statut :
+        Notification : nombre de membres utilisant ce statut.
+        Champ pour réattribuer un autre statut aux membres concernés.
+        Si aucun membre utilise ce statut, pas de notification.
+
+Pages supplémentaires
+    Page “Mes coups de cœur” :
+        Affiche tous les articles likés par le membre.
+        Bouton pour supprimer le like depuis cette page (n’apparaît que si le like existe).
+        Bouton lien vers l’article complet depuis cette page (présent pour chaque article).
+
+Autres fonctionnalités
+    Encart Google Maps
+    Placeholder d’image lors de la création d’un article si aucune image n’est uploadée par l’admin.
+    Compteur de likes en temps réel
+
+Bonus réalisé / évoqué dans les consignes :
+    Réseaux sociaux (RS)
+    Formulaire de contact
+
+
 ---
 
 ## 🔐 Accès et identifiants des comptes de test
