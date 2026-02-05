@@ -9,6 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+functions/pinned_article.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
