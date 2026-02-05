@@ -9,7 +9,7 @@ Théo : Modification dashboard : sortir les commentaire et transformer les bouto
 
 Eliott : Ajouter les contenus des articles et leur image sur la page de l'article
 
-Vérifier BBCODE partout
+Justin : Vérifier BBCODE partout
 
 Corrigé ✅ : Remplacer Delete logique/Delet physique par Corbeille/Suppression
 --> views/backend/comments/list.php
