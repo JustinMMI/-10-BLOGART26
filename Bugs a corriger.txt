@@ -4,7 +4,7 @@ Justin : Bug de la page d'accueil lorsqu'aucun article dans la bdd
 
 Création de thématiques n'entraine pas uen création de cartes de thématique sur index
 
-Demander a Martine / Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
+Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
 
 Ajouter les contenus des articles et leur image sur la page de l'article
 
@@ -12,4 +12,5 @@ Vérifier BBCODE partout
 
 Demander a martine si on peut remplacer Delete logique/Delet physique par Corbeille/Suppression
 
-Lisa : Limiter a 4 ou 5 le noùbre de liens d'articles dans les cartes de thématqiues sur le index
+Lisa C FAIT : Limiter a 4 ou 5 le nombre de liens d'articles dans les cartes de thématiques sur le index
+-> index.php
