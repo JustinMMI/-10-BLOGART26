@@ -43,7 +43,7 @@ Le blog présente :
 - ✅ Profil utilisateur avec articles aimés
 - ✅ Système de contact
 - ✅ Pages RGPD et CGU
-- ✅ Responsive design (mobile, tablette, desktop)
+- ✅⚠️ Responsive design (mobile, tablette, desktop)
 
 ### Backend (Administrateur)
 - ✅ Gestion complète des articles (CRUD)
