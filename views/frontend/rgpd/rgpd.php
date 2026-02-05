@@ -13,15 +13,15 @@ require_once '../../../header.php';
 			Conformément à l’article 6 III-2 de la loi n°2004-575 du 21 juin 2004 pour
 			la confiance dans l’économie numérique (LCEN) :
 		</p>
-		<p>Nom / Pseudonyme : Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam</p>
+		<p>Nom / Pseudonyme : Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam, Eliott Beauchamp</p>
 		<p>Adresse du domicile :IUT Bordeaux Montaigne</p>
 		<p>Adresse e-mail : Blogastro@mmibordeaux.com</p>
 		<p>Ce site est un blog personnel, non professionnel et non monétisé.</p>
-		<p>Directeur de la publication : Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam</p>
+		<p>Directeur de la publication : Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam, Eliott Beauchamp</p>
 
 		<h2>Hébergement</h2>
 		<p>Le site est hébergé par : Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam</p>
-		<p>Hébergeur : Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam</p>
+		<p>Hébergeur : Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam, Eliott Beauchamp</p>
 		<p>Adresse : Blogastro@mmibordeaux.com</p>
 		<p>Téléphone : [Numéro de téléphone]</p>
 		<p>Site web : [site de l’hébergeur]</p>
