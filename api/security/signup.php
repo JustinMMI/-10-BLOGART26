@@ -9,7 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-/* ===== reCAPTCHA ===== */
 if (!isset($_POST['recaptcha_token'])) {
     header('Location: /views/backend/security/signup.php?error=' . urlencode('Captcha manquant'));
     exit;
@@ -39,7 +38,6 @@ if (!$response->success || $response->score < 0.5) {
     header('Location: /views/backend/security/signup.php?error=' . urlencode('Captcha invalide'));
     exit;
 }
-/* ===================== */
 
 $statutMembre = sql_select("STATUT", "numStat", "libStat = 'Membre'")[0]['numStat'];
 
