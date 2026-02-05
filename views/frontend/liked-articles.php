@@ -58,13 +58,13 @@ if (isset($_GET['success'])) {
               <p><?= htmlspecialchars($article['libChapoArt']) ?></p>
 
               <div class="timeline-actions">
-                <a href="/views/frontend/articles/article1.php?numArt=<?php e(article['numArt'] ?>">
+                <a href="/views/frontend/articles/article1.php?numArt=<?= $article['numArt'] ?>">
                   Lire l’article →
                 </a>
 
                 <form method="POST">
                   <input type="hidden" name="action" value="removeLike">
-                  <input type="hidden" name="numArt" value="<?php e(article['numArt'] ?>">
+                  <input type="hidden" name="numArt" value="<?= $article['numArt'] ?>">
                   <button type="submit">
                     Retirer le like
                   </button>

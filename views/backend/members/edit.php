@@ -32,21 +32,21 @@ if (!$membre) {
     <form action="../../../api/members/update.php" method="POST" id="formUpdate">
 
         <input type="hidden" id="recaptcha_token" name="recaptcha_token">
-        <input type="hidden" name="numMemb" value="<?php e(membre['numMemb']; ?>">
+        <input type="hidden" name="numMemb" value="<?= $membre['numMemb'] ?>">
 
         <div class="mb-3">
             <label class="form-label">Pseudo *</label>
-            <input type="text" name="pseudoMemb" class="form-control" value="<?= htmlspecialchars($membre['pseudoMemb']); ?>" disabled>
+            <input type="text" name="pseudoMemb" class="form-control" value="<?= htmlspecialchars($membre['pseudoMemb']) ?>" disabled>
         </div>
 
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label class="form-label">Prénom *</label>
-                <input type="text" name="prenomMemb" class="form-control" value="<?= htmlspecialchars($membre['prenomMemb']); ?>" required>
+                <input type="text" name="prenomMemb" class="form-control" value="<?= htmlspecialchars($membre['prenomMemb']) ?>" required>
             </div>
             <div class="col-md-6 mb-3">
                 <label class="form-label">Nom *</label>
-                <input type="text" name="nomMemb" class="form-control" value="<?= htmlspecialchars($membre['nomMemb']); ?>" required>
+                <input type="text" name="nomMemb" class="form-control" value="<?= htmlspecialchars($membre['nomMemb']) ?>" required>
             </div>
         </div>
 
@@ -54,8 +54,8 @@ if (!$membre) {
             <label class="form-label">Statut</label>
             <select name="numStat" class="form-select">
                 <?php foreach ($statuts as $statut): ?>
-                    <option value="<?php e(statut['numStat']; ?>" <?= ($statut['numStat'] == $membre['numStat']) ? 'selected' : ''; ?>>
-                        <?= htmlspecialchars($statut['libStat']); ?>
+                    <option value="<?= $statut['numStat'] ?>" <?= ($statut['numStat'] == $membre['numStat']) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($statut['libStat']) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -66,7 +66,7 @@ if (!$membre) {
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label class="form-label">Email *</label>
-                <input type="email" name="eMailMemb" class="form-control" value="<?= htmlspecialchars($membre['eMailMemb']); ?>" required>
+                <input type="email" name="eMailMemb" class="form-control" value="<?= htmlspecialchars($membre['eMailMemb']) ?>" required>
             </div>
             <div class="col-md-6 mb-3">
                 <label class="form-label">Confirmer Email (Si changement)</label>
@@ -91,11 +91,11 @@ if (!$membre) {
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label class="form-label">Date Création</label>
-                <input type="text" class="form-control" value="<?php e(membre['dtCreaMemb']; ?>" disabled>
+                <input type="text" class="form-control" value="<?= $membre['dtCreaMemb'] ?>" disabled>
             </div>
             <div class="col-md-6 mb-3">
                 <label class="form-label">Dernière Modification (Mise à jour automatique)</label>
-                <input type="text" class="form-control" value="<?php e(membre['dtMajMemb'] ?? '-'; ?>" disabled>
+                <input type="text" class="form-control" value="<?= $membre['dtMajMemb'] ?? '-' ?>" disabled>
             </div>
         </div>
 

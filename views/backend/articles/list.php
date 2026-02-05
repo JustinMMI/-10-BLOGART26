@@ -54,18 +54,18 @@ $articles = sql_select("ARTICLE a INNER JOIN THEMATIQUE t ON a.numThem = t.numTh
                         ?>
 
                         <tr>
-                            <td><?= $article['numArt']; ?></td>
+                            <td><?= $article['numArt'] ?></td>
 
-                            <td><?= $article['dtCreaArt']; ?></td>
+                            <td><?= $article['dtCreaArt'] ?></td>
 
                             <td><?= htmlspecialchars($article['libTitrArt']); ?></td>
 
                             <td>
-                                <?= substr(strip_tags($article['libChapoArt']), 0, 80); ?> […]
+                                <?= substr(strip_tags($article['libChapoArt']), 0, 80) ?> […]
                             </td>
 
                             <td>
-                                <?= substr(strip_tags($article['libAccrochArt'] ?? ''), 0, 80); ?> […]
+                                <?= substr(strip_tags($article['libAccrochArt'] ?? ''), 0, 80) ?> […]
                             </td>
 
                             <td>
@@ -75,17 +75,17 @@ $articles = sql_select("ARTICLE a INNER JOIN THEMATIQUE t ON a.numThem = t.numTh
                             <td><?= htmlspecialchars($article['libThem']); ?></td>
 
                             <td>
-                                <a href="edit.php?numArt=<?= $article['numArt']; ?>"
+                                <a href="edit.php?numArt=<?= $article['numArt'] ?>"
                                 class="btn btn-warning btn-sm">
                                 Edit
                                 </a>
 
-                                <a href="delete.php?numArt=<?= $article['numArt']; ?>"
+                                <a href="delete.php?numArt=<?= $article['numArt'] ?>"
                                 class="btn btn-danger btn-sm">
                                 Delete
                                 </a>
 
-                                <button class="btn btn-info btn-sm toggle-pin" data-art="<?= $article['numArt']; ?>" data-pinned="<?= $article['numArt'] === $pinnedId ? '1' : '0' ?>">
+                                <button class="btn btn-info btn-sm toggle-pin" data-art="<?= $article['numArt'] ?>" data-pinned="<?= $article['numArt'] === $pinnedId ? '1' : '0' ?>">
                                     <?= ($article['numArt'] === $pinnedId) ? 'Dépingler' : 'Épingler' ?>
                                 </button>
                             </td>

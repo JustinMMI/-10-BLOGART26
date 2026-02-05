@@ -27,9 +27,9 @@ $commentaire = $commentaire[0];
 
 
 <div class="container">
-    <form method="POST" action="<?= ROOT_URL . '/api/comments/delete.php'; ?>">
+    <form method="POST" action="<?= ROOT_URL . '/api/comments/delete.php' ?>">
 
-    <input type="hidden" name="numCom" value="<?php e(commentaire['numCom']; ?>">
+    <input type="hidden" name="numCom" value="<?= $commentaire['numCom'] ?>">
 
     <input type="hidden" name="redirect"
            value="/views/backend/comments/list.php">
@@ -37,7 +37,7 @@ $commentaire = $commentaire[0];
     <div class="form-group">
         <h2 class="mt-5" for="libCom">Commentaire</h2>
         <textarea class="form-control mt-3" id="libCom" rows="3" disabled>
-    <?= htmlspecialchars($commentaire['libCom']); ?>
+    <?= htmlspecialchars($commentaire['libCom']) ?>
         </textarea>
     </div>
 

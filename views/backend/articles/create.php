@@ -53,8 +53,8 @@ $allMots = sql_select("MOTCLE", "*");
             <label class="fw-bold">Thématique :</label>
             <select name="numThem" class="form-control" required>
                 <?php foreach ($thematiques as $t): ?>
-                    <option value="<?= $t['numThem']; ?>">
-                        <?= htmlspecialchars($t['libThem']); ?>
+                    <option value="<?= $t['numThem'] ?>">
+                        <?= htmlspecialchars($t['libThem']) ?>
                     </option>
                 <?php endforeach; ?> 
             </select>
@@ -69,7 +69,7 @@ $allMots = sql_select("MOTCLE", "*");
                 <select id="mots-dispo" class="form-control" size="8" multiple>
                     <?php foreach ($allMots as $mot): ?>
                         <?php if (!isset($idsMotsArticle) || !in_array($mot['numMotCle'], $idsMotsArticle)): ?>
-                            <option value="<?= $mot['numMotCle']; ?>">
+                            <option value="<?= $mot['numMotCle'] ?>">
                                 <?= htmlspecialchars($mot['libMotCle']); ?>
                             </option>
                         <?php endif; ?>
@@ -94,7 +94,7 @@ $allMots = sql_select("MOTCLE", "*");
                 <select id="mots-ajoutes" name="mots[]" class="form-control" size="8" multiple>
                     <?php if (isset($motsArticle)): ?>
                         <?php foreach ($motsArticle as $mot): ?>
-                            <option value="<?= $mot['numMotCle']; ?>">
+                            <option value="<?= $mot['numMotCle'] ?>">
                                 <?= htmlspecialchars($mot['libMotCle']); ?>
                             </option>
                         <?php endforeach; ?>

@@ -2,7 +2,13 @@
 include '../../../header.php';
 
 // 🔐 Sécurité admin
-if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur'&& $_SESSION['user']['statut'] !== 'Modérateur') {
+if (
+    !isset($_SESSION['user']) ||
+    (
+        $_SESSION['user']['statut'] !== 'Administrateur' &&
+        $_SESSION['user']['statut'] !== 'Modérateur'
+    )
+) {
     header('Location: /');
     exit;
 }
@@ -17,11 +23,18 @@ $numArt = (int) $_GET['numArt'];
 /* =========================
    ARTICLE + THÉMATIQUE
 ========================= */
-$article = sql_select(
+$articleResult = sql_select(
     "ARTICLE a INNER JOIN THEMATIQUE t ON a.numThem = t.numThem",
     "a.*, t.libThem",
     "a.numArt = $numArt"
-)[0];
+);
+
+if (empty($articleResult)) {
+    header('Location: list.php');
+    exit;
+}
+
+$article = $articleResult[0];
 
 /* =========================
    THÉMATIQUES
@@ -45,60 +58,62 @@ $idsMotsArticle = array_column($motsArticle, 'numMotCle');
 <div class="container">
     <h1>Édition Article</h1>
 
-    <form action="<?= ROOT_URL . '/api/articles/update.php'; ?>" method="post" enctype="multipart/form-data">
+    <form action="<?= ROOT_URL . '/api/articles/update.php' ?>" method="post" enctype="multipart/form-data">
 
-        <input type="hidden" name="numArt" value="<?php e(numArt ?>">
+        <input type="hidden" name="numArt" value="<?= $numArt ?>">
 
         <label>Titre</label>
         <input name="libTitrArt" class="form-control mb-2"
-               value="<?= htmlspecialchars($article['libTitrArt']); ?>" required>
+               value="<?= htmlspecialchars($article['libTitrArt']) ?>" required>
 
         <label>Chapeau</label>
-        <textarea name="libChapoArt" class="form-control mb-3" rows="4"><?= htmlspecialchars($article['libChapoArt']); ?></textarea>
+        <textarea name="libChapoArt" class="form-control mb-3" rows="4"><?= htmlspecialchars($article['libChapoArt']) ?></textarea>
 
         <label>Accroche paragraphe 1</label>
         <input name="libAccrochArt" class="form-control mb-2"
-               value="<?= htmlspecialchars($article['libAccrochArt']); ?>">
+               value="<?= htmlspecialchars($article['libAccrochArt']) ?>">
 
         <label>Paragraphe 1</label>
-        <textarea name="parag1Art" class="form-control mb-3" rows="6"><?= htmlspecialchars($article['parag1Art']); ?></textarea>
+        <textarea name="parag1Art" class="form-control mb-3" rows="6"><?= htmlspecialchars($article['parag1Art']) ?></textarea>
 
         <label>Sous-titre 1</label>
         <input name="libSsTitr1Art" class="form-control mb-2"
-               value="<?= htmlspecialchars($article['libSsTitr1Art']); ?>">
+               value="<?= htmlspecialchars($article['libSsTitr1Art']) ?>">
 
         <label>Paragraphe 2</label>
-        <textarea name="parag2Art" class="form-control mb-3" rows="6"><?= htmlspecialchars($article['parag2Art']); ?></textarea>
+        <textarea name="parag2Art" class="form-control mb-3" rows="6"><?= htmlspecialchars($article['parag2Art']) ?></textarea>
 
         <label>Sous-titre 2</label>
         <input name="libSsTitr2Art" class="form-control mb-2"
-               value="<?= htmlspecialchars($article['libSsTitr2Art']); ?>">
+               value="<?= htmlspecialchars($article['libSsTitr2Art']) ?>">
 
         <label>Paragraphe 3</label>
-        <textarea name="parag3Art" class="form-control mb-3" rows="6"><?= htmlspecialchars($article['parag3Art']); ?></textarea>
+        <textarea name="parag3Art" class="form-control mb-3" rows="6"><?= htmlspecialchars($article['parag3Art']) ?></textarea>
 
         <label>Conclusion</label>
-        <textarea name="libConclArt" class="form-control mb-4" rows="4"><?= htmlspecialchars($article['libConclArt']); ?></textarea>
+        <textarea name="libConclArt" class="form-control mb-4" rows="4"><?= htmlspecialchars($article['libConclArt']) ?></textarea>
 
         <!-- IMAGE -->
         <label>Importer une nouvelle illustration</label>
         <input type="file" name="urlPhotArt" class="form-control mb-3" accept=".jpg,.jpeg,.png,.gif">
 
-        <div class="mb-4">
-            <p class="fw-bold">Image actuelle :</p>
-            <img src="<?= ROOT_URL . '/src/uploads/' . $article['urlPhotArt']; ?>"
-                 class="img-fluid d-block"
-                 style="max-width:600px">
-        </div>
+        <?php if (!empty($article['urlPhotArt'])): ?>
+            <div class="mb-4">
+                <p class="fw-bold">Image actuelle :</p>
+                <img src="<?= ROOT_URL . '/src/uploads/' . htmlspecialchars($article['urlPhotArt']) ?>"
+                     class="img-fluid d-block"
+                     style="max-width:600px">
+            </div>
+        <?php endif; ?>
 
-        <!-- THEMATIQUE -->
+        <!-- THÉMATIQUE -->
         <div class="mb-4">
             <label class="fw-bold">Thématique :</label>
             <select name="numThem" class="form-control" required>
                 <?php foreach ($thematiques as $t): ?>
-                    <option value="<?php e(t['numThem']; ?>"
-                        <?php e(t['numThem'] == $article['numThem'] ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($t['libThem']); ?>
+                    <option value="<?= (int)$t['numThem'] ?>"
+                        <?= (int)$t['numThem'] === (int)$article['numThem'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($t['libThem']) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -113,9 +128,9 @@ $idsMotsArticle = array_column($motsArticle, 'numMotCle');
                 <label>Liste Mots clés</label>
                 <select id="mots-dispo" class="form-control" size="8" multiple>
                     <?php foreach ($allMots as $mot): ?>
-                        <?php if (!in_array($mot['numMotCle'], $idsMotsArticle)): ?>
-                            <option value="<?php e(mot['numMotCle']; ?>">
-                                <?= htmlspecialchars($mot['libMotCle']); ?>
+                        <?php if (!in_array($mot['numMotCle'], $idsMotsArticle, true)): ?>
+                            <option value="<?= (int)$mot['numMotCle'] ?>">
+                                <?= htmlspecialchars($mot['libMotCle']) ?>
                             </option>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -138,8 +153,8 @@ $idsMotsArticle = array_column($motsArticle, 'numMotCle');
                 <label>Mots clés ajoutés</label>
                 <select id="mots-ajoutes" name="mots[]" class="form-control" size="8" multiple>
                     <?php foreach ($motsArticle as $mot): ?>
-                        <option value="<?php e(mot['numMotCle']; ?>">
-                            <?= htmlspecialchars($mot['libMotCle']); ?>
+                        <option value="<?= (int)$mot['numMotCle'] ?>">
+                            <?= htmlspecialchars($mot['libMotCle']) ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -147,8 +162,8 @@ $idsMotsArticle = array_column($motsArticle, 'numMotCle');
         </div>
 
         <div class="mt-4">
-            <a href="list.php" class="btn btn-primary me-2">List</a>
-            <button type="submit" class="btn btn-warning">Confirmer Edit ?</button>
+            <a href="list.php" class="btn btn-primary me-2">Liste</a>
+            <button type="submit" class="btn btn-warning">Confirmer l’édition</button>
         </div>
 
     </form>
