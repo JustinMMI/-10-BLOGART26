@@ -10,7 +10,7 @@ Corrigé ✅ : Création de thématiques n'entraine pas une création de cartes 
 Corrigé ✅ : Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
 --> views/backend/dashboard.php
 
-Corrigé ✅: Ajouter les contenus des articles et leur image sur la page de l'article
+Corrigé ✅ : Ajouter les contenus des articles et leur image sur la page de l'article
 --> views/frontend/article1.php
 
 Corrigé ✅ : Vérifier BBCODE partout
