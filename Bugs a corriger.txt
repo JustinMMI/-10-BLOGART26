@@ -6,7 +6,7 @@ Corrigé ✅ : Bug de la page d'accueil lorsqu'aucun article dans la bdd
 Corrigé ✅ : Création de thématiques n'entraine pas une création de cartes de thématique sur index
 -> index.php, home.css
 
-Theo FAITS Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
+Theo FAITS ✅ Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
 
 Eliott FAIT ✅: Ajouter les contenus des articles et leur image sur la page de l'article
 
@@ -15,7 +15,7 @@ Justin : Vérifier BBCODE partout
 Corrigé ✅ : Remplacer Delete logique/Delet physique par Corbeille/Suppression
 --> views/backend/comments/list.php
 
-Corrigé ✅ : Limiter a 4 ou 5 le nombre de liens d'articles dans les cartes de thématiques sur le index
+Corrigé Lisa ✅ : Limiter a 4 ou 5 le nombre de liens d'articles dans les cartes de thématiques sur le index
 --> index.php
 
 Eliott FAIT ✅: cgu.php
