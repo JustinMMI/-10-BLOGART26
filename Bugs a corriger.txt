@@ -3,13 +3,14 @@ Julianne : Création de pseudos de moins de 6 charactères dans le front via le 
 Corrigé ✅ : Bug de la page d'accueil lorsqu'aucun article dans la bdd
 --> index.php
 
-Lisa : Création de thématiques n'entraine pas une création de cartes de thématique sur index
+Corrigé ✅ : Création de thématiques n'entraine pas une création de cartes de thématique sur index
+-> index.php, home.css
 
-Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
+Corrigé ✅ Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
 
-Eliott ( FAIT ): Ajouter les contenus des articles et leur image sur la page de l'article
+Corrigé ✅: Ajouter les contenus des articles et leur image sur la page de l'article
 
-Vérifier BBCODE partout
+Justin : Vérifier BBCODE partout
 
 Corrigé ✅ : Remplacer Delete logique/Delet physique par Corbeille/Suppression
 --> views/backend/comments/list.php
@@ -17,4 +18,4 @@ Corrigé ✅ : Remplacer Delete logique/Delet physique par Corbeille/Suppression
 Corrigé ✅ : Limiter a 4 ou 5 le nombre de liens d'articles dans les cartes de thématiques sur le index
 --> index.php
 
-cgu.php
++ cgu.php

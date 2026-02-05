@@ -33,62 +33,54 @@ if ($_SESSION['user']['statut'] !== 'Administrateur'&& $_SESSION['user']['statut
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Objets</th>
-                            <th>Actions</th>
-                            <th>Commentaires</th>
+                            <th>Paramètres</th>
+                            <th>Description de l'action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Statuts</td>
                             <td>
-                                <a href="/views/backend/statuts/list.php" class="btn btn-primary">List</a>
+                                <a href="/views/backend/statuts/list.php" class="btn btn-primary">Statuts</a>
                             </td>
                             <td>
-                                <p>Exemple fourni, s'y référer pour les autres CRUD</p>
+                                <p>Liste des status pour l'edit, la suppression et la création</p>
                             </td>
                         </tr>
                         <tr>
-                            <td>Membres</td>
                             <td>
-                                <a href="/views/backend/members/list.php" class="btn btn-primary">List</a>
+                                <a href="/views/backend/members/list.php" class="btn btn-primary">Membres</a>
                             </td>
-                            <td>Pour tous les membres : Inscription, connexion, sécurité et captcha</td>
+                            <td>Liste des membres pour l'edit, la suppression et la création</td>
                         </tr>
                         <tr>
-                            <td>Articles</td>
                             <td>
-                                <a href="/views/backend/articles/list.php" class="btn btn-primary">List</a>
+                                <a href="/views/backend/articles/list.php" class="btn btn-primary">Articles</a>
                                 </td>
-                            <td>En même temps que l'article : image à intégrer, gestion des mots-clés associés</td>
+                            <td>Liste des articles pour l'edit, la suppression, la création et l'épinglage </td>
                         </tr>
                         <tr>
-                            <td>Thématiques</td>
                             <td>
-                                <a href="/views/backend/thematiques/list.php" class="btn btn-primary">List</a>
+                                <a href="/views/backend/thematiques/list.php" class="btn btn-primary">Thématiques</a>
                                 </td>
-                            <td></td>
+                            <td>Liste des thématiques pour l'edit, la suppression et la création</td>
                         </tr>
                         <tr>
-                            <td>Commentaires</td>
                             <td>
-                                <a href="/views/backend/comments/list.php" class="btn btn-primary">List</a>
+                                <a href="/views/backend/comments/list.php" class="btn btn-primary">Commentaires</a>
                                 </td>
-                            <td>Gestion côté front et côté back, modération. Utilisation de mise en forme (emojis...)</td>
+                            <td>Liste des commentaires en attentes, contrôlers et dans la corbeilles pour le contrôle et la gestion de la suppression</td>
                         </tr>
                         <tr>
-                            <td>Likes</td>
                             <td>
-                                <a href="/views/backend/likes/list.php" class="btn btn-primary">List</a>
+                                <a href="/views/backend/likes/list.php" class="btn btn-primary">Likes</a>
                                 </td>
-                            <td>Utilisation de JS</td>
+                            <td>Liste des likes par membre associés à l’article</td>
                         </tr>
                         <tr>
-                            <td>Mot-clés</td>
                             <td>
-                                <a href="/views/backend/keywords/list.php" class="btn btn-primary">List</a>
+                                <a href="/views/backend/keywords/list.php" class="btn btn-primary">Mot-clés</a>
                             </td>
-                            <td></td>
+                            <td>Liste des Mots-clés pour l'edit, la suppression ou la création</td>
                         </tr>
                     </tbody>
             </div>

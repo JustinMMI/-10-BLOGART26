@@ -7,7 +7,7 @@ $numArt = (int)($_GET['numArt'] ?? 0);
 $article = null;
 
 if ($numArt > 0) {
-    $article = sql_select("ARTICLE", "numArt, libTitrArt, libChapoArt, dtCreaArt, urlPhotArt", "numArt = $numArt");
+    $article = sql_select("ARTICLE", "*", "numArt = $numArt");
     $article = $article[0] ?? null;
 }
 
@@ -82,7 +82,35 @@ if ($article) {
           <?php endif; ?>
 
           <div class="article-divider"></div>
+          <?php if (!empty($article['libAccrochArt'])): ?>
+            <p class="article-accroche"><strong><?= nl2br(htmlspecialchars($article['libAccrochArt'])); ?></strong></p>
+          <?php endif; ?>
 
+          <?php if (!empty($article['parag1Art'])): ?>
+            <p class="article-paragraph"><?= nl2br(htmlspecialchars($article['parag1Art'])); ?></p>
+          <?php endif; ?>
+
+          <?php if (!empty($article['libSsTitr1Art'])): ?>
+            <h3 class="article-subtitle"><?= htmlspecialchars($article['libSsTitr1Art']); ?></h3>
+          <?php endif; ?>
+
+          <?php if (!empty($article['parag2Art'])): ?>
+            <p class="article-paragraph"><?= nl2br(htmlspecialchars($article['parag2Art'])); ?></p>
+          <?php endif; ?>
+
+          <?php if (!empty($article['libSsTitr2Art'])): ?>
+            <h3 class="article-subtitle"><?= htmlspecialchars($article['libSsTitr2Art']); ?></h3>
+          <?php endif; ?>
+
+          <?php if (!empty($article['parag3Art'])): ?>
+            <p class="article-paragraph"><?= nl2br(htmlspecialchars($article['parag3Art'])); ?></p>
+          <?php endif; ?>
+
+          <?php if (!empty($article['libConclArt'])): ?>
+            <p class="article-conclusion"><strong><?= nl2br(htmlspecialchars($article['libConclArt'])); ?></strong></p>
+          <?php endif; ?>
+
+          <div class="article-divider"></div>
           <a class="more-link" href="<?= ROOT_URL ?>/views/frontend/articles-list.php">
             Voir plus d’articles →
           </a>
