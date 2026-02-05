@@ -61,8 +61,12 @@ if ($article) {
                   <input type="hidden" name="numMemb" value="<?= (int)$numMemb ?>">
                   <input type="hidden" name="numArt" value="<?= (int)$numArt ?>">
                   <input type="hidden" name="frontend" value="true">
-                  <button type="submit" class="like-btn <?= $userLiked ? 'liked' : '' ?>" title="<?= $userLiked ? 'Retirer le like' : 'Liker' ?>">
-                    <span class="heart"><?= $userLiked ? '♥' : '♥' ?></span>
+                  <?php $likeCount = getLikeCount($numArt); ?>
+                  <button type="submit"
+                          class="like-btn <?= $userLiked ? 'liked' : '' ?>"
+                          title="<?= $userLiked ? 'Retirer le like' : 'Liker' ?>">
+                      <span class="heart">♥</span>
+                      <span class="like-count"><?= $likeCount ?></span>
                   </button>
                 </form>
               <?php else: ?>

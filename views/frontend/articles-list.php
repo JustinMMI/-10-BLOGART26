@@ -193,13 +193,17 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </a>
 
                 <?php if ($numMemb): ?>
-                  <button type="button"
-                          class="like-btn <?= $userLiked ? 'liked' : '' ?>"
-                          data-art="<?= $numArt ?>"
-                          data-liked="<?= $userLiked ? '1' : '0' ?>"
-                          title="J’aime">
-                    <span class="heart">♥</span>
-                  </button>
+                    <?php $likeCount = getLikeCount($numArt); ?>
+
+                    <button
+                        type="button"
+                        class="like-btn <?= $userLiked ? 'liked' : '' ?>"
+                        data-art="<?= $numArt ?>"
+                        data-liked="<?= $userLiked ? '1' : '0' ?>"
+                        title="J’aime">
+                        <span class="heart">♥</span>
+                        <span class="like-count"><?= $likeCount ?></span>
+                    </button>
                 <?php else: ?>
                   <a href="/views/backend/security/login.php"
                      class="like-btn"
@@ -240,8 +244,13 @@ document.querySelectorAll('button.like-btn').forEach(btn => {
         frontend: 'true'
       })
     }).then(() => {
-      this.classList.toggle('liked');
-      this.dataset.liked = liked ? '0' : '1';
+        this.classList.toggle('liked');
+
+        const countSpan = this.querySelector('.like-count');
+        let count = parseInt(countSpan.textContent, 10);
+
+        countSpan.textContent = liked ? count - 1 : count + 1;
+        this.dataset.liked = liked ? '0' : '1';
     });
   });
 });
