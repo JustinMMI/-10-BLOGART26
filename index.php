@@ -1,6 +1,7 @@
 <?php 
 require_once 'header.php';
 
+// Zone PHP principale de la page d'accueil
 // Récupérer l'article épinglé depuis le fichier JSON
 $featured_epingle = null;
 $pinFileContent = json_decode(file_get_contents('pinned_article.json'), true);
@@ -15,6 +16,7 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
 
 <!-- HERO -->
 <section class="hero">
+  <!-- Bandeau principal -->
   <div class="hero-inner">
     <h1>
       Bordeaux à travers<br>
@@ -78,13 +80,13 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
           <p><?= nl2br(htmlspecialchars($featured['libChapoArt'])) ?></p>
 
           <a class="read-more"
-             href="/views/frontend/articles/article1.php?numArt=<?= (int)$featured['numArt'] ?>">
+            href="/views/frontend/articles/article1.php?numArt=<?= (int)$featured['numArt'] ?>">
             Lire la suite →
           </a>
         </div>
       </article>
 
-      <!-- CTA déplacé ici -->
+      <!-- Boutons principaux -->
       <div class="view-all-wrapper">
         <a href="/views/frontend/articles-list.php" class="btn btn-primary btn-lg">
           Voir tous les articles →
@@ -97,26 +99,38 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
 
  <?php // Index - articles par themes
 
-    $articlesRecup = sql_select(
-    "article a",
-    "a.numThem,
-    a.numArt,
-    a.libTitrArt",
-    null,
-    null,
-    null,
+  // Récup des articles les + récents
+  $articlesRecup = sql_select(
+  "article a",
+  "a.numThem,
+  a.numArt,
+  a.libTitrArt",
+  null,
+  null,
+  "a.dtCreaArt DESC",
 );
 
-$trieArticles = [
-    1 => [],
-    2 => [],
-    3 => [],
-    4 => []
-];
+// Récupérer les thématiques
+$thematiques = sql_select("THEMATIQUE", "numThem, libThem");
 
-foreach ($articlesRecup as $article) {
-    $trieArticles[$article['numThem']][] = ['titre' => $article['libTitrArt'],'numArt' => $article['numArt']];
+// Prépa du tableau par thématique
+$trieArticles = [];
+foreach ($thematiques as $them) {
+  $trieArticles[$them['numThem']] = [];
 }
+
+// Rangement des articles dans leur thème
+foreach ($articlesRecup as $article) {
+  $trieArticles[$article['numThem']][] = ['titre' => $article['libTitrArt'],'numArt' => $article['numArt']];
+}
+
+// Classes visuelles dispo
+$sidebarClasses = [
+  'sidebar-red coins-dore',
+  'sidebar-light',
+  'sidebar-black',
+  'sidebar-light-inverse'
+];
 ?>
 
 
@@ -131,76 +145,38 @@ foreach ($articlesRecup as $article) {
         <span class="coin-br"></span>
       </a>
 
-      <div class="sidebar-box sidebar-red coins-dore">
-        <span class="coin-tl"></span>
-        <span class="coin-tr"></span>
-        <span class="coin-bl"></span>
-        <span class="coin-br"></span>
+      <?php foreach ($thematiques as $index => $them): ?>
+        <?php
+          $boxClass = $sidebarClasses[$index % count($sidebarClasses)];
+          $listeArticles = $trieArticles[$them['numThem']] ?? [];
+        ?>
 
-        <h4>Événements</h4>
-        <div class="trait-dore"></div>
-        <ul>
-        <?php foreach ($trieArticles[1] as $article): ?>
-            <li>
-                <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
-                    <?= htmlspecialchars($article['titre']) ?>
-                </a>
-            </li>
-        <?php endforeach; ?>
-        </ul>
-        <div class="trait-dore-petit"></div>
-        <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=1">Voir tous →</a>
-      </div>
+        <!-- Carte thématique -->
+        <div class="sidebar-box <?= htmlspecialchars($boxClass) ?>">
+          <?php if ($boxClass === 'sidebar-red coins-dore'): ?>
+            <span class="coin-tl"></span>
+            <span class="coin-tr"></span>
+            <span class="coin-bl"></span>
+            <span class="coin-br"></span>
+          <?php endif; ?>
 
-      <div class="sidebar-box sidebar-light">
-        <h4>Acteurs Clés</h4>
-        <div class="trait-dore"></div>
-        <ul>
-        <?php foreach ($trieArticles[2] as $article): ?>
-            <li>
-                <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
-                    <?= htmlspecialchars($article['titre']) ?>
-                </a>
-            </li>
-        <?php endforeach; ?>
-        </ul>
-        <div class="trait-dore-petit"></div>
-        <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=2">Voir tous →</a>
-      </div>
+          <h4><?= htmlspecialchars($them['libThem']) ?></h4>
+          <div class="trait-dore"></div>
+            <ul>
+          <?php foreach (array_slice($listeArticles, 0, 5) as $article): ?>
+              <li>
+                  <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
+                      <?= htmlspecialchars($article['titre']) ?>
+                  </a>
+              </li>
+          <?php endforeach; ?>
+          </ul>
+          <div class="trait-dore-petit"></div>
+          <a class="sidebar-link" href="/views/frontend/articles-list.php?search=&keywords=&them=<?= (int)$them['numThem'] ?>">Voir tous →</a>
+        </div>
+      <?php endforeach; ?>
 
-      <div class="sidebar-box sidebar-black">
-        <h4>Mouvement émergeant</h4>
-        <div class="trait-dore"></div>
-        <ul>
-        <?php foreach ($trieArticles[3] as $article): ?>
-            <li>
-                <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
-                    <?= htmlspecialchars($article['titre']) ?>
-                </a>
-            </li>
-        <?php endforeach; ?>
-        </ul>
-        <div class="trait-dore-petit"></div>
-        <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=3">Voir tous →</a>
-      </div>
-
-
-      <div class="sidebar-box sidebar-light-inverse">
-        <h4>Insolite</h4>
-        <div class="trait-dore"></div>
-        <ul>
-        <?php foreach ($trieArticles[4] as $article): ?>
-            <li class="blanc1">
-                <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
-                    <?= htmlspecialchars($article['titre']) ?>
-                </a>
-            </li>
-        <?php endforeach; ?>
-        </ul>
-        <div class="trait-dore-petit"></div>
-        <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=4">Voir tous →</a>
-      </div>
-
+      <!-- Carte maps -->
       <div class="sidebar-box map-box">
           <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d17290.13044340734!2d-0.5923902137353435!3d44.84475231300805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1srestaurants%20gastronomiques%20bordeaux!5e0!3m2!1sfr!2sfr!4v1770215811079!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
