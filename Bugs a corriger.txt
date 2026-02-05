@@ -20,3 +20,5 @@ Corrigé ✅ : Limiter a 4 ou 5 le nombre de liens d'articles dans les cartes de
 --> index.php
 
 + cgu.php
+
+Liste des fichiers a modifier (ne prend pas en compte les fichiers modifiés pour l'ajout du bbcode) : api/security/signup.php , views/backend/security/signup.php , views/backend/members/create.php , api/members/create.php , index.php , home.css , views/backend/comments/list.php , cgu.php
