@@ -2,6 +2,9 @@
 session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/ctrlSaisies.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/api_guard.php';
+
+requireAdminApi();
 
 // Suppression tous les commentaires d'un membre
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['numMemb']) && !isset($_GET['numCom'])) {
