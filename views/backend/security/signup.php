@@ -1,73 +1,9 @@
 <?php
+define('PUBLIC_PAGE', true);
 include '../../../header.php';
 
-$error = '';
-$success = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    if (empty($_POST['recaptcha_token'])) {
-        $error = "Captcha manquant.";
-    } else {
-
-        $secretKey = "6LewKl8sAAAAAMPDkHvKgCdyW8eiLqYKuUhglsQU";
-        $token = $_POST['recaptcha_token'];
-
-        $verify = file_get_contents(
-            "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$token"
-        );
-
-        $responseData = json_decode($verify, true);
-
-        if (
-            empty($responseData['success']) ||
-            $responseData['score'] < 0.5 ||
-            $responseData['action'] !== 'signup' ||
-            $responseData['hostname'] !== $_SERVER['SERVER_NAME']
-        ) {
-            $error = "Comportement suspect détecté.";
-        }
-    }
-
-    if (!$error) {
-
-        $prenom  = trim($_POST['prenom']);
-        $nom     = trim($_POST['nom']);
-        $pseudo  = trim($_POST['pseudo']);
-        $email   = trim($_POST['email']);
-        $pass    = $_POST['password'];
-        $confirm = $_POST['confirm'];
-
-        if ($pass !== $confirm) {
-            $error = "Les mots de passe ne correspondent pas.";
-        } else {
-
-            // Email déjà utilisé ?
-            $exist = sql_select("MEMBRE", "*", "eMailMemb = '$email'");
-
-            if (!empty($exist)) {
-                $error = "Un compte avec cet email existe déjà.";
-            } else {
-
-                $hash = password_hash($pass, PASSWORD_DEFAULT);
-
-                $statutMembre = sql_select(
-                    "STATUT",
-                    "numStat",
-                    "libStat = 'Membre'"
-                )[0]['numStat'];
-
-                sql_insert(
-                    "MEMBRE",
-                    "prenomMemb, nomMemb, pseudoMemb, passMemb, eMailMemb, dtCreaMemb, numStat",
-                    "'$prenom', '$nom', '$pseudo', '$hash', '$email', NOW(), $statutMembre"
-                );
-
-                $success = "Compte créé avec succès. Vous pouvez vous connecter.";
-            }
-        }
-    }
-}
+$error   = $_GET['error']   ?? '';
+$success = $_GET['success'] ?? '';
 ?>
 
 <main class="auth-page">
@@ -81,51 +17,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="auth-success"><?= htmlspecialchars($success) ?></div>
     <?php endif; ?>
 
-    <form method="post" class="auth-form" id="signupForm">
+    <form
+      class="auth-form"
+      id="signupForm"
+      method="post"
+      action="<?= ROOT_URL ?>/api/security/signup.php"
+    >
 
       <input type="hidden" name="recaptcha_token" id="recaptcha_token">
 
-      <input
-        type="text"
-        name="prenom"
-        placeholder="Prénom"
-        required
-      >
-
-      <input
-        type="text"
-        name="nom"
-        placeholder="Nom"
-        required
-      >
-
-      <input
-        type="text"
-        name="pseudo"
-        placeholder="Pseudo"
-        required
-      >
-
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        required
-      >
-
-      <input
-        type="password"
-        name="password"
-        placeholder="Mot de passe"
-        required
-      >
-
-      <input
-        type="password"
-        name="confirm"
-        placeholder="Confirmation du mot de passe"
-        required
-      >
+      <input type="text" name="prenom" placeholder="Prénom" required>
+      <input type="text" name="nom" placeholder="Nom" required>
+      <input type="text" name="pseudo" placeholder="Pseudo" maxlength="70" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Mot de passe" maxlength="15" required>
+      <input type="password" name="confirm" placeholder="Confirmation du mot de passe" maxlength="15" required>
 
       <button type="submit" class="btn-primary">
         Créer le compte
@@ -144,10 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 document.getElementById('signupForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    grecaptcha.execute('<?= "6LewKl8sAAAAAApTAS7X8kAdof0A4yzZlIq9BoAb" ?>', { action: 'signup' })
+    grecaptcha.execute('6LewKl8sAAAAAApTAS7X8kAdof0A4yzZlIq9BoAb', { action: 'signup' })
         .then(function (token) {
             document.getElementById('recaptcha_token').value = token;
             e.target.submit();
         });
 });
 </script>
+
