@@ -56,6 +56,18 @@ Le blog présente :
 - ✅ Tableau de bord administrateur
 - ✅ Système d'épinglage d'articles
 
+### Avenants au Cahier des charges (étudié et validé avec les clients )
+
+À l’issue de l’analyse UI et des réunions tenues avec les clients, des avenants au cahier des charges ont été validés.
+
+1/Dashboard administrateur principal: 
+
+Le panneau d’administration général a subi des modifications dans son organisation visuelle. Afin de clarifier les actions possibles et d’éviter la redondance ainsi que la surcharge visuelle, les boutons d’action ont été fusionnés avec le libellé du paramètre qu’ils impactent. Une section de description de l’action a été ajoutée ; elle détaille l’action déclenchée par l’interaction de l’utilisateur avec les boutons et liste les résultats obtenus lors du clic.
+
+2/Panneaux de contrôle des commentaires : 
+
+Le panneau de contrôle des commentaires a fait l’objet de modifications concernant son organisation visuelle et sa nomenclature. La section « Suppression logique » a été renommée « Corbeille » et comprend désormais un bouton « Supprimer de la corbeille » pour chaque itération, afin d’améliorer la clarté des actions possibles et de réduire la surcharge visuelle. Par ailleurs, un bouton « Placer dans la corbeille » a été ajouté à chaque itération de la section « Commentaires contrôlés », Afin de permettre la suppression de commentaires déjà validés en cas d’erreur.
+
 ---
 
 ## 🔐 Accès et identifiants des comptes de test
