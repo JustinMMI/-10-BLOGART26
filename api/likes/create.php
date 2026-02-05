@@ -4,6 +4,9 @@ require_once '../../config.php';
 require_once '../../functions/query/insert.php';
 require_once '../../functions/query/select.php';
 require_once '../../functions/query/delete.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/api_guard.php';
+
+requireAdminApi();
 
 $numMemb = $_SESSION['user']['id'] ?? $_POST['numMemb'];
 $numArt = $_POST['numArt'];
