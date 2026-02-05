@@ -8,47 +8,54 @@ requireAdminApi();
 
 header('Content-Type: application/json');
 
-// Vérifier si l'utilisateur est authentifié et admin/modérateur
+// Vérif permissions
 if (!isset($_SESSION['user']) || (!in_array($_SESSION['user']['statut'], ['Administrateur', 'Modérateur']))) {
     echo json_encode(['success' => false, 'message' => 'Unauthorized']);
     exit;
 }
 
-$numArt = isset($_POST['numArt']) ? (int)$_POST['numArt'] : 0;
-$action = isset($_POST['action']) ? $_POST['action'] : '';
+if (isset($_POST['numArt'])) {
+    $numArt = (int) $_POST['numArt'];
+} else {
+    $numArt = 0;
+}
+
+if (isset($_POST['action'])) {
+    $action = $_POST['action'];
+} else {
+    $action = '';
+}
+
 
 if (!$numArt || !in_array($action, ['pin', 'unpin'])) {
     echo json_encode(['success' => false, 'message' => 'Invalid parameters']);
     exit;
 }
 
-// Vérifier que l'article existe
+// Vérif article existe
 $article = sql_select("ARTICLE", "*", "numArt = $numArt");
 if (empty($article)) {
     echo json_encode(['success' => false, 'message' => 'Article not found']);
     exit;
 }
 
-// Connecter à la base de données
 $jsonFile = '../../functions/pinned_article.json';
 
-try {
-    // Lire le fichier JSON
+if (file_exists($jsonFile)) {
     $data = json_decode(file_get_contents($jsonFile), true);
-    
-    // Si on épingle
-    if ($action === 'pin') {
-        $data['numArt'] = $numArt;
-    } else {
-        // Si on dépingle
-        $data['numArt'] = null;
-    }
-    
-    // Écrire le fichier JSON
-    file_put_contents($jsonFile, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-    
-    echo json_encode(['success' => true]);
-} catch (Exception $e) {
-    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+} else {
+    $data = ['numArt' => null];
 }
+
+if ($action === 'pin') {
+    $data['numArt'] = $numArt;
+} else {
+    $data['numArt'] = null;
+}
+
+// dans json
+file_put_contents($jsonFile, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
+header('Location: ' . $_SERVER['HTTP_REFERER'] . '#articles');
+exit;
 ?>

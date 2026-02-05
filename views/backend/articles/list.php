@@ -85,9 +85,13 @@ $articles = sql_select("ARTICLE a INNER JOIN THEMATIQUE t ON a.numThem = t.numTh
                                 Delete
                                 </a>
 
-                                <button class="btn btn-info btn-sm toggle-pin" data-art="<?= $article['numArt'] ?>" data-pinned="<?= $article['numArt'] === $pinnedId ? '1' : '0' ?>">
-                                    <?= ($article['numArt'] === $pinnedId) ? 'Dépingler' : 'Épingler' ?>
-                                </button>
+                                <form method="POST" action="/api/articles/pin.php" style="display:inline;">
+                                    <input type="hidden" name="numArt" value="<?= $article['numArt'] ?>">
+                                    <input type="hidden" name="action" value="<?= ($article['numArt'] === $pinnedId) ? 'unpin' : 'pin' ?>">
+                                    <button type="submit" class="btn btn-info btn-sm">
+                                        <?= ($article['numArt'] === $pinnedId) ? 'Dépingler' : 'Épingler' ?>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
 
@@ -102,52 +106,5 @@ $articles = sql_select("ARTICLE a INNER JOIN THEMATIQUE t ON a.numThem = t.numTh
     </div>
 </main>
 
-<script>
-document.querySelectorAll('.toggle-pin').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        const numArt = this.dataset.art;
-        const isPinned = this.dataset.pinned === '1';
-        const button = this;
 
-        console.log('Épinglage article:', numArt, 'Action:', isPinned ? 'unpin' : 'pin');
-
-        fetch('/api/articles/pin.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            credentials: 'same-origin',
-            body: new URLSearchParams({
-                numArt: numArt,
-                action: isPinned ? 'unpin' : 'pin'
-            })
-        })
-        .then(response => {
-            console.log('Réponse reçue:', response.status);
-            if (!response.ok) {
-                throw new Error('HTTP error ' + response.status);
-            }
-            return response.text();
-        })
-        .then(text => {
-            console.log('Réponse texte:', text);
-            try {
-                const data = JSON.parse(text);
-                if (data.success) {
-                    console.log('Succès, rechargement...');
-                    location.reload();
-                } else {
-                    alert('Erreur: ' + (data.message || 'Erreur inconnue'));
-                }
-            } catch (e) {
-                console.error('Erreur parsing JSON:', e);
-                alert('Erreur serveur: ' + text);
-            }
-        })
-        .catch(error => {
-            console.error('Erreur fetch:', error);
-            alert('Erreur: ' + error.message);
-        });
-    });
-});
-</script>
 
