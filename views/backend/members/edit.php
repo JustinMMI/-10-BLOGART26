@@ -32,7 +32,7 @@ if (!$membre) {
     <form action="../../../api/members/update.php" method="POST" id="formUpdate">
 
         <input type="hidden" id="recaptcha_token" name="recaptcha_token">
-        <input type="hidden" name="numMemb" value="<?= $membre['numMemb']; ?>">
+        <input type="hidden" name="numMemb" value="<?php e(membre['numMemb']; ?>">
 
         <div class="mb-3">
             <label class="form-label">Pseudo *</label>
@@ -54,7 +54,7 @@ if (!$membre) {
             <label class="form-label">Statut</label>
             <select name="numStat" class="form-select">
                 <?php foreach ($statuts as $statut): ?>
-                    <option value="<?= $statut['numStat']; ?>" <?= ($statut['numStat'] == $membre['numStat']) ? 'selected' : ''; ?>>
+                    <option value="<?php e(statut['numStat']; ?>" <?= ($statut['numStat'] == $membre['numStat']) ? 'selected' : ''; ?>>
                         <?= htmlspecialchars($statut['libStat']); ?>
                     </option>
                 <?php endforeach; ?>
@@ -91,11 +91,11 @@ if (!$membre) {
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label class="form-label">Date Création</label>
-                <input type="text" class="form-control" value="<?= $membre['dtCreaMemb']; ?>" disabled>
+                <input type="text" class="form-control" value="<?php e(membre['dtCreaMemb']; ?>" disabled>
             </div>
             <div class="col-md-6 mb-3">
                 <label class="form-label">Dernière Modification (Mise à jour automatique)</label>
-                <input type="text" class="form-control" value="<?= $membre['dtMajMemb'] ?? '-'; ?>" disabled>
+                <input type="text" class="form-control" value="<?php e(membre['dtMajMemb'] ?? '-'; ?>" disabled>
             </div>
         </div>
 

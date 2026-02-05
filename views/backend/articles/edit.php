@@ -47,7 +47,7 @@ $idsMotsArticle = array_column($motsArticle, 'numMotCle');
 
     <form action="<?= ROOT_URL . '/api/articles/update.php'; ?>" method="post" enctype="multipart/form-data">
 
-        <input type="hidden" name="numArt" value="<?= $numArt ?>">
+        <input type="hidden" name="numArt" value="<?php e(numArt ?>">
 
         <label>Titre</label>
         <input name="libTitrArt" class="form-control mb-2"
@@ -96,8 +96,8 @@ $idsMotsArticle = array_column($motsArticle, 'numMotCle');
             <label class="fw-bold">Thématique :</label>
             <select name="numThem" class="form-control" required>
                 <?php foreach ($thematiques as $t): ?>
-                    <option value="<?= $t['numThem']; ?>"
-                        <?= $t['numThem'] == $article['numThem'] ? 'selected' : '' ?>>
+                    <option value="<?php e(t['numThem']; ?>"
+                        <?php e(t['numThem'] == $article['numThem'] ? 'selected' : '' ?>>
                         <?= htmlspecialchars($t['libThem']); ?>
                     </option>
                 <?php endforeach; ?>
@@ -114,7 +114,7 @@ $idsMotsArticle = array_column($motsArticle, 'numMotCle');
                 <select id="mots-dispo" class="form-control" size="8" multiple>
                     <?php foreach ($allMots as $mot): ?>
                         <?php if (!in_array($mot['numMotCle'], $idsMotsArticle)): ?>
-                            <option value="<?= $mot['numMotCle']; ?>">
+                            <option value="<?php e(mot['numMotCle']; ?>">
                                 <?= htmlspecialchars($mot['libMotCle']); ?>
                             </option>
                         <?php endif; ?>
@@ -138,7 +138,7 @@ $idsMotsArticle = array_column($motsArticle, 'numMotCle');
                 <label>Mots clés ajoutés</label>
                 <select id="mots-ajoutes" name="mots[]" class="form-control" size="8" multiple>
                     <?php foreach ($motsArticle as $mot): ?>
-                        <option value="<?= $mot['numMotCle']; ?>">
+                        <option value="<?php e(mot['numMotCle']; ?>">
                             <?= htmlspecialchars($mot['libMotCle']); ?>
                         </option>
                     <?php endforeach; ?>

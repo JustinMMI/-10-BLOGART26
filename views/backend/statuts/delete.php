@@ -68,7 +68,7 @@ if ($nbMembers > 0) {
                 <br />
                 <div class="form-group mt-2">
                     <a href="list.php" class="btn btn-primary">List</a>
-                    <button type="submit" class="btn btn-danger" <?= $nbMembers > 0 ? 'disabled' : '' ?>>Confirmer delete ?</button>
+                    <button type="submit" class="btn btn-danger" <?php e(nbMembers > 0 ? 'disabled' : '' ?>>Confirmer delete ?</button>
                 </div>
             </form>
         </div>

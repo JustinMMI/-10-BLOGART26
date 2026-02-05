@@ -54,9 +54,9 @@ $articles = sql_select("ARTICLE a INNER JOIN THEMATIQUE t ON a.numThem = t.numTh
                         ?>
 
                         <tr>
-                            <td><?= $article['numArt']; ?></td>
+                            <td><?php e(article['numArt']; ?></td>
 
-                            <td><?= $article['dtCreaArt']; ?></td>
+                            <td><?php e(article['dtCreaArt']; ?></td>
 
                             <td><?= htmlspecialchars($article['libTitrArt']); ?></td>
 
@@ -75,17 +75,17 @@ $articles = sql_select("ARTICLE a INNER JOIN THEMATIQUE t ON a.numThem = t.numTh
                             <td><?= htmlspecialchars($article['libThem']); ?></td>
 
                             <td>
-                                <a href="edit.php?numArt=<?= $article['numArt']; ?>"
+                                <a href="edit.php?numArt=<?php e(article['numArt']; ?>"
                                 class="btn btn-warning btn-sm">
                                 Edit
                                 </a>
 
-                                <a href="delete.php?numArt=<?= $article['numArt']; ?>"
+                                <a href="delete.php?numArt=<?php e(article['numArt']; ?>"
                                 class="btn btn-danger btn-sm">
                                 Delete
                                 </a>
 
-                                <button class="btn btn-info btn-sm toggle-pin" data-art="<?= $article['numArt']; ?>" data-pinned="<?= $article['numArt'] === $pinnedId ? '1' : '0' ?>">
+                                <button class="btn btn-info btn-sm toggle-pin" data-art="<?php e(article['numArt']; ?>" data-pinned="<?php e(article['numArt'] === $pinnedId ? '1' : '0' ?>">
                                     <?= ($article['numArt'] === $pinnedId) ? 'Dépingler' : 'Épingler' ?>
                                 </button>
                             </td>

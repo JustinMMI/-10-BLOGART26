@@ -29,7 +29,7 @@ $commentaire = $commentaire[0];
 <div class="container">
     <form method="POST" action="<?= ROOT_URL . '/api/comments/delete.php'; ?>">
 
-    <input type="hidden" name="numCom" value="<?= $commentaire['numCom']; ?>">
+    <input type="hidden" name="numCom" value="<?php e(commentaire['numCom']; ?>">
 
     <input type="hidden" name="redirect"
            value="/views/backend/comments/list.php">

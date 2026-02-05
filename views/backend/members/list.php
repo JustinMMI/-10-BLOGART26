@@ -35,15 +35,15 @@ $currentUserId = $_SESSION['user']['id'] ?? null;
                             $memberId = $membre['numMemb'] ?? $membre['NumMemb'] ?? null;
                         ?>
                             <tr>
-                                <td><?php echo $memberId; ?></td>
-                                <td><?php echo $membre['prenomMemb']; ?></td>
-                                <td><?php echo $membre['nomMemb']; ?></td>
-                                <td><?php echo $membre['pseudoMemb']; ?></td>
-                                <td><?php echo $membre['eMailMemb']; ?></td>
+                                <td><?php e($memberId; ?></td>
+                                <td><?php e($membre['prenomMemb']; ?></td>
+                                <td><?php e($membre['nomMemb']; ?></td>
+                                <td><?php e($membre['pseudoMemb']; ?></td>
+                                <td><?php e($membre['eMailMemb']; ?></td>
                                 <td><?php echo ($membre['accordMemb'] == 1 ? 'Oui' : 'Non'); ?></td>
-                                <td><?php echo $membre['libStat']; ?></td>
+                                <td><?php e($membre['libStat']; ?></td>
                                 <td>
-                                    <a href="edit.php?numMemb=<?php echo $memberId; ?>" class="btn btn-warning">Edit</a>
+                                    <a href="edit.php?numMemb=<?php e($memberId; ?>" class="btn btn-warning">Edit</a>
 
                                     <?php
                                     if (
@@ -52,7 +52,7 @@ $currentUserId = $_SESSION['user']['id'] ?? null;
                                             Suppression impossible !
                                         </button>
                                     <?php } else { ?>
-                                        <a href="delete.php?numMemb=<?php echo $memberId; ?>" class="btn btn-danger">
+                                        <a href="delete.php?numMemb=<?php e($memberId; ?>" class="btn btn-danger">
                                             Delete
                                         </a>
                                     <?php } ?>

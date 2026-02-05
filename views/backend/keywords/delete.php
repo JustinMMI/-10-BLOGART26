@@ -41,7 +41,7 @@ $canDelete = ($nbLiens == 0);
 
     <form action="<?= ROOT_URL ?>/api/keywords/delete.php" method="post">
 
-        <input type="hidden" name="numMotCle" value="<?= $numMotCle ?>">
+        <input type="hidden" name="numMotCle" value="<?php e(numMotCle ?>">
 
         <div class="form-group mb-3">
             <label>Mot-clé</label>
@@ -63,7 +63,7 @@ $canDelete = ($nbLiens == 0);
                 <button type="button" class="btn btn-secondary" disabled>
                     Veuillez d’abord supprimer tous les liens associés à ce mot-clé
                 </button>
-                <a href="<?= ROOT_URL ?>/api/keywords/delete.php?numMotCle=<?= $numMotCle ?>&unlink=1"
+                <a href="<?= ROOT_URL ?>/api/keywords/delete.php?numMotCle=<?php e(numMotCle ?>&unlink=1"
                    class="btn btn-warning ms-2"
                    onclick="return confirm('Délier ce mot-clé de tous les articles ?');">
                     Délier le mot-clé de tous les articles
