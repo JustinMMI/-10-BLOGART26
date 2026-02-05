@@ -16,3 +16,5 @@ Corrigé ✅ : Remplacer Delete logique/Delet physique par Corbeille/Suppression
 
 Corrigé ✅ : Limiter a 4 ou 5 le nombre de liens d'articles dans les cartes de thématiques sur le index
 --> index.php
+
+cgu.php
