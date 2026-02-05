@@ -41,12 +41,12 @@ if (!$response->success || $response->score < 0.5) {
 
 $statutMembre = sql_select("STATUT", "numStat", "libStat = 'Membre'")[0]['numStat'];
 
-$pseudo   = trim($_POST['pseudo']);
-$prenom   = trim($_POST['prenom']);
-$nom      = trim($_POST['nom']);
+$pseudo = trim($_POST['pseudo']);
+$prenom = trim($_POST['prenom']);
+$nom = trim($_POST['nom']);
 $password = $_POST['password'];
-$confirm  = $_POST['confirm'];
-$email    = trim($_POST['email']);
+$confirm = $_POST['confirm'];
+$email = trim($_POST['email']);
 
 $exist = sql_select("MEMBRE", "*", "eMailMemb = '$email'");
 $regex = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$/';
@@ -82,15 +82,7 @@ $stmt = $DB->prepare(
     VALUES (:pseudo, :prenom, :nom, :pass, :email, :dtCrea, NULL, :numStat)'
 );
 
-$stmt->execute([
-    ':pseudo'  => $pseudo,
-    ':prenom'  => $prenom,
-    ':nom'     => $nom,
-    ':pass'    => $hash,
-    ':email'   => $email,
-    ':dtCrea'  => $now,
-    ':numStat' => $statutMembre
-]);
+$stmt->execute([':pseudo'  => $pseudo,':prenom'  => $prenom,':nom'     => $nom,':pass'    => $hash,':email'   => $email,':dtCrea'  => $now,':numStat' => $statutMembre]);
 
 header('Location: /views/backend/security/signup.php?success=' . urlencode('Compte créé avec succès. Vous pouvez vous connecter.'));
 exit;

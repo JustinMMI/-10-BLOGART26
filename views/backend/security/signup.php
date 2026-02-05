@@ -2,7 +2,7 @@
 define('PUBLIC_PAGE', true);
 include '../../../header.php';
 
-$error   = $_GET['error']   ?? '';
+$error = $_GET['error'] ?? '';
 $success = $_GET['success'] ?? '';
 ?>
 
