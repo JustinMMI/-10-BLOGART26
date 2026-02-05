@@ -7,7 +7,7 @@ $numArt = (int)($_GET['numArt'] ?? 0);
 $article = null;
 
 if ($numArt > 0) {
-    $article = sql_select("ARTICLE", "numArt, libTitrArt, libChapoArt, dtCreaArt", "numArt = $numArt");
+    $article = sql_select("ARTICLE", "numArt, libTitrArt, libChapoArt, dtCreaArt, urlPhotArt", "numArt = $numArt");
     $article = $article[0] ?? null;
 }
 
@@ -74,6 +74,12 @@ if ($article) {
           </div>
 
           <p class="article-chapo"><?= nl2br(htmlspecialchars($article['libChapoArt'])); ?></p>
+
+          <?php if (!empty($article['urlPhotArt'])): ?>
+            <div class="article-image">
+              <img src="<?= ROOT_URL ?>/src/uploads/<?= htmlspecialchars($article['urlPhotArt']); ?>" alt="<?= htmlspecialchars($article['libTitrArt']); ?>" style="max-width: 400px; height: auto; display: block; margin: 20px auto;">
+            </div>
+          <?php endif; ?>
 
           <div class="article-divider"></div>
 

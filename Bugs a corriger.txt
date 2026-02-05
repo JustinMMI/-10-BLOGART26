@@ -3,11 +3,11 @@ Julianne : Création de pseudos de moins de 6 charactères dans le front via le 
 Corrigé ✅ : Bug de la page d'accueil lorsqu'aucun article dans la bdd
 --> index.php
 
-Création de thématiques n'entraine pas uen création de cartes de thématique sur index
+Lisa : Création de thématiques n'entraine pas une création de cartes de thématique sur index
 
 Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
 
-Ajouter les contenus des articles et leur image sur la page de l'article
+Eliott ( FAIT ): Ajouter les contenus des articles et leur image sur la page de l'article
 
 Vérifier BBCODE partout
 

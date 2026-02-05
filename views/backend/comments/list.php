@@ -84,7 +84,7 @@ $suppressionLogique = array_filter($comments, fn($c) => $c['delLogiq'] == 1);
                                 <td><?= $comment['libCom']; ?></td>
                                 <td><?= $comment['delLogiq'] ? 'Masqué' : 'Publié'; ?></td>
                                 <td>
-                                    <a href="delete.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-danger">Delete logique</a>
+                                    <a href="delete.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-danger">Placer dans la corbeille</a>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -94,7 +94,7 @@ $suppressionLogique = array_filter($comments, fn($c) => $c['delLogiq'] == 1);
         </div>
         <div class="row">
             <div class="col-md-12 mt-5">
-                <h1>Suppression logique</h1>
+                <h1>Corbeille</h1>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -115,7 +115,7 @@ $suppressionLogique = array_filter($comments, fn($c) => $c['delLogiq'] == 1);
                                 <td>REFUS</td>
                                 <td><?= $comment['notifComKOAff']; ?></td>
                                 <td>
-                                    <a href="delete.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-danger">Delete Physique</a>
+                                    <a href="delete.php?numCom=<?= $comment['numCom']; ?>" class="btn btn-danger">Supprimer de la corbeille</a>
                                 </td>
                             </tr>
                         <?php } ?>
