@@ -24,7 +24,7 @@ function cookie_notice(){
         <script>
         function acceptCookies() {
             document.cookie = "user_cookie_consent=accepted; path=/; max-age=" + (365 * 24 * 60 * 60);
-            location.reload(); // 👈 OBLIGATOIRE
+            location.reload();
         }
 
         function rejectCookies() {
