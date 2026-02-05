@@ -1,12 +1,12 @@
 <?php
 function requireAdmin(): void
 {
-    // 🔐 Session obligatoire
+    // Session obligatoire
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
     }
 
-    // ❌ Accès direct par URL (GET)
+    // Accès direct par URL (GET)
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         // Admin → dashboard
         if (!empty($_SESSION['user']) &&
@@ -25,13 +25,13 @@ function requireAdmin(): void
         exit;
     }
 
-    // ❌ Non connecté
+    // Non connecté
     if (empty($_SESSION['user'])) {
         header('Location: /views/backend/security/login.php');
         exit;
     }
 
-    // ❌ Connecté mais pas admin/modérateur
+    // Connecté mais pas admin/modérateur
     if (!in_array($_SESSION['user']['statut'], ['Administrateur', 'Modérateur'], true)) {
         header('Location: /');
         exit;
