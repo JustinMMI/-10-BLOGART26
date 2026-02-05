@@ -12,7 +12,6 @@ if ($pinFileContent['numArt']) {
 
 // Récupérer les 6 derniers articles
 $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
-$featured = $articles[0];
 ?>
 
 <!-- HERO -->
@@ -43,7 +42,7 @@ $featured = $articles[0];
 <main class="page-content">
 
 <?php if (!empty($articles)): ?>
-<?php $featured = $articles[0]; ?>
+  <?php $featured = $articles[0]; ?>
 
 <section class="featured-section">
   <div class="container featured-layout">
@@ -186,6 +185,25 @@ $sidebarClasses = [
     </aside>
   </div>
 </section>
+
+<?php else: ?>
+  <!-- MESSAGE PAS D'ARTICLES -->
+  <section class="no-articles-section" style="text-align: center; padding: 60px 20px;">
+    <div class="container">
+      <div class="no-articles-content">
+        <h2>Il n'y a pas d'articles pour l'instant</h2>
+        
+        <?php if (!empty($_SESSION['user']) && $_SESSION['user']['statut'] === 'Administrateur'): ?>
+          <p>Vous êtes administrateur. Créez le premier article !</p>
+          <a href="/views/backend/articles/create.php" class="btn btn-primary btn-lg">
+            Créer votre premier article !
+          </a>
+        <?php else: ?>
+          <p>Revenez bientôt pour découvrir du contenu passionnant.</p>
+        <?php endif; ?>
+      </div>
+    </div>
+  </section>
 
 <?php endif; ?>
 
