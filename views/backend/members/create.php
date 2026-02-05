@@ -92,8 +92,8 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur
                     <select class="form-select" name="numStat" required>
                         <option value="">-- Choisir un statut --</option>
                         <?php foreach ($statuts as $statut) { ?>
-                            <option value="<?php e($statut['numStat']; ?>">
-                                <?php e($statut['libStat']; ?>
+                            <option value="<?php e($statut['numStat']); ?>">
+                                <?php e($statut['libStat']); ?>
                             </option>
                         <?php } ?>
                     </select>

@@ -47,12 +47,12 @@ if ($numMemb) {
                     <div class="alert alert-warning">
                         <p><strong>Actions supplémentaires requises :</strong></p>
                         <?php if ($hasComments) { ?>
-                            <a href="javascript:deleteComments(<?php e($membre['numMemb']; ?>)" class="btn btn-warning btn-sm">
+                            <a href="javascript:deleteComments(<?php e($membre['numMemb']); ?>)" class="btn btn-warning btn-sm">
                                 <i class="fas fa-trash"></i> Supprimer les commentaires
                             </a>
                         <?php } ?>
                         <?php if ($hasLikes) { ?>
-                            <a href="javascript:deleteLikes(<?php e($membre['numMemb']; ?>)" class="btn btn-warning btn-sm">
+                            <a href="javascript:deleteLikes(<?php e($membre['numMemb']); ?>)" class="btn btn-warning btn-sm">
                                 <i class="fas fa-trash"></i> Supprimer les likes
                             </a>
                         <?php } ?>
