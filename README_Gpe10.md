@@ -184,7 +184,8 @@ BLOGART26/
 │   └── JeuEssaiBlogArt26_OK.sql      # Jeu de données de test
 │
 ├── 📁 BDD_A_Exporter/                # Export final pour production
-│   └── txt.txt
+│   ├── Blogart 26 Groupe 10.sql      # BDD finale du projet
+│   └── htdocs.zip                    # Zip code modifié hebergement externe (inutil en local)
 │
 ├── 📁 classes/                       # Classes PHP métier (POO)
 ├── 📁 config/                        # Configuration de l'application
@@ -398,7 +399,7 @@ Bibliothèque de fonctions réutilisables :
 - **URL Repo** : https://github.com/votre-groupe/blogart26
 
 ### Hébergement en ligne (IUT ou autre)
-- **URL Online** : https://blogart26-groupe10.great-site.net (ou votre adresse IUT)
+- **URL Online** : https://blogart26-groupe10.great-site.net
 - **Serveur** : Hébergement Externe chez Infinity Free
 
 ---
