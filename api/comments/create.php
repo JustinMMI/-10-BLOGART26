@@ -32,5 +32,3 @@ if (!str_starts_with($redirect, '/')) {
 
 header('Location: ' . $redirect);
 exit;
-
-
