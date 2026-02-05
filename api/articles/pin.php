@@ -30,7 +30,7 @@ if (empty($article)) {
 }
 
 // Connecter à la base de données
-$jsonFile = '../../pinned_article.json';
+$jsonFile = '../../functions/pinned_article.json';
 
 try {
     // Lire le fichier JSON

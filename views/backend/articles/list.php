@@ -8,7 +8,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur
 }
 
 // Récupérer l'article épinglé depuis le fichier JSON
-$pinFileContent = json_decode(file_get_contents('../../../pinned_article.json'), true);
+$pinFileContent = json_decode(file_get_contents('../../../functions/pinned_article.json'), true);
 $pinnedId = $pinFileContent['numArt'];
 
 $articles = sql_select("ARTICLE a INNER JOIN THEMATIQUE t ON a.numThem = t.numThem","a.*, t.libThem");

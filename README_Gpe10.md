@@ -8,15 +8,12 @@
 
 - [À propos](#à-propos)
 - [Fonctionnalités](#fonctionnalités)
-- [Installation](#installation)
 - [Architecture du projet](#architecture-du-projet)
-- [Base de données](#base-de-données)
-- [Accès et identifiants](#accès-et-identifiants)
+- [Accès et identifiants des comptes de test](#accès-et-identifiants-des-comptes-de-test)
 - [Thématiques et mots-clés](#thématiques-et-mots-clés)
 - [RGPD et Mentions légales](#rgpd-et-mentions-légales)
 - [URLs](#urls)
-- [État du projet](#état-du-projet)
-- [Équipe](#équipe)
+- [Support et contact](#support-et-contact)
 
 ---
 

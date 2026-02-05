@@ -4,7 +4,7 @@ require_once 'header.php';
 // Zone PHP principale de la page d'accueil
 // Récupérer l'article épinglé depuis le fichier JSON
 $featured_epingle = null;
-$pinFileContent = json_decode(file_get_contents('pinned_article.json'), true);
+$pinFileContent = json_decode(file_get_contents('functions/pinned_article.json'), true);
 if ($pinFileContent['numArt']) {
     $epingled = sql_select("ARTICLE", "*", "numArt = " . (int)$pinFileContent['numArt']);
     $featured_epingle = !empty($epingled) ? $epingled[0] : null;
