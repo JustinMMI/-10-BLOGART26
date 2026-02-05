@@ -137,7 +137,7 @@ Bonus réalisé / évoqué dans les consignes :
 
 ---
 
-## �️ Architecture du projet
+## 🗜️ Architecture du projet
 
 ### Arborescence complète
 
@@ -336,7 +336,7 @@ Bibliothèque de fonctions réutilisables :
 
 ---
 
-## �🏷️ Thématiques et mots-clés
+## 🏷️ Thématiques et mots-clés
 
 ### Thématiques principales
 
