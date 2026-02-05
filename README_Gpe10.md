@@ -337,7 +337,7 @@ Bibliothèque de fonctions réutilisables :
 3. **Mouvements Émergents** - Nouvelles tendances culinaires
 4. **Insolite** - Histoires et anecdotes surprenantes
 
-[liste non exhaustive]
+[liste non exhaustive pouvant être allongée]
 
 ### Mots-clés associés
 
@@ -362,7 +362,7 @@ Bibliothèque de fonctions réutilisables :
 - Appellation
 - Dégustation de vin
 
-[liste non exhaustive]
+[liste non exhaustive pouvant être allongée]
 
 ---
 
@@ -391,13 +391,13 @@ Bibliothèque de fonctions réutilisables :
 - **URL Repo** : https://github.com/votre-groupe/blogart26
 
 ### Hébergement en ligne (IUT ou autre)
-- **URL Online** : http://blogart26.mmibordeaux.com (ou votre adresse IUT)
-- **Serveur** : Hébergement Externe
+- **URL Online** : https://blogart26-groupe10.great-site.net (ou votre adresse IUT)
+- **Serveur** : Hébergement Externe chez Infinity Free
 
 ---
 
 ## 📞 Support et contact
 
 - **Formulaire de contact** : http://localhost/BLOGART26/views/frontend/contact.php
-- **Email** : Blogastro@mmibordeaux.com
+- **Email** : sagastronomie@mmibordeaux.com (mail factice)
 - **Équipe** : Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam, Eliott Beauchamps
