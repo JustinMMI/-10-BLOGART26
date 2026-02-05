@@ -105,7 +105,7 @@ $featured = $articles[0];
     a.libTitrArt",
     null,
     null,
-    null,
+    "a.dtCreaArt DESC",
 );
 
 $trieArticles = [
@@ -141,7 +141,7 @@ foreach ($articlesRecup as $article) {
         <h4>Événements</h4>
         <div class="trait-dore"></div>
         <ul>
-        <?php foreach ($trieArticles[1] as $article): ?>
+        <?php foreach (array_slice($trieArticles[1], 0, 5) as $article): ?>
             <li>
                 <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
                     <?= htmlspecialchars($article['titre']) ?>
@@ -157,7 +157,7 @@ foreach ($articlesRecup as $article) {
         <h4>Acteurs Clés</h4>
         <div class="trait-dore"></div>
         <ul>
-        <?php foreach ($trieArticles[2] as $article): ?>
+        <?php foreach (array_slice($trieArticles[2], 0, 5) as $article): ?>
             <li>
                 <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
                     <?= htmlspecialchars($article['titre']) ?>
@@ -173,7 +173,7 @@ foreach ($articlesRecup as $article) {
         <h4>Mouvement émergeant</h4>
         <div class="trait-dore"></div>
         <ul>
-        <?php foreach ($trieArticles[3] as $article): ?>
+        <?php foreach (array_slice($trieArticles[3], 0, 5) as $article): ?>
             <li>
                 <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
                     <?= htmlspecialchars($article['titre']) ?>
@@ -190,7 +190,7 @@ foreach ($articlesRecup as $article) {
         <h4>Insolite</h4>
         <div class="trait-dore"></div>
         <ul>
-        <?php foreach ($trieArticles[4] as $article): ?>
+        <?php foreach (array_slice($trieArticles[4], 0, 5) as $article): ?>
             <li class="blanc1">
                 <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
                     <?= htmlspecialchars($article['titre']) ?>
