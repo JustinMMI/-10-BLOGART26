@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : sql308.infinityfree.com
--- Généré le :  jeu. 05 fév. 2026 à 09:10
+-- Généré le :  jeu. 05 fév. 2026 à 11:32
 -- Version du serveur :  11.4.9-MariaDB
 -- Version de PHP :  7.2.22
 
@@ -128,7 +128,6 @@ INSERT INTO `likeart` (`numMemb`, `numArt`, `likeA`) VALUES
 (1003, 13, 1),
 (1009, 9, 1),
 (1009, 10, 1),
-(1009, 11, 1),
 (1009, 15, 1),
 (1009, 17, 1);
 

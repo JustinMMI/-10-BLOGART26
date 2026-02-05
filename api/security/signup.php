@@ -4,7 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 require_once '../../functions/getExistPseudo.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
 
-requireAdmin();
+requireAdmin('api');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: /views/backend/security/login.php');

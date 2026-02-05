@@ -4,7 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/ctrlSaisies.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
 
-requireAdmin();
+requireAdmin('api');
 
 $numArt = (int) ($_POST['numArt'] ?? 0);
 

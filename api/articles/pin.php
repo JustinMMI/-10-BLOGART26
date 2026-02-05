@@ -4,7 +4,7 @@ require_once '../../config.php';
 require_once '../../functions/query/select.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
 
-requireAdmin();
+requireAdmin('api');
 
 header('Content-Type: application/json');
 

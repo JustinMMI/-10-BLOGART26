@@ -1,39 +1,67 @@
 <?php
-function requireAdmin(): void
+
+function requireAdmin(string $mode = 'api'): void
 {
     // Session obligatoire
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
     }
 
-    // Accès direct par URL (GET)
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        // Admin → dashboard
-        if (!empty($_SESSION['user']) &&
-            in_array($_SESSION['user']['statut'], ['Administrateur', 'Modérateur'], true)
-        ) {
-            header('Location: /views/backend/dashboard.php');
+    $isLogged = !empty($_SESSION['user']);
+    $isStaff  = $isLogged &&
+        in_array($_SESSION['user']['statut'], ['Administrateur', 'Modérateur'], true);
+
+    /*
+        MODE API  → protection des fichiers /api/*
+        MODE PAGE → protection des pages backend
+    */
+
+    if ($mode === 'api') {
+
+        // Accès direct par URL (GET)
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            if (!$isLogged) {
+                header('Location: /views/backend/security/login.php');
+            } elseif (!$isStaff) {
+                header('Location: /');
+            } else {
+                header('Location: /views/backend/dashboard.php');
+            }
+            exit;
         }
-        // Non connecté → login
-        elseif (empty($_SESSION['user'])) {
+
+        // POST mais non connecté
+        if (!$isLogged) {
             header('Location: /views/backend/security/login.php');
+            exit;
         }
-        // Connecté mais pas staff → accueil
-        else {
+
+        // POST mais pas staff
+        if (!$isStaff) {
             header('Location: /');
+            exit;
         }
-        exit;
+
+        // ✅ Autorisé
+        return;
     }
 
-    // Non connecté
-    if (empty($_SESSION['user'])) {
-        header('Location: /views/backend/security/login.php');
-        exit;
-    }
+    /* =========================
+       MODE PAGE BACKEND
+    ========================= */
+    if ($mode === 'page') {
 
-    // Connecté mais pas admin/modérateur
-    if (!in_array($_SESSION['user']['statut'], ['Administrateur', 'Modérateur'], true)) {
-        header('Location: /');
-        exit;
+        if (!$isLogged) {
+            header('Location: /views/backend/security/login.php');
+            exit;
+        }
+
+        if (!$isStaff) {
+            header('Location: /');
+            exit;
+        }
+
+        // ✅ Autorisé
+        return;
     }
 }

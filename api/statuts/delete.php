@@ -7,7 +7,7 @@ require_once '../../functions/query/update.php';
 require_once '../../functions/query/delete.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
 
-requireAdmin();
+requireAdmin('api');
 
 if (!isset($_SESSION['user'])) {
     header('Location: /views/backend/security/login.php');
