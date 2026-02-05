@@ -7,7 +7,7 @@ Corrigé ✅ : Bug de la page d'accueil lorsqu'aucun article dans la bdd
 Corrigé ✅ : Création de thématiques n'entraine pas une création de cartes de thématique sur index
 --> index.php, home.css
 
-Corrigé ✅ Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
+Corrigé ✅ : Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
 --> views/backend/dashboard.php
 
 Corrigé ✅: Ajouter les contenus des articles et leur image sur la page de l'article
