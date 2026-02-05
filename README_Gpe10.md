@@ -72,10 +72,10 @@ Le panneau de contrôle des commentaires a fait l’objet de modifications conce
 
 ## 🔐 Accès et identifiants des comptes de test
 
-| Pseudo |  Password   |      Rôle      |           Email            |
-|--------|-------------|----------------|----------------------------|
-| Admin01| Admin!12345 | Administrateur | admin@blogart26.com        |
-| Modo01 | Modo!12345  | Modérateur     | modo@blogart26.com   |
+| Pseudo |  Password   |      Rôle      |        Email        |
+|--------|-------------|----------------|---------------------|
+| Admin01| Admin!12345 | Administrateur | admin@blogart26.com |
+| Modo01 | Modo!12345  | Modérateur     | modo@blogart26.co   |
 | User01 | User!12345  | Utilisateur    | user@blogart26.com  |
 
 > ⚠️ **IMPORTANT** : Ces identifiants sont pour les tests uniquement. Les mots de passe en production doivent être forts et uniques.
@@ -282,6 +282,8 @@ Bibliothèque de fonctions réutilisables :
 3. **Mouvements Émergents** - Nouvelles tendances culinaires
 4. **Insolite** - Histoires et anecdotes surprenantes
 
+[liste non exhaustive]
+
 ### Mots-clés associés
 
 - Vin
@@ -304,6 +306,8 @@ Bibliothèque de fonctions réutilisables :
 - Vignoble
 - Appellation
 - Dégustation de vin
+
+[liste non exhaustive]
 
 ---
 
@@ -334,7 +338,6 @@ Bibliothèque de fonctions réutilisables :
 ### Hébergement en ligne (IUT ou autre)
 - **URL Online** : http://blogart26.mmibordeaux.com (ou votre adresse IUT)
 - **Serveur** : Hébergement Externe
-- **Contact Hébergement** : intervenant-hebergement@mmibordeaux.com
 
 ---
 
@@ -342,4 +345,4 @@ Bibliothèque de fonctions réutilisables :
 
 - **Formulaire de contact** : http://localhost/BLOGART26/views/frontend/contact.php
 - **Email** : Blogastro@mmibordeaux.com
-- **Équipe** : Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam
+- **Équipe** : Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam, Eliott Beauchamps
