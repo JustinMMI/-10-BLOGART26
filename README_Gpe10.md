@@ -66,8 +66,7 @@ Le panneau d’administration général a subi des modifications dans son organi
 
 2/Panneaux de contrôle des commentaires : 
 
-Le panneau de contrôle des commentaires a fait l’objet de modifications concernant son organisation visuelle et sa nomenclature. La section « Suppression logique » a été renommée « Corbeille » et comprend désormais un bouton « Supprimer de la corbeille » pour chaque itération. Par ailleurs, un bouton « Placer dans la corbeille » a été ajouté à chaque itération de la section « Commentaires contrôlés », afin d’améliorer la clarté des actions possibles et de réduire la surcharge visuelle.
-
+Le panneau de contrôle des commentaires a fait l’objet de modifications concernant son organisation visuelle et sa nomenclature. La section « Suppression logique » a été renommée « Corbeille » et comprend désormais un bouton « Supprimer de la corbeille » pour chaque itération, afin d’améliorer la clarté des actions possibles et de réduire la surcharge visuelle. Par ailleurs, un bouton « Placer dans la corbeille » a été ajouté à chaque itération de la section « Commentaires contrôlés », Afin de permettre la suppression de commentaires déjà validés en cas d’erreur.
 
 ---
 
