@@ -192,12 +192,13 @@ BLOGART26/
 ├── 📁 data/                          # Données temporaires/cache
 │
 ├── 📁 functions/                     # Fonctions réutilisables
-│   ├── api_guard.php                 # Protection des endpoints API
+│   ├── admin_guard.php               # Protection qui empêche un accés illégal aux API
 │   ├── ctrlSaisies.php               # Validation et contrôle des données
 │   ├── dateChangeFormat.php          # Conversion de formats de dates
 │   ├── getExistPseudo.php            # Vérification d'unicité des pseudos
 │   ├── global.inc.php                # Fonctions globales
 │   ├── motsCles.js                   # Gestion JavaScript des mots-clés
+│   ├── pinned_article.json           # Article épinglé actuel
 │   ├── security.php                  # Gestion de sécurité (sessions, cookies)
 │   ├── utilErrOn.php                 # Gestion des erreurs
 │   ├── various.php                   # Fonctions diverses
@@ -378,15 +379,6 @@ Bibliothèque de fonctions réutilisables :
 - **RGPD** : `/views/frontend/rgpd/rgpd.php`
 - **CGU** : `/views/frontend/rgpd/cgu.php`
 - **Mentions légales** : Intégrées dans la page RGPD
-
-### Conformité RGPD
-
-✅ Politique de confidentialité accessible
-✅ Consentement utilisateur (commentaires, contact)
-✅ Droit d'accès aux données
-✅ Droit à l'oubli
-✅ Formulaire de contact sécurisé
-✅ Mentions légales complètes
 
 ---
 
