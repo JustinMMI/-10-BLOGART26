@@ -36,6 +36,4 @@ function requireAdmin(): void
         header('Location: /');
         exit;
     }
-
-    // ✅ Sinon : autorisé → l’API continue
 }
