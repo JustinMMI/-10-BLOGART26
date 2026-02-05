@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 if(isset($_POST['g-recaptcha-response'])){
 $token = $_POST['g-recaptcha-response'];
