@@ -3,8 +3,8 @@ Julianne : Création de pseudos de moins de 6 charactères dans le front via le 
 Corrigé ✅ : Bug de la page d'accueil lorsqu'aucun article dans la bdd
 --> index.php
 
-Lisa : Création de thématiques n'entraine pas une création de cartes de thématique sur index
--> index.php
+Corrigé ✅ : Création de thématiques n'entraine pas une création de cartes de thématique sur index
+-> index.php, home.css
 
 Theo FAITS Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
 
