@@ -182,7 +182,7 @@ BLOGART26/
 │
 ├── 📁 BDD_A_Exporter/                # Export final pour production
 │   ├── Blogart 26 Groupe 10.sql      # BDD finale du projet
-│   └── htdocs.zip                    # Zip code modifié hebergement externe (inutil en local)
+│   └── htdocs.zip                    # Zip code modifié pour hebergement externe (inutil en local) Pour utilisation : déplacer tout le contenu du zip dans le dossier "htdocs" du serveur.
 │
 ├── 📁 classes/                       # Classes PHP métier (POO)
 ├── 📁 config/                        # Configuration de l'application
