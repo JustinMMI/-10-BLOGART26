@@ -22,7 +22,7 @@ if (isset($_GET['numThem'])) {
 
         <div class="col-md-12">
             <form action="<?php echo ROOT_URL . '/api/thematiques/update.php'; ?>" method="post">
-                <input type="hidden" name="numThem" value="<?= $numThem ?>">
+                <input type="hidden" name="numThem" value="<?php e(numThem ?>">
 
                 <div class="form-group">
                     <label>Thématique</label>

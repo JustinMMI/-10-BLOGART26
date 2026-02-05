@@ -61,8 +61,8 @@ if ($article) {
                   <input type="hidden" name="numMemb" value="<?= (int)$numMemb ?>">
                   <input type="hidden" name="numArt" value="<?= (int)$numArt ?>">
                   <input type="hidden" name="frontend" value="true">
-                  <button type="submit" class="like-btn <?= $userLiked ? 'liked' : '' ?>" title="<?= $userLiked ? "Retirer le like" : "Liker" ?>">
-                    <span class="heart"><?= $userLiked ? '♥' : '♥' ?></span>
+                  <button type="submit" class="like-btn <?php e(userLiked ? 'liked' : '' ?>" title="<?php e(userLiked ? "Retirer le like" : "Liker" ?>">
+                    <span class="heart"><?php e(userLiked ? '♥' : '♥' ?></span>
                   </button>
                 </form>
               <?php else: ?>
@@ -179,17 +179,17 @@ if ($article) {
 
   <div class="container">
     <h2 class="TRS">Partager cet article :</h2>
-    <a href="https://www.facebook.com/sharer/sharer.php?u=<?= $encodedUrl ?>"
+    <a href="https://www.facebook.com/sharer/sharer.php?u=<?php e(encodedUrl ?>"
       target="_blank" rel="noopener noreferrer" class="btn btn-primary">
         Facebook
     </a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= $encodedUrl ?>&title=<?= $encodedTitle ?>"
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php e(encodedUrl ?>&title=<?php e(encodedTitle ?>"
       target="_blank" rel="noopener noreferrer" class="btn btn-primary">
         LinkedIn
     </a>
 
-    <a href="https://api.whatsapp.com/send?text=<?= $encodedTitle ?>%20<?= $encodedUrl ?>"
+    <a href="https://api.whatsapp.com/send?text=<?php e(encodedTitle ?>%20<?php e(encodedUrl ?>"
       target="_blank" rel="noopener noreferrer" class="btn btn-primary">
         WhatsApp
     </a>

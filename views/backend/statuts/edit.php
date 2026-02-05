@@ -27,11 +27,11 @@ if (!$statut) {
 
     <form action="<?= ROOT_URL ?>/api/statuts/update.php" method="post">
 
-        <input type="hidden" name="numStat" value="<?= $statut['numStat'] ?>">
+        <input type="hidden" name="numStat" value="<?php e(statut['numStat'] ?>">
 
         <div class="form-group mb-3">
             <label>Numéro</label>
-            <input class="form-control" type="text" value="<?= $statut['numStat'] ?>" readonly>
+            <input class="form-control" type="text" value="<?php e(statut['numStat'] ?>" readonly>
         </div>
 
         <div class="form-group mb-3">

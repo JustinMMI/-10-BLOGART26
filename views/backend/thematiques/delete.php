@@ -41,7 +41,7 @@ $canDelete = ($nbArticles == 0);
 
     <form action="<?= ROOT_URL ?>/api/thematiques/delete.php" method="post">
 
-        <input type="hidden" name="numThem" value="<?= $numThem ?>">
+        <input type="hidden" name="numThem" value="<?php e(numThem ?>">
 
         <div class="form-group mb-3">
             <label>Thématique</label>
@@ -63,7 +63,7 @@ $canDelete = ($nbArticles == 0);
                 <button type="button" class="btn btn-secondary" disabled>
                     Veuillez d’abord supprimer tous les articles liés à cette thématique
                 </button>
-                <a href="<?= ROOT_URL ?>/api/thematiques/delete.php?numThem=<?= $numThem ?>&deleteArticles=1"
+                <a href="<?= ROOT_URL ?>/api/thematiques/delete.php?numThem=<?php e(numThem ?>&deleteArticles=1"
                    class="btn btn-warning ms-2"
                    onclick="return confirm('Voulez vous vraiment supprimer tous les articles liés à cette thématique ? /!\\ ATTENTION /!\\ Cela supprimera également les commentaires et les likes liés à ces derniers.');">
                     Supprimer tous les articles liés à cette thématique

@@ -59,10 +59,10 @@ $nbLikes = sql_select(
 
     <form action="<?= ROOT_URL . '/api/articles/delete.php'; ?>" method="post">
 
-        <input type="hidden" name="numArt" value="<?= $numArt ?>">
+        <input type="hidden" name="numArt" value="<?php e(numArt ?>">
 
         <label>Numéro</label>
-        <input class="form-control mb-2" value="<?= $article['numArt']; ?>" readonly>
+        <input class="form-control mb-2" value="<?php e(article['numArt']; ?>" readonly>
 
         <label>Titre</label>
         <input class="form-control mb-2"
@@ -70,7 +70,7 @@ $nbLikes = sql_select(
 
         <label>Date création</label>
         <input class="form-control mb-2"
-               value="<?= $article['dtCreaArt']; ?>" readonly>
+               value="<?php e(article['dtCreaArt']; ?>" readonly>
 
         <label>Chapeau</label>
         <textarea class="form-control mb-3" rows="4" readonly><?= htmlspecialchars($article['libChapoArt']); ?></textarea>
