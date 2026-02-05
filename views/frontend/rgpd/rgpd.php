@@ -20,7 +20,7 @@ require_once '../../../header.php';
 		<p>Directeur de la publication : Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam, Eliott Beauchamp</p>
 
 		<h2>Hébergement</h2>
-		<p>Le site est hébergé par : Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam</p>
+		<p>Le site est hébergé par : Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam, Eliott Beauchamp</p>
 		<p>Hébergeur : Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam, Eliott Beauchamp</p>
 		<p>Adresse : Blogastro@mmibordeaux.com</p>
 		<p>Téléphone : [Numéro de téléphone]</p>
