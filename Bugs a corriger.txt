@@ -1,4 +1,5 @@
-Julianne : Création de pseudos de moins de 6 charactères dans le front via le bouton créer un compte et aussi la conformité du mot de passe et du mail
+Corrigé ✅ : Création de pseudos de moins de 6 charactères dans le front via le bouton créer un compte et aussi la conformité du mot de passe et du mail
+--> api/security/signup.php , views/backend/security/signup.php , views/backend/members/create.php , api/members/create.php
 
 Corrigé ✅ : Bug de la page d'accueil lorsqu'aucun article dans la bdd
 --> index.php
