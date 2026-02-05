@@ -78,7 +78,7 @@ if ($nbMembers > 0) {
                 <div class="alert alert-warning">
                     <strong><?= (int)$nbMembers; ?></strong> membre(s) utilisent ce statut.
                     <br>
-                    Veuillez réattribuer un nouveau statut (inférieur au vôtre) avant suppression.
+                    Veuillez réattribuer un nouveau statut avant suppression.
                 </div>
 
                 <form action="<?php echo ROOT_URL . '/api/statuts/delete.php' ?>" method="post">
