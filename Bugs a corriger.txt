@@ -10,7 +10,7 @@ Ajouter les contenus des articles et leur image sur la page de l'article
 
 Vérifier BBCODE partout
 
-Demander a martine si on peut remplacer Delete logique/Delet physique par Corbeille/Suppression
+Theo FAIS Demander a martine si on peut remplacer Delete logique/Delet physique par Corbeille/Suppression
 
 Lisa C FAIT : Limiter a 4 ou 5 le nombre de liens d'articles dans les cartes de thématiques sur le index
 -> index.php
