@@ -39,7 +39,7 @@ if ($article) {
         <article class="article-main">
           <div class="article-top">
             <div>
-              <h1 class="article-title"><?= htmlspecialchars($article['libTitrArt']); ?></h1>
+              <h1 class="article-title"><?php e($article['libTitrArt']); ?></h1>
               <div class="article-meta">
                 Publié le <?= htmlspecialchars(date('d/m/Y', strtotime($article['dtCreaArt']))); ?>
               </div>
@@ -61,8 +61,8 @@ if ($article) {
                   <input type="hidden" name="numMemb" value="<?= (int)$numMemb ?>">
                   <input type="hidden" name="numArt" value="<?= (int)$numArt ?>">
                   <input type="hidden" name="frontend" value="true">
-                  <button type="submit" class="like-btn <?php e(userLiked ? 'liked' : '' ?>" title="<?php e(userLiked ? "Retirer le like" : "Liker" ?>">
-                    <span class="heart"><?php e(userLiked ? '♥' : '♥' ?></span>
+                  <button type="submit" class="like-btn <?= $userLiked ? 'liked' : '' ?>" title="<?= $userLiked ? 'Retirer le like' : 'Liker' ?>">
+                    <span class="heart"><?= $userLiked ? '♥' : '♥' ?></span>
                   </button>
                 </form>
               <?php else: ?>
@@ -73,7 +73,7 @@ if ($article) {
             </div>
           </div>
 
-          <p class="article-chapo"><?= nl2br(htmlspecialchars($article['libChapoArt'])); ?></p>
+          <p class="article-chapo"><?php e($article['libChapoArt']); ?></p>
 
           <?php if (!empty($article['urlPhotArt'])): ?>
             <div class="article-image">
@@ -83,31 +83,33 @@ if ($article) {
 
           <div class="article-divider"></div>
           <?php if (!empty($article['libAccrochArt'])): ?>
-            <p class="article-accroche"><strong><?= nl2br(htmlspecialchars($article['libAccrochArt'])); ?></strong></p>
+            <p class="article-accroche"><strong><?php e($article['libAccrochArt']); ?></strong></p>
           <?php endif; ?>
 
           <?php if (!empty($article['parag1Art'])): ?>
-            <p class="article-paragraph"><?= nl2br(htmlspecialchars($article['parag1Art'])); ?></p>
+            <p class="article-paragraph"><?php e($article['parag1Art']); ?></p>
           <?php endif; ?>
 
           <?php if (!empty($article['libSsTitr1Art'])): ?>
-            <h3 class="article-subtitle"><?= htmlspecialchars($article['libSsTitr1Art']); ?></h3>
+            <h3 class="article-subtitle"><?php e($article['libSsTitr1Art']); ?></h3>
           <?php endif; ?>
 
           <?php if (!empty($article['parag2Art'])): ?>
-            <p class="article-paragraph"><?= nl2br(htmlspecialchars($article['parag2Art'])); ?></p>
+            <p class="article-paragraph"><?php e($article['parag2Art']); ?></p>
           <?php endif; ?>
 
           <?php if (!empty($article['libSsTitr2Art'])): ?>
-            <h3 class="article-subtitle"><?= htmlspecialchars($article['libSsTitr2Art']); ?></h3>
+            <h3 class="article-subtitle"><?php e($article['libSsTitr2Art']); ?></h3>
           <?php endif; ?>
 
           <?php if (!empty($article['parag3Art'])): ?>
-            <p class="article-paragraph"><?= nl2br(htmlspecialchars($article['parag3Art'])); ?></p>
+            <p class="article-paragraph"><?php e($article['parag3Art']); ?></p>
           <?php endif; ?>
 
           <?php if (!empty($article['libConclArt'])): ?>
-            <p class="article-conclusion"><strong><?= nl2br(htmlspecialchars($article['libConclArt'])); ?></strong></p>
+            <p class="article-conclusion">
+              <strong><?php e($article['libConclArt']); ?></strong>
+            </p>
           <?php endif; ?>
 
           <div class="article-divider"></div>
@@ -134,7 +136,7 @@ if ($article) {
                     <strong class="comment-user"><?= htmlspecialchars($pseudo); ?></strong>
                     <span class="comment-date"><?= htmlspecialchars(date('d/m/Y H:i', strtotime($commentaire['dtCreaCom']))); ?></span>
                   </div>
-                  <p class="comment-text"><?= nl2br(htmlspecialchars($commentaire['libCom'])); ?></p>
+                  <p class="comment-text"><?php e($commentaire['libCom']); ?></p>
                 </div>
               <?php endforeach; ?>
             </div>
@@ -179,17 +181,17 @@ if ($article) {
 
   <div class="container">
     <h2 class="TRS">Partager cet article :</h2>
-    <a href="https://www.facebook.com/sharer/sharer.php?u=<?php e(encodedUrl ?>"
+    <a href="https://www.facebook.com/sharer/sharer.php?u=<?= $encodedUrl ?>"
       target="_blank" rel="noopener noreferrer" class="btn btn-primary">
         Facebook
     </a>
 
-    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php e(encodedUrl ?>&title=<?php e(encodedTitle ?>"
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= $encodedUrl ?>&title=<?= $encodedTitle ?>"
       target="_blank" rel="noopener noreferrer" class="btn btn-primary">
         LinkedIn
     </a>
 
-    <a href="https://api.whatsapp.com/send?text=<?php e(encodedTitle ?>%20<?php e(encodedUrl ?>"
+    <a href="https://api.whatsapp.com/send?text=<?= $encodedTitle ?>%20<?= $encodedUrl ?>"
       target="_blank" rel="noopener noreferrer" class="btn btn-primary">
         WhatsApp
     </a>

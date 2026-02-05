@@ -14,24 +14,22 @@ $where  = [];
 $joins  = [];
 $params = [];
 
-/* Recherche avancée (TD14) */
+/* Recherche avancée */
 if ($search !== '') {
     $input = trim($search);
 
-    $keywordsList = [];
     preg_match_all('/[""«»‹›]([^""«»‹›]+)[""«»‹›]/', $input, $matches);
-
     $expressions = $matches[1];
     $remaining = preg_replace('/[""«»‹›][^""«»‹›]+[""«»‹›]/', '', $input);
 
-    $motsSimples = preg_split('/\s+/', trim($remaining));
-    $motsSimples = array_filter($motsSimples, function ($mot) {
-        return trim($mot) !== '';
-    });
+    $motsSimples = array_filter(
+        preg_split('/\s+/', trim($remaining)),
+        fn($mot) => $mot !== ''
+    );
 
     $keywordsList = array_merge($expressions, $motsSimples);
 
-    if (!empty($keywordsList)) {
+    if ($keywordsList) {
         $tabChamps = [
             "a.libTitrArt",
             "a.libChapoArt",
@@ -45,13 +43,13 @@ if ($search !== '') {
         ];
 
         $clauses = [];
-        foreach ($keywordsList as $key => $keyword) {
-            $orParts = [];
+        foreach ($keywordsList as $k => $word) {
+            $or = [];
             foreach ($tabChamps as $champ) {
-                $orParts[] = "$champ LIKE :search$key";
+                $or[] = "$champ LIKE :search$k";
             }
-            $clauses[] = '(' . implode(' OR ', $orParts) . ')';
-            $params["search$key"] = "%$keyword%";
+            $clauses[] = '(' . implode(' OR ', $or) . ')';
+            $params["search$k"] = "%$word%";
         }
 
         $where[] = '(' . implode(' AND ', $clauses) . ')';
@@ -64,7 +62,7 @@ if ($them > 0) {
     $params['them'] = $them;
 }
 
-/* Recherche mots-clés multiples */
+/* Recherche mots-clés */
 if ($keywords !== '') {
     $joins[] = "
         INNER JOIN MOTCLEARTICLE ma ON a.numArt = ma.numArt
@@ -75,9 +73,8 @@ if ($keywords !== '') {
     $sub   = [];
 
     foreach ($words as $i => $word) {
-        $key = "kw$i";
-        $sub[] = "mc.libMotCle LIKE :$key";
-        $params[$key] = "%$word%";
+        $sub[] = "mc.libMotCle LIKE :kw$i";
+        $params["kw$i"] = "%$word%";
     }
 
     $where[] = '(' . implode(' OR ', $sub) . ')';
@@ -90,7 +87,7 @@ $sql = "
     LEFT JOIN THEMATIQUE t ON a.numThem = t.numThem
     " . implode(' ', $joins);
 
-if (!empty($where)) {
+if ($where) {
     $sql .= " WHERE " . implode(' AND ', $where);
 }
 
@@ -108,148 +105,145 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <link rel="stylesheet" href="/src/css/articles-list.css">
 
 <div class="articles-page">
-    <div class="articles-container">
+  <div class="articles-container">
 
-        <h1 class="articles-title">Tous les articles</h1>
+    <h1 class="articles-title">Tous les articles</h1>
 
-        <!-- FILTRES -->
-        <form method="GET" class="articles-filters">
+    <!-- FILTRES -->
+    <form method="GET" class="articles-filters">
 
-            <input type="text"
-                   name="search"
-                   placeholder="Rechercher un article…"
-                   value="<?= htmlspecialchars($search) ?>">
+      <input type="text"
+             name="search"
+             placeholder="Rechercher un article…"
+             value="<?= htmlspecialchars($search) ?>">
 
-            <input type="text"
-                   name="keywords"
-                   placeholder="Mots-clés (ex : vin chef bio)"
-                   value="<?= htmlspecialchars($keywords) ?>">
+      <input type="text"
+             name="keywords"
+             placeholder="Mots-clés (ex : vin chef bio)"
+             value="<?= htmlspecialchars($keywords) ?>">
 
-            <select name="them">
-                <option value="">Toutes les thématiques</option>
-                <?php foreach ($thematiques as $t): ?>
-                    <option value="<?= $t['numThem'] ?>"
-                        <?= ($them === (int)$t['numThem']) ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($t['libThem']) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
+      <select name="them">
+        <option value="">Toutes les thématiques</option>
+        <?php foreach ($thematiques as $t): ?>
+          <option value="<?= (int)$t['numThem'] ?>"
+            <?= $them === (int)$t['numThem'] ? 'selected' : '' ?>>
+            <?= htmlspecialchars($t['libThem']) ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
 
-            <button type="submit">Filtrer</button>
+      <button type="submit">Filtrer</button>
+    </form>
 
-        </form>
+    <!-- LISTE ARTICLES -->
+    <?php if ($articles): ?>
+      <div class="articles-grid">
 
-        <!-- LISTE ARTICLES -->
-        <?php if (!empty($articles)): ?>
-            <div class="articles-grid">
+        <?php foreach ($articles as $article): ?>
+          <?php
+            $numArt  = (int)$article['numArt'];
+            $numMemb = $_SESSION['user']['id'] ?? null;
+            $userLiked = false;
 
-                <?php foreach ($articles as $article): ?>
-                    <?php
-                    $numArt = (int)$article['numArt'];
-                    $numMemb = $_SESSION['user']['id'] ?? null;
-                    $userLiked = false;
+            if ($numMemb) {
+                $check = sql_select(
+                    "likeart",
+                    "*",
+                    "numMemb = $numMemb AND numArt = $numArt"
+                );
+                $userLiked = !empty($check);
+            }
+          ?>
 
-                    if ($numMemb) {
-                        $check = sql_select(
-                            "likeart",
-                            "*",
-                            "numMemb = $numMemb AND numArt = $numArt"
-                        );
-                        $userLiked = !empty($check);
-                    }
-                    ?>
+          <article class="article-card">
 
-                    <article class="article-card">
+            <?php if (!empty($article['urlPhotArt'])): ?>
+              <img src="/src/uploads/<?= htmlspecialchars($article['urlPhotArt']) ?>"
+                   alt="<?= htmlspecialchars($article['libTitrArt']) ?>"
+                   class="article-card-image">
+            <?php endif; ?>
 
-                        <?php if (!empty($article['urlPhotArt'])): ?>
-                            <img src="/src/uploads/<?= htmlspecialchars($article['urlPhotArt']) ?>"
-                                 alt="<?= htmlspecialchars($article['libTitrArt']) ?>"
-                                 class="article-card-image">
-                        <?php endif; ?>
+            <div class="article-card-body">
 
-                        <div class="article-card-body">
+              <div class="article-meta">
+                <span class="article-date">
+                  <?= date('d F Y', strtotime($article['dtCreaArt'])) ?>
+                </span>
 
-                            <div class="article-meta">
-                                <span class="article-date">
-                                    <?= date('d F Y', strtotime($article['dtCreaArt'])) ?>
-                                </span>
+                <?php if (!empty($article['libThem'])): ?>
+                  <span class="article-theme">
+                    <?= htmlspecialchars($article['libThem']) ?>
+                  </span>
+                <?php endif; ?>
+              </div>
 
-                                <?php if (!empty($article['libThem'])): ?>
-                                    <span class="article-theme">
-                                        <?= htmlspecialchars($article['libThem']) ?>
-                                    </span>
-                                <?php endif; ?>
-                            </div>
+              <h2 class="article-card-title">
+                <?php e($article['libTitrArt']); ?>
+              </h2>
 
-                            <h2 class="article-card-title">
-                                <?= htmlspecialchars($article['libTitrArt']) ?>
-                            </h2>
+              <p class="article-card-excerpt">
+                <?php e($article['libChapoArt']); ?>
+              </p>
 
-                            <p class="article-card-excerpt">
-                                <?= htmlspecialchars($article['libChapoArt']) ?>
-                            </p>
+              <div class="article-card-footer">
 
-                            <div class="article-card-footer">
+                <a class="read-link"
+                   href="/views/frontend/articles/article1.php?numArt=<?= $numArt ?>">
+                  Lire la suite →
+                </a>
 
-                                <a class="read-link"
-                                   href="/views/frontend/articles/article1.php?numArt=<?= $numArt ?>">
-                                    Lire la suite →
-                                </a>
+                <?php if ($numMemb): ?>
+                  <button type="button"
+                          class="like-btn <?= $userLiked ? 'liked' : '' ?>"
+                          data-art="<?= $numArt ?>"
+                          data-liked="<?= $userLiked ? '1' : '0' ?>"
+                          title="J’aime">
+                    <span class="heart">♥</span>
+                  </button>
+                <?php else: ?>
+                  <a href="/views/backend/security/login.php"
+                     class="like-btn"
+                     title="Se connecter">
+                    <span class="heart">♡</span>
+                  </a>
+                <?php endif; ?>
 
-                                <?php if ($numMemb): ?>
-                                    <button
-                                        type="button"
-                                        class="like-btn <?= $userLiked ? 'liked' : '' ?>"
-                                        data-art="<?= $numArt ?>"
-                                        data-liked="<?= $userLiked ? '1' : '0' ?>"
-                                        title="J’aime">
-                                        <span class="heart">♥</span>
-                                    </button>
-                                <?php else: ?>
-                                    <a href="/views/backend/security/login.php"
-                                       class="like-btn"
-                                       title="Se connecter">
-                                        <span class="heart">♡</span>
-                                    </a>
-                                <?php endif; ?>
-
-                            </div>
-                        </div>
-                    </article>
-
-                <?php endforeach; ?>
-
+              </div>
             </div>
-        <?php else: ?>
-            <div class="no-articles">
-                <p>Aucun article ne correspond à votre recherche.</p>
-            </div>
-        <?php endif; ?>
+          </article>
 
-    </div>
+        <?php endforeach; ?>
+
+      </div>
+    <?php else: ?>
+      <div class="no-articles">
+        <p>Aucun article ne correspond à votre recherche.</p>
+      </div>
+    <?php endif; ?>
+
+  </div>
 </div>
 
 <script>
 document.querySelectorAll('button.like-btn').forEach(btn => {
-    btn.addEventListener('click', function (e) {
-        e.preventDefault();
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
 
-        const numArt = this.dataset.art;
-        const liked  = this.dataset.liked === '1';
+    const numArt = this.dataset.art;
+    const liked  = this.dataset.liked === '1';
 
-        fetch('/api/likes/create.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-                numArt: numArt,
-                frontend: 'true'
-            })
-        })
-        .then(() => {
-            this.classList.toggle('liked');
-            this.dataset.liked = liked ? '0' : '1';
-        });
+    fetch('/api/likes/create.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        numArt: numArt,
+        frontend: 'true'
+      })
+    }).then(() => {
+      this.classList.toggle('liked');
+      this.dataset.liked = liked ? '0' : '1';
     });
+  });
 });
 </script>
 
