@@ -180,15 +180,13 @@ BLOGART26/
 │       └── update.php                # Modification de thématiques
 │
 ├── 📁 BDD/                           # Scripts SQL de création
-│   ├── CreateDbBlogArt26.sql        # Structure de la BDD
-│   └── JeuEssaiBlogArt26_OK.sql     # Jeu de données de test
+│   ├── CreateDbBlogArt26.sql         # Structure de la BDD
+│   └── JeuEssaiBlogArt26_OK.sql      # Jeu de données de test
 │
 ├── 📁 BDD_A_Exporter/                # Export final pour production
-│   └── (fichiers .sql exportés)
+│   └── txt.txt
 │
 ├── 📁 classes/                       # Classes PHP métier (POO)
-│   └── (classes réutilisables)
-│
 ├── 📁 config/                        # Configuration de l'application
 │   ├── debug.php                     # Paramètres de débogage
 │   └── defines.php                   # Constantes globales (chemins, etc.)
@@ -196,15 +194,16 @@ BLOGART26/
 ├── 📁 data/                          # Données temporaires/cache
 │
 ├── 📁 functions/                     # Fonctions réutilisables
-│   ├── ctrlSaisies.php              # Validation et contrôle des données
-│   ├── dateChangeFormat.php         # Conversion de formats de dates
-│   ├── getExistPseudo.php           # Vérification d'unicité des pseudos
-│   ├── global.inc.php               # Fonctions globales
-│   ├── motsCles.js                  # Gestion JavaScript des mots-clés
-│   ├── security.php                 # Gestion de sécurité (sessions, cookies)
-│   ├── utilErrOn.php                # Gestion des erreurs
-│   ├── various.php                  # Fonctions diverses
-│   └── 📁 query/                    # Fonctions d'accès à la BDD
+│   ├── api_guard.php                 # Protection des endpoints API
+│   ├── ctrlSaisies.php               # Validation et contrôle des données
+│   ├── dateChangeFormat.php          # Conversion de formats de dates
+│   ├── getExistPseudo.php            # Vérification d'unicité des pseudos
+│   ├── global.inc.php                # Fonctions globales
+│   ├── motsCles.js                   # Gestion JavaScript des mots-clés
+│   ├── security.php                  # Gestion de sécurité (sessions, cookies)
+│   ├── utilErrOn.php                 # Gestion des erreurs
+│   ├── various.php                   # Fonctions diverses
+│   └── 📁 query/                     # Fonctions d'accès à la BDD
 │       ├── connect.php               # Connexion à la base de données
 │       ├── delete.php                # Fonction générique DELETE
 │       ├── insert.php                # Fonction générique INSERT
@@ -228,6 +227,11 @@ BLOGART26/
 │   │   └── liked-articles.css        # Style articles likés
 │   ├── 📁 fonts/                     # Polices personnalisées
 │   ├── 📁 images/                    # Images statiques du site
+│   │   ├── article.png
+│   │   ├── logoBlogArt.png
+│   │   ├── mmi-bordeaux_Blanc.png
+│   │   ├── mmi-bordeaux_Noir.png
+│   │   └── search.png
 │   ├── 📁 js/
 │   │   └── reveal.js                 # Animations/effets JS
 │   └── 📁 uploads/                   # Images téléchargées (articles)
@@ -286,19 +290,22 @@ BLOGART26/
 │       ├── 📁 comments/
 │       │   └── commentaire.php       # Gestion des commentaires
 │       └── 📁 rgpd/
-│           ├── cgu.php                # Conditions générales d'utilisation
-│           └── rgpd.php               # Politique de confidentialité & mentions légales
+│           ├── cgu.php               # Conditions générales d'utilisation
+│           └── rgpd.php              # Politique de confidentialité & mentions légales
 │
+├── 📁 .git/                          # Métadonnées Git
+├── 📁 .venv/                         # Environnement Python local
 ├── 📄 .env                           # Variables d'environnement (NON versionné)
-├── 📄 .env.example                   # Exemple de configuration .env
+├── 📄 .gitattributes                 # Attributs Git
 ├── 📄 .gitignore                     # Fichiers à ignorer par Git
+├── 📄 .htaccess                      # Configuration Apache
 ├── 📄 404.php                        # Page d'erreur 404
+├── 📄 Bugs a corriger.txt            # Liste de bugs à corriger
 ├── 📄 config.php                     # Configuration générale de l'application
 ├── 📄 footer.php                     # Pied de page réutilisable
 ├── 📄 header.php                     # En-tête réutilisable
 ├── 📄 index.php                      # Page d'accueil du site
 ├── 📄 pinned_article.json            # Article épinglé actuel (NON versionné)
-├── 📄 README.md                      # README original du template
 └── 📄 README_Gpe10.md                # Documentation du projet (ce fichier)
 ```
 
