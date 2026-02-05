@@ -179,15 +179,11 @@ $sidebarClasses = [
         </div>
         
       <?php endforeach; ?>
-      <div class="sidebar-box sidebar-light">
-      <h4>Restaurants gastronomiques</h4>
-      <div class="trait-dore"></div>
+      <div class="sidebar-light">
 
       <div class="map-wrapper">
         <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d22637.968251198658!2d-0.5570560254383343!3d44.82673834480565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1srestaurants%20gastronomiques%20Bordeaux!5e0!3m2!1sfr!2sfr!4v1770297548553!5m2!1sfr!2sfr" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"> </iframe>
       </div>
-
-      <div class="trait-dore-petit"></div>
     </div>
 
     </aside>
