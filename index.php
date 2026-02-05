@@ -11,7 +11,6 @@ if ($pinFileContent['numArt']) {
 
 // Récupérer les 6 derniers articles
 $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
-$featured = $articles[0];
 ?>
 
 <!-- HERO -->
@@ -41,7 +40,7 @@ $featured = $articles[0];
 <main class="page-content">
 
 <?php if (!empty($articles)): ?>
-<?php $featured = $articles[0]; ?>
+  <?php $featured = $articles[0]; ?>
 
 <section class="featured-section">
   <div class="container featured-layout">
@@ -105,7 +104,7 @@ $featured = $articles[0];
     a.libTitrArt",
     null,
     null,
-    "a.dtCreaArt DESC",
+    null,
 );
 
 $trieArticles = [
@@ -141,7 +140,7 @@ foreach ($articlesRecup as $article) {
         <h4>Événements</h4>
         <div class="trait-dore"></div>
         <ul>
-        <?php foreach (array_slice($trieArticles[1], 0, 5) as $article): ?>
+        <?php foreach ($trieArticles[1] as $article): ?>
             <li>
                 <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
                     <?= htmlspecialchars($article['titre']) ?>
@@ -157,7 +156,7 @@ foreach ($articlesRecup as $article) {
         <h4>Acteurs Clés</h4>
         <div class="trait-dore"></div>
         <ul>
-        <?php foreach (array_slice($trieArticles[2], 0, 5) as $article): ?>
+        <?php foreach ($trieArticles[2] as $article): ?>
             <li>
                 <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
                     <?= htmlspecialchars($article['titre']) ?>
@@ -173,8 +172,25 @@ foreach ($articlesRecup as $article) {
         <h4>Mouvement émergeant</h4>
         <div class="trait-dore"></div>
         <ul>
-        <?php foreach (array_slice($trieArticles[3], 0, 5) as $article): ?>
+        <?php foreach ($trieArticles[3] as $article): ?>
             <li>
+                <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
+                    <?= htmlspecialchars($article['titre']) ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+        </ul>
+        <div class="trait-dore-petit"></div>
+        <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=3">Voir tous →</a>
+      </div>
+
+
+      <div class="sidebar-box sidebar-light-inverse">
+        <h4>Insolite</h4>
+        <div class="trait-dore"></div>
+        <ul>
+        <?php foreach ($trieArticles[4] as $article): ?>
+            <li class="blanc1">
                 <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
                     <?= htmlspecialchars($article['titre']) ?>
                 </a>
@@ -185,23 +201,6 @@ foreach ($articlesRecup as $article) {
         <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=4">Voir tous →</a>
       </div>
 
-
-      <div class="sidebar-box sidebar-light-inverse">
-        <h4>Insolite</h4>
-        <div class="trait-dore"></div>
-        <ul>
-        <?php foreach (array_slice($trieArticles[4], 0, 5) as $article): ?>
-            <li class="blanc1">
-                <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
-                    <?= htmlspecialchars($article['titre']) ?>
-                </a>
-            </li>
-        <?php endforeach; ?>
-        </ul>
-        <div class="trait-dore-petit"></div>
-        <a class="sidebar-link" href="http://blogart26.local/views/frontend/articles-list.php?search=&keywords=&them=2">Voir tous →</a>
-      </div>
-
       <div class="sidebar-box map-box">
           <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d17290.13044340734!2d-0.5923902137353435!3d44.84475231300805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1srestaurants%20gastronomiques%20bordeaux!5e0!3m2!1sfr!2sfr!4v1770215811079!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
@@ -210,6 +209,25 @@ foreach ($articlesRecup as $article) {
     </aside>
   </div>
 </section>
+
+<?php else: ?>
+  <!-- MESSAGE PAS D'ARTICLES -->
+  <section class="no-articles-section" style="text-align: center; padding: 60px 20px;">
+    <div class="container">
+      <div class="no-articles-content">
+        <h2>Il n'y a pas d'articles pour l'instant</h2>
+        
+        <?php if (!empty($_SESSION['user']) && $_SESSION['user']['statut'] === 'Administrateur'): ?>
+          <p>Vous êtes administrateur. Créez le premier article !</p>
+          <a href="/views/backend/articles/create.php" class="btn btn-primary btn-lg">
+            Créer votre premier article !
+          </a>
+        <?php else: ?>
+          <p>Revenez bientôt pour découvrir du contenu passionnant.</p>
+        <?php endif; ?>
+      </div>
+    </div>
+  </section>
 
 <?php endif; ?>
 
