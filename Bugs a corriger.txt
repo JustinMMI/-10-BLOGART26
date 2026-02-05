@@ -8,7 +8,7 @@ Lisa : Création de thématiques n'entraine pas une création de cartes de thém
 
 Theo FAITS Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
 
-Eliott : Ajouter les contenus des articles et leur image sur la page de l'article
+Eliott FAIT: Ajouter les contenus des articles et leur image sur la page de l'article
 
 Justin : Vérifier BBCODE partout
 
