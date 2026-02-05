@@ -1,10 +1,7 @@
 <?php
 require_once '../../../header.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur'&& $_SESSION['user']['statut'] !== 'Modérateur') {
-    header('Location: /');
-    exit;
-}
+requireAdmin('page');
 
 $numMemb = (int)($_GET['numMemb'] ?? 0);
 

@@ -2,10 +2,7 @@
 include '../../../header.php';
 $statuts = sql_select("STATUT", "*");
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur'&& $_SESSION['user']['statut'] !== 'Modérateur') {
-    header('Location: /');
-    exit;
-}
+requireAdmin('page');
 
 $numMemb = $_GET['numMemb'] ?? null;
 $membre = null;

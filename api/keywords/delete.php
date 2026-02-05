@@ -6,10 +6,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
 requireAdmin('api');
 
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur'&& $_SESSION['user']['statut'] !== 'Modérateur') {
-    header('Location: /');
-    exit;
-}
+requireAdmin('page');
 
 // Délier un mot-clé de tous ses articles
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['numMotCle']) && isset($_GET['unlink'])) {

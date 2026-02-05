@@ -5,10 +5,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
 
 requireAdmin('api');
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur'&& $_SESSION['user']['statut'] !== 'Modérateur') {
-    header('Location: /');
-    exit;
-}
+requireAdmin('page');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: /views/backend/members/list.php');
