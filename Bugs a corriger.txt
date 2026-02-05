@@ -4,7 +4,7 @@ Justin : Bug de la page d'accueil lorsqu'aucun article dans la bdd
 
 Création de thématiques n'entraine pas uen création de cartes de thématique sur index
 
-Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
+Theo FAITS Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
 
 Ajouter les contenus des articles et leur image sur la page de l'article
 
