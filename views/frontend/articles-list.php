@@ -128,7 +128,7 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <select name="them">
                 <option value="">Toutes les thématiques</option>
                 <?php foreach ($thematiques as $t): ?>
-                    <option value="<?php e(t['numThem'] ?>"
+                    <option value="<?= $t['numThem'] ?>"
                         <?= ($them === (int)$t['numThem']) ? 'selected' : '' ?>>
                         <?= htmlspecialchars($t['libThem']) ?>
                     </option>
@@ -192,16 +192,16 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <div class="article-card-footer">
 
                                 <a class="read-link"
-                                   href="/views/frontend/articles/article1.php?numArt=<?php e(numArt ?>">
+                                   href="/views/frontend/articles/article1.php?numArt=<?= $numArt ?>">
                                     Lire la suite →
                                 </a>
 
                                 <?php if ($numMemb): ?>
                                     <button
                                         type="button"
-                                        class="like-btn <?php e(userLiked ? 'liked' : '' ?>"
-                                        data-art="<?php e(numArt ?>"
-                                        data-liked="<?php e(userLiked ? '1' : '0' ?>"
+                                        class="like-btn <?= $userLiked ? 'liked' : '' ?>"
+                                        data-art="<?= $numArt ?>"
+                                        data-liked="<?= $userLiked ? '1' : '0' ?>"
                                         title="J’aime">
                                         <span class="heart">♥</span>
                                     </button>
