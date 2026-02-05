@@ -1,4 +1,4 @@
-Création de pseudos de moins de 6 charactères dans le front via le bouton créer un compte et aussi la conformité du mot de passe et du mail
+Julianne : Création de pseudos de moins de 6 charactères dans le front via le bouton créer un compte et aussi la conformité du mot de passe et du mail
 
 Bug de la page d'accueil lorsqu'aucun article dans la bdd
 
