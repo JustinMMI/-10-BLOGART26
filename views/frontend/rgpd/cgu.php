@@ -17,7 +17,7 @@ require_once '../../../header.php';
       <section>
         <h2>2. Éditeur et contact</h2>
         <p><strong>Le blog Bordeaux SAGAstronomique est édité par :</strong></p>
-        <p>Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam</p>
+        <p>Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam, Eliott Beauchamp</p>
         <p><strong>Adresse e-mail :</strong> <a href="mailto:sagastronomique@mmibordeaux.com">sagastronomique@mmibordeaux.com</a></p>
         <p>Le blog est un site personnel, non professionnel et non monétisé.</p>
       </section>
@@ -25,7 +25,7 @@ require_once '../../../header.php';
       <section>
         <h2>3. Hébergement</h2>
         <p><strong>Le site est hébergé par :</strong></p>
-        <p>Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam</p>
+        <p>Lisa Bruno, Justin Esquer, Paul Pauly, Théo Messean, Julianne Rogam, Eliott Beauchamp</p>
         <p><strong>Adresse :</strong> IUT Bordeaux Montaigne</p>
       </section>
 
