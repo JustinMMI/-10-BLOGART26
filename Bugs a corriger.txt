@@ -3,6 +3,7 @@ Julianne : Création de pseudos de moins de 6 charactères dans le front via le 
 Justin : Bug de la page d'accueil lorsqu'aucun article dans la bdd
 
 Lisa : Création de thématiques n'entraine pas une création de cartes de thématique sur index
+-> index.php
 
 Modification dashboard : sortir les commentaire et transformer les boutons lists en boutons nomminatifs
 
