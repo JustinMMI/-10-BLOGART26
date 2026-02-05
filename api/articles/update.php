@@ -2,9 +2,9 @@
 session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/ctrlSaisies.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/api_guard.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
 
-requireAdminApi();
+requireAdmin();
 
 $numArt = (int) ($_POST['numArt'] ?? 0);
 

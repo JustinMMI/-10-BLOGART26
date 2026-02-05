@@ -5,9 +5,9 @@ require_once '../../config.php';
 require_once '../../functions/query/insert.php';
 require_once '../../functions/query/select.php';
 require_once '../../functions/query/delete.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/api_guard.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
 
-requireAdminApi();
+requireAdmin();
 
 // Suppression tous likes d'un membre
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['numMemb']) && !isset($_GET['numArt'])) {

@@ -16,7 +16,6 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
 
 <!-- HERO -->
 <section class="hero">
-  <!-- Bandeau principal -->
   <div class="hero-inner">
     <h1>
       Bordeaux à travers<br>
@@ -38,11 +37,10 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
   </a>
 </section>
 
-<!-- CONTENU -->
 <main class="page-content">
 
 <?php if (!empty($articles)): ?>
-  <?php $featured = $articles[0]; ?>
+<?php $featured = $articles[0]; ?>
 
 <section class="featured-section">
   <div class="container featured-layout">
@@ -50,16 +48,17 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
     <!-- ARTICLE À LA UNE -->
     <div class="featured-main">
       <h2 class="section-title">À la une<div class="trait-dore-alaune"></div></h2>
+
       <?php if ($featured_epingle): ?>
-        <!-- ARTICLE ÉPINGLÉ -->
         <article class="featured-article featured-pinned">
           <img src="/src/uploads/<?= htmlspecialchars($featured_epingle['urlPhotArt']) ?>" alt="">
           <div class="featured-meta">
             <span class="date">
               <?= date('d F Y', strtotime($featured_epingle['dtCreaArt'])) ?>
             </span>
-            <h3><?= htmlspecialchars($featured_epingle['libTitrArt']) ?></h3>
-            <p><?= nl2br(htmlspecialchars($featured_epingle['libChapoArt'])) ?></p>
+
+            <h3><?php e($featured_epingle['libTitrArt']); ?></h3>
+            <p><?php e($featured_epingle['libChapoArt']); ?></p>
 
             <a class="read-more"
                href="/views/frontend/articles/article1.php?numArt=<?= (int)$featured_epingle['numArt'] ?>">
@@ -69,62 +68,59 @@ $articles = sql_select("ARTICLE", "*", null, null, "dtCreaArt DESC", "6");
         </article>
       <?php endif; ?>
 
-      <!-- DERNIER ARTICLE PUBLIÉ -->
+      <!-- DERNIER ARTICLE -->
       <article class="featured-article">
         <img src="/src/uploads/<?= htmlspecialchars($featured['urlPhotArt']) ?>" alt="">
         <div class="featured-meta">
           <span class="date">
             <?= date('d F Y', strtotime($featured['dtCreaArt'])) ?>
           </span>
-          <h3><?= htmlspecialchars($featured['libTitrArt']) ?></h3>
-          <p><?= nl2br(htmlspecialchars($featured['libChapoArt'])) ?></p>
+
+          <h3><?php e($featured['libTitrArt']); ?></h3>
+          <p><?php e($featured['libChapoArt']); ?></p>
 
           <a class="read-more"
-            href="/views/frontend/articles/article1.php?numArt=<?= (int)$featured['numArt'] ?>">
+             href="/views/frontend/articles/article1.php?numArt=<?= (int)$featured['numArt'] ?>">
             Lire la suite →
           </a>
         </div>
       </article>
 
-      <!-- Boutons principaux -->
       <div class="view-all-wrapper">
         <a href="/views/frontend/articles-list.php" class="btn btn-primary btn-lg">
           Voir tous les articles →
         </a>
         <a href="/views/frontend/contact.php" class="btn btn-primary btn-lg">
-            Contactez-nous →
+          Contactez-nous →
         </a>
       </div>
     </div>
 
- <?php // Index - articles par themes
-
-  // Récup des articles les + récents
-  $articlesRecup = sql_select(
-  "article a",
-  "a.numThem,
-  a.numArt,
-  a.libTitrArt",
-  null,
-  null,
-  "a.dtCreaArt DESC",
+<?php
+// Articles par thématique
+$articlesRecup = sql_select(
+    "ARTICLE a",
+    "a.numThem, a.numArt, a.libTitrArt",
+    null,
+    null,
+    "a.dtCreaArt DESC"
 );
 
-// Récupérer les thématiques
 $thematiques = sql_select("THEMATIQUE", "numThem, libThem");
 
-// Prépa du tableau par thématique
+// Préparation
 $trieArticles = [];
 foreach ($thematiques as $them) {
-  $trieArticles[$them['numThem']] = [];
+    $trieArticles[$them['numThem']] = [];
 }
 
-// Rangement des articles dans leur thème
 foreach ($articlesRecup as $article) {
-  $trieArticles[$article['numThem']][] = ['titre' => $article['libTitrArt'],'numArt' => $article['numArt']];
+    $trieArticles[$article['numThem']][] = [
+        'titre'  => $article['libTitrArt'],
+        'numArt' => $article['numArt']
+    ];
 }
 
-// Classes visuelles dispo
 $sidebarClasses = [
   'sidebar-red coins-dore',
   'sidebar-light',
@@ -132,7 +128,6 @@ $sidebarClasses = [
   'sidebar-light-inverse'
 ];
 ?>
-
 
     <!-- SIDEBAR -->
     <aside class="featured-sidebar">
@@ -151,67 +146,38 @@ $sidebarClasses = [
           $listeArticles = $trieArticles[$them['numThem']] ?? [];
         ?>
 
-        <!-- Carte thématique -->
         <div class="sidebar-box <?= htmlspecialchars($boxClass) ?>">
-          <?php if ($boxClass === 'sidebar-red coins-dore'): ?>
-            <span class="coin-tl"></span>
-            <span class="coin-tr"></span>
-            <span class="coin-bl"></span>
-            <span class="coin-br"></span>
-          <?php endif; ?>
-
           <h4><?= htmlspecialchars($them['libThem']) ?></h4>
           <div class="trait-dore"></div>
-            <ul>
-          <?php foreach (array_slice($listeArticles, 0, 5) as $article): ?>
+
+          <ul>
+            <?php foreach (array_slice($listeArticles, 0, 5) as $article): ?>
               <li>
-                  <a href="views/frontend/articles/article1.php?numArt=<?= urlencode($article['numArt']) ?>">
-                      <?= htmlspecialchars($article['titre']) ?>
-                  </a>
+                <a href="/views/frontend/articles/article1.php?numArt=<?= (int)$article['numArt'] ?>">
+                  <?php e($article['titre']); ?>
+                </a>
               </li>
-          <?php endforeach; ?>
+            <?php endforeach; ?>
           </ul>
+
           <div class="trait-dore-petit"></div>
-          <a class="sidebar-link" href="/views/frontend/articles-list.php?search=&keywords=&them=<?= (int)$them['numThem'] ?>">Voir tous →</a>
+          <a class="sidebar-link"
+             href="/views/frontend/articles-list.php?them=<?= (int)$them['numThem'] ?>">
+             Voir tous →
+          </a>
         </div>
-        
       <?php endforeach; ?>
-      <div class="sidebar-light">
-
-      <div class="map-wrapper">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d22637.968251198658!2d-0.5570560254383343!3d44.82673834480565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1srestaurants%20gastronomiques%20Bordeaux!5e0!3m2!1sfr!2sfr!4v1770297548553!5m2!1sfr!2sfr" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"> </iframe>
-      </div>
-    </div>
-
-      <!-- Carte maps -->
-      <div class="sidebar-box map-box">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d17290.13044340734!2d-0.5923902137353435!3d44.84475231300805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1srestaurants%20gastronomiques%20bordeaux!5e0!3m2!1sfr!2sfr!4v1770215811079!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-
 
     </aside>
   </div>
 </section>
 
 <?php else: ?>
-  <!-- MESSAGE PAS D'ARTICLES -->
-  <section class="no-articles-section" style="text-align: center; padding: 60px 20px;">
-    <div class="container">
-      <div class="no-articles-content">
-        <h2>Il n'y a pas d'articles pour l'instant</h2>
-        
-        <?php if (!empty($_SESSION['user']) && $_SESSION['user']['statut'] === 'Administrateur'): ?>
-          <p>Vous êtes administrateur. Créez le premier article !</p>
-          <a href="/views/backend/articles/create.php" class="btn btn-primary btn-lg">
-            Créer votre premier article !
-          </a>
-        <?php else: ?>
-          <p>Revenez bientôt pour découvrir du contenu passionnant.</p>
-        <?php endif; ?>
-      </div>
-    </div>
-  </section>
-
+<section class="no-articles-section">
+  <div class="container">
+    <h2>Il n'y a pas d'articles pour l'instant</h2>
+  </div>
+</section>
 <?php endif; ?>
 
 </main>
