@@ -214,3 +214,14 @@
   font-size: .9rem;
 
 }
+
+.like-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.like-count {
+    font-size: 0.9rem;
+    font-weight: bold;
+}

@@ -1,65 +1,67 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
-require_once '../../functions/ctrlSaisies.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/ctrlSaisies.php';
 
-$numArt = (int) $_POST['numArt'];
+$numArt = (int) ($_POST['numArt'] ?? 0);
 
-/* =========================
-   CHAMPS TEXTE
-========================= */
-$libTitrArt     = addslashes(ctrlSaisies($_POST['libTitrArt']));
-$libChapoArt    = addslashes(ctrlSaisies($_POST['libChapoArt']));
-$libAccrochArt  = addslashes(ctrlSaisies($_POST['libAccrochArt']));
-$parag1Art      = addslashes(ctrlSaisies($_POST['parag1Art']));
-$libSsTitr1Art  = addslashes(ctrlSaisies($_POST['libSsTitr1Art']));
-$parag2Art      = addslashes(ctrlSaisies($_POST['parag2Art']));
-$libSsTitr2Art  = addslashes(ctrlSaisies($_POST['libSsTitr2Art']));
-$parag3Art      = addslashes(ctrlSaisies($_POST['parag3Art']));
-$libConclArt    = addslashes(ctrlSaisies($_POST['libConclArt']));
-$numThem        = (int) $_POST['numThem'];
-
-/* =========================
-   IMAGE (OPTIONNELLE)
-========================= */
-$imageSql = '';
-
-if (!empty($_FILES['urlPhotArt']['name'])) {
-    $fileName = basename($_FILES['urlPhotArt']['name']);
-    move_uploaded_file(
-        $_FILES['urlPhotArt']['tmp_name'],
-        $_SERVER['DOCUMENT_ROOT'] . '/src/uploads/' . $fileName
-    );
-    $imageSql = ", urlPhotArt = '$fileName'";
+if ($numArt <= 0) {
+    header('Location: ../../views/backend/articles/list.php');
+    exit;
 }
 
-/* =========================
-   UPDATE ARTICLE
-========================= */
+$libTitrArt     = addslashes(ctrlSaisies($_POST['libTitrArt'] ?? ''));
+$libChapoArt    = addslashes(ctrlSaisies($_POST['libChapoArt'] ?? ''));
+$libAccrochArt  = addslashes(ctrlSaisies($_POST['libAccrochArt'] ?? ''));
+$parag1Art      = addslashes(ctrlSaisies($_POST['parag1Art'] ?? ''));
+$libSsTitr1Art  = addslashes(ctrlSaisies($_POST['libSsTitr1Art'] ?? ''));
+$parag2Art      = addslashes(ctrlSaisies($_POST['parag2Art'] ?? ''));
+$libSsTitr2Art  = addslashes(ctrlSaisies($_POST['libSsTitr2Art'] ?? ''));
+$parag3Art      = addslashes(ctrlSaisies($_POST['parag3Art'] ?? ''));
+$libConclArt    = addslashes(ctrlSaisies($_POST['libConclArt'] ?? ''));
+$numThem        = (int) ($_POST['numThem'] ?? 0);
+
+$imageSql  = '';
+$uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/src/uploads/';
+
+if (
+    !empty($_FILES['urlPhotArt']['name']) &&
+    $_FILES['urlPhotArt']['error'] === UPLOAD_ERR_OK
+) {
+    $tmpName = $_FILES['urlPhotArt']['tmp_name'];
+    $ext = strtolower(pathinfo($_FILES['urlPhotArt']['name'], PATHINFO_EXTENSION));
+    $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+
+    if (in_array($ext, $allowed, true)) {
+        $fileName = uniqid('art_', true) . '.' . $ext;
+        move_uploaded_file($tmpName, $uploadDir . $fileName);
+
+        // On met à jour l’image UNIQUEMENT si une nouvelle est envoyée
+        $imageSql = ", urlPhotArt = '$fileName'";
+    }
+}
+
 sql_update(
     'ARTICLE',
     "
-    libTitrArt = '$libTitrArt',
-    libChapoArt = '$libChapoArt',
-    libAccrochArt = '$libAccrochArt',
-    parag1Art = '$parag1Art',
-    libSsTitr1Art = '$libSsTitr1Art',
-    parag2Art = '$parag2Art',
-    libSsTitr2Art = '$libSsTitr2Art',
-    parag3Art = '$parag3Art',
-    libConclArt = '$libConclArt',
-    numThem = $numThem
-    $imageSql,
-    dtMajArt = NOW()
+        libTitrArt     = '$libTitrArt',
+        libChapoArt    = '$libChapoArt',
+        libAccrochArt  = '$libAccrochArt',
+        parag1Art      = '$parag1Art',
+        libSsTitr1Art  = '$libSsTitr1Art',
+        parag2Art      = '$parag2Art',
+        libSsTitr2Art  = '$libSsTitr2Art',
+        parag3Art      = '$parag3Art',
+        libConclArt    = '$libConclArt',
+        numThem        = $numThem
+        $imageSql,
+        dtMajArt       = NOW()
     ",
     "numArt = $numArt"
 );
 
-/* =========================
-   MOTS-CLÉS (RESET)
-========================= */
 sql_delete('MOTCLEARTICLE', "numArt = $numArt");
 
-if (!empty($_POST['mots'])) {
+if (!empty($_POST['mots']) && is_array($_POST['mots'])) {
     foreach ($_POST['mots'] as $numMotCle) {
         $numMotCle = (int) $numMotCle;
         sql_insert(

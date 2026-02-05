@@ -134,6 +134,12 @@
     padding: 0;
 }
 
+
+.like-count {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
 .heart {
     font-size: 3rem;
     color: #c7a14a;
@@ -206,3 +212,4 @@
         grid-template-columns:1fr;
     }
 }
+

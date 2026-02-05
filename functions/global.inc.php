@@ -20,7 +20,7 @@ function parseBBCode(string $text): string
         '/\[quote\](.*?)\[\/quote\]/is' => '<blockquote>$1</blockquote>',
         '/\[code\](.*?)\[\/code\]/is' => '<pre><code>$1</code></pre>',
         '/\[url=(.*?)\](.*?)\[\/url\]/is' => '<a href="$1" target="_blank" rel="noopener">$2</a>',
-        
+
     ];
 
     foreach ($bbcode as $pattern => $replace) {
@@ -33,6 +33,17 @@ function parseBBCode(string $text): string
 function e(string $text): void
 {
     echo parseBBCode($text);
+}
+
+function getLikeCount(int $numArt): int
+{
+    $result = sql_select(
+        'LIKEART',
+        'COUNT(*) AS total',
+        "numArt = $numArt"
+    );
+
+    return (int)($result[0]['total'] ?? 0);
 }
 
 ?>
