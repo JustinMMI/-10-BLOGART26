@@ -2,10 +2,7 @@
 include '../../../header.php';
 
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur'&& $_SESSION['user']['statut'] !== 'Modérateur') {
-    header('Location: /');
-    exit;
-}
+requireAdmin('page');
 
 // Récupérer l'article épinglé depuis le fichier JSON
 $pinFileContent = json_decode(file_get_contents('../../../functions/pinned_article.json'), true);

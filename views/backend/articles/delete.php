@@ -2,10 +2,7 @@
 include '../../../header.php';
 
 // 🔐 Sécurité admin
-if (!isset($_SESSION['user']) || $_SESSION['user']['statut'] !== 'Administrateur'&& $_SESSION['user']['statut'] !== 'Modérateur') {
-    header('Location: /');
-    exit;
-}
+requireAdmin('page');
 
 if (!isset($_GET['numArt'])) {
     header('Location: list.php');
