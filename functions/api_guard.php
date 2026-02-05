@@ -1,23 +1,33 @@
 <?php
-// functions/api_guard.php
-
 function requireAdminApi(): void
 {
     // Méthode POST obligatoire
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        header('Location: /views/backend/dashboard.php');
+        http_response_code(405);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Méthode non autorisée'
+        ]);
         exit;
     }
 
-    // Session obligatoire
+    // Session requise
     if (empty($_SESSION['user'])) {
-        header('Location: /views/backend/security/login.php');
+        http_response_code(401);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Non authentifié'
+        ]);
         exit;
     }
 
-    // Rôle autorisé
+    // Rôle requis
     if (!in_array($_SESSION['user']['statut'], ['Administrateur', 'Modérateur'], true)) {
-        header('Location: /views/backend/dashboard.php');
+        http_response_code(403);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Accès refusé'
+        ]);
         exit;
     }
 }
