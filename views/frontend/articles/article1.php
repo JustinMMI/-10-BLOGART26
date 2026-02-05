@@ -83,7 +83,7 @@ if ($article) {
 
           <div class="article-divider"></div>
           <?php if (!empty($article['libAccrochArt'])): ?>
-            <p class="article-accroche"><strong><?php e($article['libAccrochArt']); ?></strong></p>
+            <p class="article-accroche"><?php e($article['libAccrochArt']); ?></p>
           <?php endif; ?>
 
           <?php if (!empty($article['parag1Art'])): ?>
@@ -108,7 +108,7 @@ if ($article) {
 
           <?php if (!empty($article['libConclArt'])): ?>
             <p class="article-conclusion">
-              <strong><?php e($article['libConclArt']); ?></strong>
+              <?php e($article['libConclArt']); ?>
             </p>
           <?php endif; ?>
 
