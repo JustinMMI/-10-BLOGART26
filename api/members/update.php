@@ -7,9 +7,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
 
 requireAdmin('api');
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
-
-requireAdmin('page');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: /views/backend/members/list.php');
