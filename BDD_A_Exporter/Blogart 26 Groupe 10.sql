@@ -19,8 +19,11 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `if0_41051795_blogart26`
+-- Base de données :  `blogart26`
 --
+
+CREATE DATABASE IF NOT EXISTS `blogart26` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `blogart26`;
 
 -- --------------------------------------------------------
 
