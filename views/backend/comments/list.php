@@ -47,10 +47,10 @@ $suppressionLogique = array_filter($comments, fn($c) => $c['delLogiq'] == 1);
                     <tbody>
                         <?php foreach ($enAttente as $comment) { ?>
                             <tr>
-                                <td><?= $comment['libTitrArt'] ?></td>
-                                <td><?= $comment['pseudoMemb'] ?></td>
-                                <td><?= $comment['dtCreaCom'] ?></td>
-                                <td><?= $comment['libCom'] ?></td>
+                                <td><?= htmlspecialchars($comment['libTitrArt'], ENT_QUOTES, 'UTF-8') ?></td>
+                                <td><?= htmlspecialchars($comment['pseudoMemb'], ENT_QUOTES, 'UTF-8') ?></td>
+                                <td><?= htmlspecialchars($comment['dtCreaCom'], ENT_QUOTES, 'UTF-8') ?></td>
+                                <td><?= htmlspecialchars($comment['libCom'], ENT_QUOTES, 'UTF-8') ?></td>
                                 <td>
                                     <a href="update.php?numCom=<?= $comment['numCom'] ?>" class="btn btn-info">Controle</a>
                                 </td>
@@ -76,10 +76,10 @@ $suppressionLogique = array_filter($comments, fn($c) => $c['delLogiq'] == 1);
                     <tbody>
                         <?php foreach ($dejaControle as $comment) { ?>
                             <tr>
-                                <td><?= $comment['pseudoMemb'] ?></td>
-                                <td><?= $comment['dtModCom'] ?></td>
-                                <td><?= $comment['libCom'] ?></td>
-                                <td><?= $comment['delLogiq'] ? 'Masqué' : 'Publié' ?></td>
+                                <td><?= htmlspecialchars($comment['pseudoMemb'], ENT_QUOTES, 'UTF-8') ?></td>
+                                <td><?= htmlspecialchars($comment['dtModCom'], ENT_QUOTES, 'UTF-8') ?></td>
+                                <td><?= htmlspecialchars($comment['libCom'], ENT_QUOTES, 'UTF-8') ?></td>
+                            <td>Publié</td>
                                 <td>
                                     <a href="delete.php?numCom=<?= $comment['numCom'] ?>" class="btn btn-danger">Placer dans la corbeille</a>
                                 </td>
@@ -106,11 +106,11 @@ $suppressionLogique = array_filter($comments, fn($c) => $c['delLogiq'] == 1);
                     <tbody>
                         <?php foreach ($suppressionLogique as $comment) { ?>
                             <tr>
-                                <td><?= $comment['pseudoMemb'] ?></td>
-                                <td><?= $comment['dtModCom'] ?></td>
-                                <td><?= $comment['libCom'] ?></td>
+                                <td><?= htmlspecialchars($comment['pseudoMemb'], ENT_QUOTES, 'UTF-8') ?></td>
+                                <td><?= htmlspecialchars($comment['dtModCom'], ENT_QUOTES, 'UTF-8') ?></td>
+                                <td><?= htmlspecialchars($comment['libCom'], ENT_QUOTES, 'UTF-8') ?></td>
                                 <td>REFUS</td>
-                                <td><?= $comment['notifComKOAff'] ?></td>
+                                <td><?= htmlspecialchars($comment['notifComKOAff'], ENT_QUOTES, 'UTF-8') ?></td>
                                 <td>
                                     <a href="delete.php?numCom=<?= $comment['numCom'] ?>" class="btn btn-danger">Supprimer de la corbeille</a>
                                 </td>
