@@ -1,5 +1,9 @@
 <?php
 require_once '../../../header.php';
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
+
+requireAdmin('page');
 ?>
 
 <div class="container">

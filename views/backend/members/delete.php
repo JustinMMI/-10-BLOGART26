@@ -2,6 +2,8 @@
 include '../../../header.php';
 $statuts = sql_select("STATUT", "*");
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
+
 requireAdmin('page');
 
 $numMemb = $_GET['numMemb'] ?? null;

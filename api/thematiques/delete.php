@@ -5,6 +5,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
 
 requireAdmin('api');
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
+
 requireAdmin('page');
 
 // Suppression de tous les articles d'une thématique (et contenus liés)

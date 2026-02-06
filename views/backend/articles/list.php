@@ -2,6 +2,8 @@
 include '../../../header.php';
 
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
+
 requireAdmin('page');
 
 // Récupérer l'article épinglé depuis le fichier JSON

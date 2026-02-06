@@ -1,6 +1,9 @@
 <?php
 include '../../../header.php';
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
+
+requireAdmin('page');
 // 🔐 Connexion requise
 if (!isset($_SESSION['user'])) {
 	header('Location: /views/backend/security/login.php');

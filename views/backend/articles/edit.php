@@ -1,23 +1,9 @@
 <?php
 include '../../../header.php';
 
-// 🔐 Sécurité admin
-if (
-    !isset($_SESSION['user']) ||
-    (
-        $_SESSION['user']['statut'] !== 'Administrateur' &&
-        $_SESSION['user']['statut'] !== 'Modérateur'
-    )
-) {
-    header('Location: /');
-    exit;
-}
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
 
-if (!isset($_GET['numArt'])) {
-    header('Location: list.php');
-    exit;
-}
-
+requireAdmin('page');
 $numArt = (int) $_GET['numArt'];
 
 /* =========================

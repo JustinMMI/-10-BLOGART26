@@ -1,7 +1,10 @@
 <?php
 include '../../../header.php';
 
+
 // 🔐 Sécurité admin
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
+
 requireAdmin('page');
 
 // Thématiques

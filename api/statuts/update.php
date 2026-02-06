@@ -5,6 +5,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
 
 requireAdmin('api');
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
+
 requireAdmin('page');
 
 $numStat = (int)($_POST['numStat'] ?? 0);

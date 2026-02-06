@@ -1,6 +1,8 @@
 <?php
 include '../../../header.php'; // contains the header and call to config.php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
 
+requireAdmin('page');
 //Load all statuts
 $thematiques = sql_select("thematique", "*");
 ?>

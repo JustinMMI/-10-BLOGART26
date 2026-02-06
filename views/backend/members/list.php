@@ -1,6 +1,8 @@
 <?php
 include '../../../header.php'; 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
 
+requireAdmin('page');
 $membres = sql_select("MEMBRE m INNER JOIN STATUT s ON m.numStat = s.numStat", "m.*, s.libStat");
 
 $rqAdminCount = $DB->query("SELECT COUNT(*) FROM membre WHERE numStat = 1");

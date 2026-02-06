@@ -6,10 +6,9 @@ include '../../header.php';
 <?php
 
 
-if (!isset($_SESSION['user'])) {
-    header('Location: security/login.php?error=auth');
-    exit;
-}
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
+
+requireAdmin('page');
 
 if ($_SESSION['user']['statut'] !== 'Administrateur'&& $_SESSION['user']['statut'] !== 'Modérateur'&& $_SESSION['user']['statut'] !== 'Modérateur'
 ) {

@@ -1,6 +1,8 @@
 <?php
 include '../../../header.php';
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/admin_guard.php';
+
 requireAdmin('page');
 
 $numMotCle = (int)($_GET['numMotCle'] ?? 0);
