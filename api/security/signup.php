@@ -84,7 +84,7 @@ $stmt = $DB->prepare(
     VALUES (:pseudo, :prenom, :nom, :pass, :email, :dtCrea, NULL, :numStat)'
 );
 
-$stmt->execute([':pseudo'  => $pseudo,':prenom'  => $prenom,':nom'     => $nom,':pass'    => $hash,':email'   => $email,':dtCrea'  => $now,':numStat' => $statutMembre]);
+$stmt->execute([':pseudo' => $pseudo,':prenom' => $prenom,':nom' => $nom,':pass' => $hash,':email' => $email,':dtCrea' => $now,':numStat' => $statutMembre]);
 
 header('Location: /views/backend/security/signup.php?success=' . urlencode('Compte créé avec succès. Vous pouvez vous connecter.'));
 exit;

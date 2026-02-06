@@ -9,7 +9,6 @@ $adminCount = $rqAdminCount->fetchColumn();
 $currentUserId = $_SESSION['user']['id'] ?? null;
 ?>
 
-<!-- Bootstrap default layout to display all statuts in foreach -->
 <main class="container my-5">
     <div class="container">
         <div class="row">
